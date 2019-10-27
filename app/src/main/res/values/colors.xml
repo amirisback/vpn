@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0c7944</color>
+    <color name="colorPrimaryDark">#0f9d58</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="splash_bg_start">#109D59</color>
+    <color name="splash_bg_end">#10CAA1</color>
+    <color name="primary_white_text">@android:color/white</color>
+    <color name="primary_black_text">#DE000000</color>
+    <color name="secondary_black_text">#8A000000</color>
+    <color name="grey_e3">#e3e3e3</color>
+    <color name="grey_cc">#cccccc</color>
+    <color name="grey_ee">#EEEEEE</color>
+    <color name="activity_background">@color/grey_ee</color>
+    <color name="stop_yellow">#f0a734</color>
+    <color name="disconnect_red">#e93d25</color>
+    <color name="progress">#17d478</color>
+    <color name="rate_us_bg">#f7fbfb</color>
+    <color name="nav_draw_icon">#747d87</color>
+    <color name="textColor">#3af3ff</color>
+    <color name="textColor2">#242e3a</color>
+    <color name="transparent">#00000000</color>
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#d1395c</color>
+    <color name="dot_dark_screen2">#14a895</color>
+    <color name="dot_dark_screen3">#2278d4</color>
+    <color name="dot_dark_screen4">#a854d4</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#f98da5</color>
+    <color name="dot_light_screen2">#8cf9eb</color>
+    <color name="dot_light_screen3">#93c6fd</color>
+    <color name="dot_light_screen4">#e4b5fc</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+
+    <color name="popUpBg">#ffffff</color>
+    <color name="listDivider">#356690</color>
+
+    <color name="mapFill">#1c3f60</color>
+    <color name="mapStroke">#7f7f7f</color>
+    <color name="mapBackground">#71bad2</color>
+    <color name="mapNameCountry">#ffffff</color>
+    <color name="mapLine">#ffffff</color>
+
+    <color name="toolbarTitle">#cbecfd</color>
+    <color name="toolbarBg">#356690</color>
+
+    <color name="buttonText">#cbecfd</color>
+    <color name="buttonBg">#356690</color>
+
+    <color name="totalServers">#ffffff</color>
+
+    <color name="infoServersList">#1c3f61</color>
+
+    <color name="ratingNot">#A7A7A7</color>
+
+    <color name="activeServer">#cbecfd</color>
+    <color name="additionalServer">#f1dd77</color>
+
+    <color name="serverNameBg">#cbecfd</color>
+    <color name="serverName">#356690</color>
+</resources>

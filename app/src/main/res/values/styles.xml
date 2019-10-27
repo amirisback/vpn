@@ -1,0 +1,67 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/toolbarTitle</item>
+    </style>
+
+    <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowButtonStyle">@style/OverFlow</item>
+    </style>
+
+    <style name="OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_more_vert_24dp</item>
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme2" parent="AppThemeBase" />
+
+
+    <style name="serverList" >
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="buttons" >
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@color/buttonText</item>
+    </style>
+
+    <style name="buttonsPopUp" >
+        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:textColor">@color/buttonText</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:minHeight">35dp</item>
+        <item name="android:width">250dp</item>
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="Splash" parent="AppTheme.NoActionBar.FullScreen">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+</resources>

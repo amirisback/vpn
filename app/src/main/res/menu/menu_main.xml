@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kusenko.myapplication.MainActivity">
+    <item
+        android:id="@+id/actionSpeed"
+        android:icon="@drawable/ic_speed"
+        android:orderInCategory="100"
+        android:title="@string/action_share"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/actionCurrentServer"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:orderInCategory="101"
+        android:title="@string/action_current_connection"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:orderInCategory="101"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+
+
+</menu>

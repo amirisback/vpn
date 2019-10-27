@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/info_servers_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:background="@color/disconnect_red"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/success_pop_up_title"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/successPopUpBtnPlayMarket"
+            style="@style/buttonsPopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_playmarket" />
+
+        <Button
+            android:id="@+id/successPopUpBtnBrowser"
+            style="@style/buttonsPopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_browser" />
+
+        <Button
+            android:id="@+id/successPopUpBtnDesktop"
+            style="@style/buttonsPopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_my_desktop"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/successPopUpBtnClose"
+            style="@style/buttonsPopUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stay_to_try_something_else"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</RelativeLayout>

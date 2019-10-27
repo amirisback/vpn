@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_up">
+
+        <item
+            android:id="@+id/nav_home"
+            android:checkable="false"
+            android:icon="@drawable/home"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/nav_speedtest"
+            android:checkable="false"
+            android:icon="@drawable/speedmeter"
+            android:title="Speed Test" />
+
+        <item
+            android:id="@+id/nav_vpnlist"
+            android:checkable="false"
+            android:icon="@drawable/connection"
+            android:title="VPN Connection"
+            android:visible="false" />
+
+    </group>
+
+    <item android:title="Select Option">
+    <menu>
+
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_002_share"
+            android:title="Share App" />
+
+        <item
+            android:id="@+id/about_me"
+            android:icon="@drawable/ic_info"
+            android:title="About Us" />
+
+        <item
+            android:id="@+id/privacypolicy"
+            android:icon="@drawable/ic_license"
+            android:title="Privacy Policy" />
+
+        <item
+            android:id="@+id/rate_us"
+            android:icon="@drawable/ic_001_rating"
+            android:title="Rate Us" />
+
+        <item
+            android:id="@+id/moreapp"
+            android:icon="@drawable/ic_favorite_border_white_24dp"
+            android:title="More Apps" />
+
+
+    </menu>
+    </item>
+</menu>
