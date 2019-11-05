@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-        if (BaseActivity.connectedServer == null) {
+        if (connectedServer == null) {
             Button hello = (Button) findViewById(R.id.elapse2);
             hello.setText("No VPN Connected");
             hello.setBackgroundResource(R.drawable.button2);
@@ -261,7 +261,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
-        if (BaseActivity.connectedServer == null) {
+        if (connectedServer == null) {
             Button hello = (Button) findViewById(R.id.elapse2);
             hello.setText("No VPN Connected");
         }
