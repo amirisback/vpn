@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
 
@@ -32,6 +34,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0.0"
+        multiDexEnabled true
 
         // Declaration apk / aab name
         def nameAPK = "vpn-hero"
@@ -128,7 +131,13 @@ dependencies {
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.2.8'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.github.bmarrdev:android-DecoView-charting:v1.2'
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
 
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}
