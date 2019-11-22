@@ -1,34 +1,112 @@
-
 apply plugin: 'com.android.application'
 
 android {
+
+    // Declaration app name
+    def nameApp = "VPN Hero"
+
+    def versionPropsFile = file('version.properties')
+    Properties versionProps = new Properties()
+
+    if (versionPropsFile.canRead()) {
+        versionProps.load(new FileInputStream(versionPropsFile))
+    } else {
+        versionProps['VERSION_CODE'] = '0'
+    }
+
+    def code = versionProps['VERSION_CODE'].toInteger()
+
+    versionProps['VERSION_CODE'] = code.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
     compileSdkVersion 29
     buildToolsVersion '29.0.1'
-
     defaultConfig {
         applicationId "com.frogobox.evpn"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0.0"
+
+        // Declaration apk / aab name
+        def nameAPK = "vpn-hero"
+
+        // Declaration apps name debug mode
+        def debugAttribute = " Development"
+        def nameAppDebug = nameApp + debugAttribute
+
+        // Declaration admob id for debug
+        def debugAdmobPublisherId = "ca-app-pub-3940256099942544~3347511713"
+        def debugAdmobInterstitial = "ca-app-pub-3940256099942544/1033173712"
+        def debugAdmobVideo = "ca-app-pub-3940256099942544/5224354917"
+        def debugAdmobBanner = "ca-app-pub-3940256099942544/6300978111"
+
+        // Naming APK // AAB
+        setProperty("archivesBaseName", nameAPK + versionName + "#" + code + "-"
+                + new Date().format('ddMMyy'))
+
+        resConfigs "en", "id"
+        vectorDrawables.useSupportLibrary = true
+
+        // Inject app name for debug
+        resValue "string", "app_name", nameAppDebug
+
+        // Inject admob id for debug
+        resValue "string", "admob_publisher_id", debugAdmobPublisherId
+        resValue "string", "admob_interstitial", debugAdmobInterstitial
+        resValue "string", "admob_video", debugAdmobVideo
+        resValue "string", "admob_banner", debugAdmobBanner
+
     }
+
+    signingConfigs {
+        release {
+            // You need to specify either an absolute path or include the
+            // keystore file in the same directory as the build.gradle file.
+            // [PROJECT FOLDER NAME/app/[COPY YOUT KEY STORE] .jks in here
+            storeFile file("frogoboxdev.jks")
+            storePassword "cronoclez"
+            keyAlias "frogobox"
+            keyPassword "xeonranger"
+        }
+    }
+
 
     buildTypes {
 
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),
-                    'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // Generated Signed APK / AAB
+            signingConfig signingConfigs.release
+
+            // Declaration admob id for release
+            def releaseAdmobPublisherId = "ca-app-pub-5472340099809711~9558797229"
+            def releaseAdmobInterstitial = "ca-app-pub-5472340099809711/4114898854"
+            def releaseAdmobVideo = "ca-app-pub-3940256099942544/5224354917"
+            def releaseAdmobBanner = "ca-app-pub-3940256099942544/6300978111"
+
+            // Inject app name for release
+            resValue "string", "app_name", nameApp
+
+            // Inject admob id for release
+            resValue "string", "admob_publisher_id", releaseAdmobPublisherId
+            resValue "string", "admob_interstitial", releaseAdmobInterstitial
+            resValue "string", "admob_video", releaseAdmobVideo
+            resValue "string", "admob_banner", releaseAdmobBanner
+
         }
 
     }
 
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
-}
 
+}
 
 
 dependencies {
@@ -36,15 +114,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
     implementation 'com.amitshekhar.android:android-networking:0.2.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.caverock:androidsvg:1.2.2-beta-1'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.google.android.gms:play-services-ads:18.2.0'
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
     implementation files('libs/achartengine-1.2.0.jar')
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.2.8'

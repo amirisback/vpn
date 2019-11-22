@@ -74,7 +74,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MobileAds.initialize(this, String.valueOf(R.string.admob_app_id));
+        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
         homeContextRL = (RelativeLayout) findViewById(R.id.homeContextRL);
         countryList = dbHelper.getUniqueCountries();
 
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         });
 
         final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit));
+        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
         mInterstitial.loadAd(new AdRequest.Builder().build());
         mInterstitial.setAdListener(new AdListener() {
             @Override

@@ -233,5 +233,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="@string/admob_banner"></com.google.android.gms.ads.AdView>
 </RelativeLayout>

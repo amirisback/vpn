@@ -29,7 +29,7 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        MobileAds.initialize(this, String.valueOf(R.string.admob_app_id));
+        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
         toolbar = (Toolbar) findViewById(R.id.preferenceToolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -72,7 +72,7 @@ public class SettingsActivity extends PreferenceActivity {
         });
 
         final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit));
+        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
         mInterstitial.loadAd(new AdRequest.Builder().build());
         mInterstitial.setAdListener(new AdListener() {
             @Override

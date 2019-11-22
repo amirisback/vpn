@@ -1,13 +1,8 @@
 <resources>
 
-    <string name="app_name" translatable="false">eVPN</string>
     <string name="app_description" translatable="false">Free Ultimate VPN</string>
     <string name="all_rights_reserved">Copyright © pharid.com. All Rights Reserved.</string>
-    <string name="interstitial_ad_unit" translatable="false">ca-app-pub-1704956696905394/7963366375</string>
-    <string name="banner_ad_unit" translatable="false">ca-app-pub-1704956696905394/6829004830</string>
-    <string name="admob_app_id" translatable="false">ca-app-pub-1704956696905394~3828644858</string>
     <string name="url_check_ip_batch">http://ip-api.com/batch</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="developer_email">contact@pharid.com</string>
@@ -65,29 +60,29 @@
     <string name="traffic_in">Downloaded: %1$s</string>
     <string name="traffic_out">Uploaded: %1$s</string>
     <string name="traffic_totally"><b>Totally through the application</b></string>
-  <string name="unknown_state" translatable="false">Unknown state</string>
-  <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
-  <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
-  <string name="cancel_connection">Disconnect</string>
-  <string name="last_eVPN_tun_config">Opening tun interface:</string>
-  <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
-  <string name="route_rejected">Route rejected by Android</string>
-  <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
-  <string name="routes_info_excl">Routes excluded: %1$s %2$s</string>
-  <string name="tun_open_error">Failed to open the tun interface</string>
-  <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
-  <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
-  <string name="keychain_access">Cannot access the Android Keychain Certificates. This can be caused by a firmware upgrade or by restoring a backup of the app/app settings. Please edit the VPN and reselect the certificate under basic settings to recreate the permission to access the certificate.</string>
-  <string name="no_keystore_cert_selected">You must select a User certificate</string>
-  <string name="custom_route_format_error">Error parsing the custom routes</string>
-  <string name="no_error_found">No error found</string>
-  <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
-  <string name="routes_info_incl">Routes: %1$s %2$s</string>
-  <string name="routes_debug">VpnService routes installed: %1$s %2$s</string>
-  <string name="error">"Error: "</string>
-  <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
-  <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by eVPN is \"%3$s\".</string>
-  <string name="ipv4_format_error">Error parsing the IPv4 address</string>
+    <string name="unknown_state" translatable="false">Unknown state</string>
+    <string name="state_user_vpn_permission" translatable="false">Waiting for user permission to use VPN API</string>
+    <string name="no_vpn_support_image">Your image does not support the VPNService API, sorry :(</string>
+    <string name="cancel_connection">Disconnect</string>
+    <string name="last_eVPN_tun_config">Opening tun interface:</string>
+    <string name="opentun_no_ipaddr">Refusing to open tun device without IP information</string>
+    <string name="route_rejected">Route rejected by Android</string>
+    <string name="dns_server_info">DNS Server: %1$s, Domain: %2$s</string>
+    <string name="routes_info_excl">Routes excluded: %1$s %2$s</string>
+    <string name="tun_open_error">Failed to open the tun interface</string>
+    <string name="tun_error_helpful">On some custom ICS images the permission on /dev/tun might be wrong, or the tun module might be missing completely. For CM9 images try the fix ownership option under general settings</string>
+    <string name="route_not_netip">Corrected route %1$s/%2$s to %3$s/%2$s</string>
+    <string name="keychain_access">Cannot access the Android Keychain Certificates. This can be caused by a firmware upgrade or by restoring a backup of the app/app settings. Please edit the VPN and reselect the certificate under basic settings to recreate the permission to access the certificate.</string>
+    <string name="no_keystore_cert_selected">You must select a User certificate</string>
+    <string name="custom_route_format_error">Error parsing the custom routes</string>
+    <string name="no_error_found">No error found</string>
+    <string name="local_ip_info">Local IPv4: %1$s/%2$d IPv6: %3$s MTU: %4$d</string>
+    <string name="routes_info_incl">Routes: %1$s %2$s</string>
+    <string name="routes_debug">VpnService routes installed: %1$s %2$s</string>
+    <string name="error">"Error: "</string>
+    <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by eVPN is \"%3$s\".</string>
+    <string name="ipv4_format_error">Error parsing the IPv4 address</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
     <string name="private_key_password">Private Key Password</string>
     <string name="password">Password</string>

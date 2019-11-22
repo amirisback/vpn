@@ -61,7 +61,7 @@ public class SpeedTestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speedtest);
-        MobileAds.initialize(this, String.valueOf(R.string.admob_app_id));
+        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
@@ -104,7 +104,7 @@ public class SpeedTestActivity extends AppCompatActivity {
         });
 
         final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.interstitial_ad_unit));
+        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
         mInterstitial.loadAd(new AdRequest.Builder().build());
         mInterstitial.setAdListener(new AdListener() {
             @Override

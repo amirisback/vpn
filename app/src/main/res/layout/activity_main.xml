@@ -359,7 +359,7 @@
                             android:layout_centerHorizontal="true"
                             android:visibility="visible"
                             ads:adSize="BANNER"
-                            ads:adUnitId="@string/banner_ad_unit"></com.google.android.gms.ads.AdView>
+                            ads:adUnitId="@string/admob_banner"></com.google.android.gms.ads.AdView>
                     </LinearLayout>
 
 
