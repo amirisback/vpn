@@ -1,6 +1,6 @@
-package com.frogobox.evpn.dns;
+package com.frogobox.evpn.util.dns;
 
-import static com.frogobox.evpn.dns.HttpUploadTest.uploadedKByte;
+import static com.frogobox.evpn.util.dns.HttpUploadTest.uploadedKByte;
 
 import java.io.DataOutputStream;
 import java.math.BigDecimal;

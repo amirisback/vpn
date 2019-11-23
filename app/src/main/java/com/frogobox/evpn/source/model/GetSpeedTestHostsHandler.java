@@ -1,4 +1,4 @@
-package com.frogobox.evpn.model;
+package com.frogobox.evpn.source.model;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

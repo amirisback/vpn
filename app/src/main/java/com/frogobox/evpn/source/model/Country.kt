@@ -1,4 +1,4 @@
-package com.frogobox.evpn.model
+package com.frogobox.evpn.source.model
 
 data class Country(
         val countryName: String,

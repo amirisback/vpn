@@ -21,32 +21,32 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.frogobox.evpn.activity.SplashActivity"
+            android:name=".view.ui.activity.SplashActivity"
             android:noHistory="true"
             android:theme="@style/Splash" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.MainActivity"
+            android:name=".view.ui.activity.MainActivity"
             android:label="@string/app_name" />
 
-        <activity android:name="com.frogobox.evpn.activity.VPNListActivity" />
+        <activity android:name=".view.ui.activity.VPNListActivity" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.VPNInfoActivity"
+            android:name=".view.ui.activity.VPNInfoActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.SettingsActivity"
+            android:name=".view.ui.activity.SettingsActivity"
             android:label="@string/action_settings"
             android:noHistory="true" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.SpeedTestActivity"
+            android:name=".view.ui.activity.SpeedTestActivity"
             android:label="eVPN Speed Test"
             android:theme="@style/AppTheme2" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.TOSActivity"
+            android:name=".view.ui.activity.TOSActivity"
             android:theme="@style/AppTheme2" />
 
         <activity
@@ -55,7 +55,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name="com.frogobox.evpn.activity.StepActivity"
+            android:name=".view.ui.activity.StepActivity"
             android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,13 +72,13 @@
             </intent-filter>
         </service>
 
-        <service android:name="com.frogobox.evpn.service.MyFirebaseMessagingService">
+        <service android:name=".util.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name="com.frogobox.evpn.service.MyFirebaseInstanceIDService">
+        <service android:name=".util.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

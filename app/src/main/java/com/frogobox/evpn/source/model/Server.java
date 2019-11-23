@@ -1,4 +1,4 @@
-package com.frogobox.evpn.model;
+package com.frogobox.evpn.source.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

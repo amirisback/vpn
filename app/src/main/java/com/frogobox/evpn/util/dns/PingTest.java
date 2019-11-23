@@ -1,4 +1,4 @@
-package com.frogobox.evpn.dns;
+package com.frogobox.evpn.util.dns;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

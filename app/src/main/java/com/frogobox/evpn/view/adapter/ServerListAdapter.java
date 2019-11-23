@@ -1,4 +1,4 @@
-package com.frogobox.evpn.adapter;
+package com.frogobox.evpn.view.adapter;
 
 import android.content.Context;
 import androidx.core.content.ContextCompat;
@@ -10,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.activity.BaseActivity;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.ConnectionQuality;
 import com.frogobox.evpn.util.CountriesNames;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,7 @@ import java.util.Map;
 public class ServerListAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
-    private List<Server> serverList = new ArrayList<Server>();
+    private List<Server> serverList;
     private Context context;
     private Map<String, String> localeCountries;
 

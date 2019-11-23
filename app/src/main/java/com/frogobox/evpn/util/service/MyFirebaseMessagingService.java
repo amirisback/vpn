@@ -1,9 +1,9 @@
-package com.frogobox.evpn.service;
+package com.frogobox.evpn.util.service;
 
 import android.content.Intent;
 import android.util.Log;
 
-import com.frogobox.evpn.activity.MainActivity;
+import com.frogobox.evpn.view.ui.activity.MainActivity;
 import com.frogobox.evpn.util.NotificationUtils;
 import com.frogobox.evpn.util.NotificationVO;
 import com.google.firebase.messaging.FirebaseMessagingService;

@@ -1,16 +1,15 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.base;
 
 import android.content.Intent;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -18,12 +17,14 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.frogobox.evpn.App;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.database.DBHelper;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.source.local.DBHelper;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.CountriesNames;
 import com.frogobox.evpn.util.PropertiesService;
-
 import com.frogobox.evpn.util.TotalTraffic;
+import com.frogobox.evpn.view.ui.activity.SettingsActivity;
+import com.frogobox.evpn.view.ui.activity.SpeedTestActivity;
+import com.frogobox.evpn.view.ui.activity.VPNInfoActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,23 +38,25 @@ import java.util.Map;
 import de.blinkt.openvpn.core.VpnStatus;
 
 
-
 public abstract class BaseActivity extends AppCompatActivity {
 
+    public static Server connectedServer = null;
     private DrawerLayout fullLayout;
     private Toolbar toolbar;
-    public static Server connectedServer = null;
-    boolean hideCurrentConnection = false;
 
-    int widthWindow ;
-    int heightWindow;
+    protected boolean hideCurrentConnection = false;
+    protected int widthWindow;
+    protected int heightWindow;
+    protected DBHelper dbHelper;
+    protected Map<String, String> localeCountries;
 
-    static DBHelper dbHelper;
-    Map<String, String> localeCountries;
+
+    public static void sendTouchButton(String button) {
+
+    }
 
     @Override
-    public void setContentView(int layoutResID)
-    {
+    public void setContentView(int layoutResID) {
 
         fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
         FrameLayout activityContainer = (FrameLayout) fullLayout.findViewById(R.id.activity_content);
@@ -69,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         if (useHomeButton()) {
-            if (getSupportActionBar() != null){
+            if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 getSupportActionBar().setDisplayShowHomeEnabled(true);
             }
@@ -100,18 +103,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected boolean useToolbar()
-    {
+    protected boolean useToolbar() {
         return true;
     }
 
-    protected boolean useHomeButton()
-    {
+    protected boolean useHomeButton() {
         return true;
     }
 
-    protected boolean useMenu()
-    {
+    protected boolean useMenu() {
         return true;
     }
 
@@ -160,7 +160,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public Server getRandomServer() {
         Server randomServer;
         if (PropertiesService.getCountryPriority()) {
@@ -181,11 +180,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public static void sendTouchButton(String button) {
-
+    protected void ipInfoResult() {
     }
-
-    protected void ipInfoResult() {}
 
     protected void getIpInfo(Server server) {
         List<Server> serverList = new ArrayList<Server>();
@@ -219,6 +215,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         if (dbHelper.setIpInfo(response, serverList))
                             ipInfoResult();
                     }
+
                     @Override
                     public void onError(ANError error) {
 

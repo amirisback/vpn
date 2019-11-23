@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 import android.text.Html;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.activity.MainActivity;
+import com.frogobox.evpn.view.ui.activity.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

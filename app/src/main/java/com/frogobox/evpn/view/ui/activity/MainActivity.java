@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -32,7 +32,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;

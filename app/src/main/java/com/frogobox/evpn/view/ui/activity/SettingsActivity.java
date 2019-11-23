@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -10,8 +10,8 @@ import android.view.View;
 
 import com.frogobox.evpn.App;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.database.DBHelper;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.source.local.DBHelper;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.CountriesNames;
 import com.frogobox.evpn.util.PropertiesService;
 import com.google.android.gms.ads.AdListener;

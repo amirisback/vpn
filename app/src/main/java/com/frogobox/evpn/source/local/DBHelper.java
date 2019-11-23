@@ -1,4 +1,4 @@
-package com.frogobox.evpn.database;
+package com.frogobox.evpn.source.local;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.ConnectionQuality;
 
 import org.json.JSONArray;

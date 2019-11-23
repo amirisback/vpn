@@ -1,4 +1,4 @@
-package com.frogobox.evpn.service;
+package com.frogobox.evpn.util.service;
 
 import android.util.Log;
 

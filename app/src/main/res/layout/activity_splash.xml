@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
 
     android:background="@color/colorPrimary"
-    tools:context="com.frogobox.evpn.activity.SplashActivity">
+    tools:context=".view.ui.activity.SplashActivity">
 
     <LinearLayout
         android:id="@+id/splashh"

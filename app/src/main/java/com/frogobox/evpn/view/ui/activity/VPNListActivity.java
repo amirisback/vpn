@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.content.Intent;
 
@@ -15,8 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.adapter.ServerListAdapter;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.view.adapter.ServerListAdapter;
+import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.source.model.Server;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

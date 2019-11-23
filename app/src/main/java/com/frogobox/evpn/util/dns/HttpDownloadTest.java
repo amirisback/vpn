@@ -1,4 +1,4 @@
-package com.frogobox.evpn.dns;
+package com.frogobox.evpn.util.dns;
 
 import java.io.InputStream;
 import java.math.BigDecimal;

@@ -34,7 +34,7 @@ import com.frogobox.evpn.BuildConfig;
 
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.activity.VPNInfoActivity;
+import com.frogobox.evpn.view.ui.activity.VPNInfoActivity;
 import com.frogobox.evpn.util.TotalTraffic;
 
 

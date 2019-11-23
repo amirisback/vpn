@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -41,7 +41,8 @@ import android.widget.Toast;
 
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
 import com.frogobox.evpn.util.TotalTraffic;

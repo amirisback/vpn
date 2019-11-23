@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -33,10 +33,10 @@ import java.util.HashSet;
 import java.util.List;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.dns.HttpDownloadTest;
-import com.frogobox.evpn.dns.HttpUploadTest;
-import com.frogobox.evpn.dns.PingTest;
-import com.frogobox.evpn.model.GetSpeedTestHostsHandler;
+import com.frogobox.evpn.util.dns.HttpDownloadTest;
+import com.frogobox.evpn.util.dns.HttpUploadTest;
+import com.frogobox.evpn.util.dns.PingTest;
+import com.frogobox.evpn.source.model.GetSpeedTestHostsHandler;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;

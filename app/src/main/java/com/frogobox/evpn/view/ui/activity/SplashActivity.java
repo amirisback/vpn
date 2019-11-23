@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
+import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.util.NetworkState;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -19,7 +20,7 @@ import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.model.Server;
+import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
 

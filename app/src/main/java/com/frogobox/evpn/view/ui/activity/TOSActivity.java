@@ -1,4 +1,4 @@
-package com.frogobox.evpn.activity;
+package com.frogobox.evpn.view.ui.activity;
 
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
