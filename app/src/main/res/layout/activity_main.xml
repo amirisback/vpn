@@ -7,9 +7,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,6 +26,7 @@
                 android:visibility="visible"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
             <RelativeLayout
                 android:id="@+id/homeContextRL"
                 android:layout_width="match_parent"
@@ -84,7 +87,7 @@
                             android:layout_marginTop="-17dp"
                             android:gravity="center">
 
-                            <com.frgoobox.evpn.CustomTxTRegular
+                            <com.frogobox.evpn.CustomTxTRegular
                                 android:id="@+id/top"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -94,7 +97,7 @@
                                 android:textColor="@color/grey_cc"
                                 android:textSize="11sp" />
 
-                            <com.frgoobox.evpn.CustomTxTRegular
+                            <com.frogobox.evpn.CustomTxTRegular
                                 android:id="@+id/centree"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -104,7 +107,7 @@
                                 android:textColor="#000000"
                                 android:textSize="12sp" />
 
-                            <com.frgoobox.evpn.CustomTxTRegular
+                            <com.frogobox.evpn.CustomTxTRegular
                                 android:id="@+id/bottom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -169,8 +172,7 @@
                             android:textStyle="bold"
                             android:visibility="gone" />
 
-                        <androidx.gridlayout.widget.GridLayout
-                            xmlns:grid="http://schemas.android.com/apk/res-auto"
+                        <androidx.gridlayout.widget.GridLayout xmlns:grid="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/mainGrid"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -179,8 +181,7 @@
                             grid:alignmentMode="alignMargins"
                             grid:columnCount="2"
                             grid:columnOrderPreserved="false"
-                            grid:rowCount="2"
->
+                            grid:rowCount="2">
 
 
                             <!-- Row 1 -->
@@ -190,13 +191,13 @@
                                 android:id="@+id/homeBtnRandomConnection"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                grid:layout_rowWeight="1"
-                                grid:layout_columnWeight="1"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginRight="16dp"
                                 android:layout_marginBottom="16dp"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp">
+                                app:cardElevation="8dp"
+                                grid:layout_columnWeight="1"
+                                grid:layout_rowWeight="1">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -228,13 +229,13 @@
                                 android:id="@+id/homeBtnChooseCountry"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                grid:layout_rowWeight="1"
-                                grid:layout_columnWeight="1"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginRight="16dp"
                                 android:layout_marginBottom="16dp"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp">
+                                app:cardElevation="8dp"
+                                grid:layout_columnWeight="1"
+                                grid:layout_rowWeight="1">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -269,13 +270,13 @@
                                 android:id="@+id/button"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                grid:layout_rowWeight="1"
-                                grid:layout_columnWeight="1"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginRight="16dp"
                                 android:layout_marginBottom="16dp"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp">
+                                app:cardElevation="8dp"
+                                grid:layout_columnWeight="1"
+                                grid:layout_rowWeight="1">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -307,13 +308,13 @@
                                 android:id="@+id/CardViewShare"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                grid:layout_rowWeight="1"
-                                grid:layout_columnWeight="1"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginRight="16dp"
                                 android:layout_marginBottom="16dp"
                                 app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp">
+                                app:cardElevation="8dp"
+                                grid:layout_columnWeight="1"
+                                grid:layout_rowWeight="1">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -359,12 +360,11 @@
                             android:layout_centerHorizontal="true"
                             android:visibility="visible"
                             ads:adSize="BANNER"
-                            ads:adUnitId="@string/admob_banner"></com.google.android.gms.ads.AdView>
+                            ads:adUnitId="@string/admob_banner" />
                     </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>
-
 
 
             </RelativeLayout>

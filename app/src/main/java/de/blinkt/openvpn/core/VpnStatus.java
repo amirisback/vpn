@@ -6,7 +6,7 @@ import android.content.Context;
 import android.os.HandlerThread;
 import android.os.Message;
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 import java.io.File;
 import java.io.PrintWriter;

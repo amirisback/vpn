@@ -11,7 +11,7 @@ import android.os.ParcelFileDescriptor;
 import androidx.annotation.NonNull;
 import android.util.Log;
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 //import junit.framework.Assert;
 

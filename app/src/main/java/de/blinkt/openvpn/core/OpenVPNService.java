@@ -30,12 +30,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.frgoobox.evpn.BuildConfig;
+import com.frogobox.evpn.BuildConfig;
 
 
-import com.frgoobox.evpn.R;
-import com.frgoobox.evpn.activity.VPNInfoActivity;
-import com.frgoobox.evpn.util.TotalTraffic;
+import com.frogobox.evpn.R;
+import com.frogobox.evpn.activity.VPNInfoActivity;
+import com.frogobox.evpn.util.TotalTraffic;
 
 
 import java.io.IOException;

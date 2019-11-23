@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 import java.io.File;
 import java.io.FileOutputStream;

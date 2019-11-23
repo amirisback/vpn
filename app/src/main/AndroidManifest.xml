@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.frgoobox.evpn">
+    package="com.frogobox.evpn">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.frgoobox.evpn.App"
+        android:name="com.frogobox.evpn.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,32 +21,32 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name="com.frgoobox.evpn.activity.SplashActivity"
+            android:name="com.frogobox.evpn.activity.SplashActivity"
             android:noHistory="true"
             android:theme="@style/Splash" />
 
         <activity
-            android:name="com.frgoobox.evpn.activity.MainActivity"
+            android:name="com.frogobox.evpn.activity.MainActivity"
             android:label="@string/app_name" />
 
-        <activity android:name="com.frgoobox.evpn.activity.VPNListActivity" />
+        <activity android:name="com.frogobox.evpn.activity.VPNListActivity" />
 
         <activity
-            android:name="com.frgoobox.evpn.activity.VPNInfoActivity"
+            android:name="com.frogobox.evpn.activity.VPNInfoActivity"
             android:launchMode="singleTop" />
 
         <activity
-            android:name="com.frgoobox.evpn.activity.SettingsActivity"
+            android:name="com.frogobox.evpn.activity.SettingsActivity"
             android:label="@string/action_settings"
             android:noHistory="true" />
 
         <activity
-            android:name="com.frgoobox.evpn.activity.SpeedTestActivity"
+            android:name="com.frogobox.evpn.activity.SpeedTestActivity"
             android:label="eVPN Speed Test"
             android:theme="@style/AppTheme2" />
 
         <activity
-            android:name="com.frgoobox.evpn.activity.TOSActivity"
+            android:name="com.frogobox.evpn.activity.TOSActivity"
             android:theme="@style/AppTheme2" />
 
         <activity
@@ -55,7 +55,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <activity
-            android:name=".activity.StepActivity"
+            android:name="com.frogobox.evpn.activity.StepActivity"
             android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,13 +72,13 @@
             </intent-filter>
         </service>
 
-        <service android:name=".service.MyFirebaseMessagingService">
+        <service android:name="com.frogobox.evpn.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".service.MyFirebaseInstanceIDService">
+        <service android:name="com.frogobox.evpn.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>

@@ -7,11 +7,11 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 import de.blinkt.openvpn.VpnProfile;
-import com.frgoobox.evpn.util.io.pem.PemObject;
-import com.frgoobox.evpn.util.io.pem.PemReader;
+import com.frogobox.evpn.util.io.pem.PemObject;
+import com.frogobox.evpn.util.io.pem.PemReader;
 
 
 import javax.security.auth.x500.X500Principal;

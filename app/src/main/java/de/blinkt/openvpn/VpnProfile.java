@@ -16,10 +16,10 @@ import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
-import com.frgoobox.evpn.util.io.pem.PemObject;
-import com.frgoobox.evpn.util.io.pem.PemWriter;
+import com.frogobox.evpn.util.io.pem.PemObject;
+import com.frogobox.evpn.util.io.pem.PemWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;

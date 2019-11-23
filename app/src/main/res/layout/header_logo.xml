@@ -9,7 +9,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.frgoobox.evpn.CustomTxTRegular
+    <com.frogobox.evpn.CustomTxTRegular
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="20dp"
@@ -86,7 +86,7 @@
                 android:layout_marginTop="-17dp"
                 android:gravity="center">
 
-                <com.frgoobox.evpn.CustomTxTRegular
+                <com.frogobox.evpn.CustomTxTRegular
                     android:id="@+id/top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                     android:textColor="@color/grey_cc"
                     android:textSize="11sp" />
 
-                <com.frgoobox.evpn.CustomTxTRegular
+                <com.frogobox.evpn.CustomTxTRegular
                     android:id="@+id/centree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     android:textColor="#000000"
                     android:textSize="12sp" />
 
-                <com.frgoobox.evpn.CustomTxTRegular
+                <com.frogobox.evpn.CustomTxTRegular
                     android:id="@+id/bottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <com.frgoobox.evpn.CustomTxTRegular
+                <com.frogobox.evpn.CustomTxTRegular
                     android:id="@+id/scanning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

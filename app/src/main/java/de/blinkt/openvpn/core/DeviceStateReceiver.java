@@ -13,7 +13,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 

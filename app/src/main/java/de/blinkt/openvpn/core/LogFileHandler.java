@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.frgoobox.evpn.R;
+import com.frogobox.evpn.R;
 
 import java.io.BufferedInputStream;
 import java.io.File;
