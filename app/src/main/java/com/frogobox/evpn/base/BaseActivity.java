@@ -22,8 +22,6 @@ import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.CountriesNames;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.TotalTraffic;
-import com.frogobox.evpn.view.ui.activity.SettingsActivity;
-import com.frogobox.evpn.view.ui.activity.SpeedTestActivity;
 import com.frogobox.evpn.view.ui.activity.VPNInfoActivity;
 
 import org.json.JSONArray;

@@ -203,12 +203,6 @@ public class VPNInfoActivity extends BaseActivity {
 
         registerReceiver(trafficReceiver, new IntentFilter(TotalTraffic.TRAFFIC_ACTION));
 
-
-
-
-
-
-
         lastLog.setText(R.string.server_not_connected);
 
         initView(getIntent());

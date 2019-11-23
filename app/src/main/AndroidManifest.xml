@@ -49,11 +49,6 @@
             android:noHistory="true" />
 
         <activity
-            android:name=".view.ui.activity.SpeedTestActivity"
-            android:label="eVPN Speed Test"
-            android:theme="@style/AppTheme2" />
-
-        <activity
             android:name=".view.ui.activity.TOSActivity"
             android:theme="@style/AppTheme2" />
 
