@@ -6,28 +6,22 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.frogobox.evpn.BuildConfig;
@@ -40,7 +34,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.material.navigation.NavigationView;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
@@ -50,7 +43,7 @@ import java.util.List;
 import java.util.Random;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity {
 
     public static final String EXTRA_COUNTRY = "country";
 
@@ -59,37 +52,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private RelativeLayout homeContextRL;
     private TextView centree;
     private List<Server> countryList;
-
-    private CardView mCardViewShare;
-
-    public static String getDeviceName() {
-        String manufacturer = Build.MANUFACTURER;
-        String model = Build.MODEL;
-        if (model.startsWith(manufacturer)) {
-            return capitalize(model);
-        }
-        return capitalize(manufacturer) + " " + model;
-    }
-
-    private static String capitalize(String str) {
-        if (TextUtils.isEmpty(str)) {
-            return str;
-        }
-        char[] arr = str.toCharArray();
-        boolean capitalizeNext = true;
-        String phrase = "";
-        for (char c : arr) {
-            if (capitalizeNext && Character.isLetter(c)) {
-                phrase += Character.toUpperCase(c);
-                capitalizeNext = false;
-                continue;
-            } else if (Character.isWhitespace(c)) {
-                capitalizeNext = true;
-            }
-            phrase += c;
-        }
-        return phrase;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +62,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         homeContextRL = findViewById(R.id.homeContextRL);
         countryList = dbHelper.getUniqueCountries();
 
-        Toolbar toolbar = initToolbar();
-        initDrawer(toolbar);
-        initNavigationView();
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         AdView mAdMobAdView = findViewById(R.id.admob_adview);
         AdRequest adRequest = new AdRequest.Builder()
@@ -207,25 +168,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         }).build());
 
-        mCardViewShare = findViewById(R.id.CardViewShare);
-        mCardViewShare.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                final String text = "Check out "
-                        + getResources().getString(R.string.app_name)
-                        + ", the free app for vpn and proxy with " + getResources().getString(R.string.app_name) + ". https://play.google.com/store/apps/details?id="
-                        + getPackageName();
-                intent.putExtra(Intent.EXTRA_TEXT, text);
-                Intent sender = Intent.createChooser(intent, "Share " + getResources().getString(R.string.app_name));
-                startActivity(sender);
-            }
-        });
-
-        CardView button1 = findViewById(R.id.homeBtnRandomConnection);
+        LinearLayout button1 = findViewById(R.id.homeBtnRandomConnection);
         button1.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -243,18 +186,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-        CardView button2 = findViewById(R.id.homeBtnChooseCountry);
+        LinearLayout button2 = findViewById(R.id.homeBtnChooseCountry);
         button2.setOnClickListener(v -> {
             sendTouchButton("homeBtnChooseCountry");
             chooseCountry();
 
-        });
-
-
-        CardView button = findViewById(R.id.button);
-        button.setOnClickListener(v ->
-        {
-            startActivity(new Intent(MainActivity.this, SpeedTestActivity.class));
         });
 
     }
@@ -274,12 +210,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         invalidateOptionsMenu();
 
 
-    }
-
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
     }
 
     @Override
@@ -368,112 +298,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Intent intent = new Intent(getApplicationContext(), VPNListActivity.class);
         intent.putExtra(EXTRA_COUNTRY, server.getCountryShort());
         startActivity(intent);
-    }
-
-    private void initNavigationView() {
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if (id == R.id.nav_speedtest) {
-            startActivity(new Intent(this, SpeedTestActivity.class));
-
-
-        } else if (id == R.id.nav_home) {
-            startActivity(new Intent(this, MainActivity.class));
-        } else if (id == R.id.nav_vpnlist) {
-        } else if (id == R.id.nav_share) {
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            String shareBody = "Best Free Vpn app download now. https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName();
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share App");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            startActivity(Intent.createChooser(sharingIntent, "Share via"));
-        } else if (id == R.id.rate_us) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getApplicationContext().getPackageName())));
-        } else if (id == R.id.about_me) {
-            aboutMyApp();
-
-        } else if (id == R.id.privacypolicy) {
-            startActivity(new Intent(MainActivity.this, TOSActivity.class));
-
-        } else if (id == R.id.moreapp) {
-
-            Uri uri = Uri.parse("market://search?q=pub:" + "PA Production");
-            Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-            try {
-                startActivity(goToMarket);
-            } catch (ActivityNotFoundException e) {
-                startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/search?q=pub:" + "PA Production")));
-            }
-        }
-
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    private void aboutMyApp() {
-
-        MaterialDialog.Builder bulder = new MaterialDialog.Builder(this)
-                .title(R.string.app_name)
-                .customView(R.layout.about, true)
-                .backgroundColor(getResources().getColor(R.color.colorPrimaryDark))
-                .titleColorRes(android.R.color.white)
-                .positiveText("MORE APPS")
-                .positiveColor(getResources().getColor(android.R.color.white))
-                .icon(getResources().getDrawable(R.mipmap.ic_launcher))
-                .limitIconToDefaultSize()
-                .onPositive((dialog, which) -> {
-                    Uri uri = Uri.parse("market://search?q=pub:" + "PA Production");
-                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                    try {
-                        startActivity(goToMarket);
-                    } catch (ActivityNotFoundException e) {
-                        startActivity(new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("http://play.google.com/store/search?q=pub:" + "PA Production")));
-                    }
-                });
-
-        MaterialDialog materialDialog = bulder.build();
-
-        TextView versionCode = (TextView) materialDialog.findViewById(R.id.version_code);
-        TextView versionName = (TextView) materialDialog.findViewById(R.id.version_name);
-        versionCode.setText("Version Code : " + BuildConfig.VERSION_CODE);
-        versionName.setText("Version Name : " + BuildConfig.VERSION_NAME);
-
-        materialDialog.show();
-    }
-
-    private void initDrawer(Toolbar toolbar) {
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-            }
-        });
-        toggle.syncState();
-    }
-
-    private Toolbar initToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbarr);
-        setSupportActionBar(toolbar);
-        return toolbar;
     }
 
 }

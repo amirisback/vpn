@@ -41,15 +41,13 @@ import de.blinkt.openvpn.core.VpnStatus;
 public abstract class BaseActivity extends AppCompatActivity {
 
     public static Server connectedServer = null;
-    private DrawerLayout fullLayout;
-    private Toolbar toolbar;
-
     protected boolean hideCurrentConnection = false;
     protected int widthWindow;
     protected int heightWindow;
     protected DBHelper dbHelper;
     protected Map<String, String> localeCountries;
-
+    private DrawerLayout fullLayout;
+    private Toolbar toolbar;
 
     public static void sendTouchButton(String button) {
 
@@ -141,18 +139,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
 
-
-            case R.id.actionSpeed:
-                startActivity(new Intent(this, SpeedTestActivity.class));
-                return true;
             case R.id.actionCurrentServer:
                 if (connectedServer != null)
                     startActivity(new Intent(this, VPNInfoActivity.class));
-                return true;
-
-            case R.id.action_settings:
-                sendTouchButton("Settings");
-                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
 
         }

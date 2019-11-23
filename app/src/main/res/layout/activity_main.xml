@@ -1,389 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/homeContextRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:visibility="visible"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <RelativeLayout
+        android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="330dp"
+        android:layout_below="@id/toolbar_main"
+        android:background="@color/colorPrimary">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/activeServer"
-            android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_main_booster"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarr"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:visibility="visible"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            <ImageView
+                android:layout_width="290dp"
+                android:layout_height="190dp"
+                android:padding="120dp"
+                android:paddingLeft="40dp"
+                android:src="@mipmap/bg_outer_shadow" />
 
-            <RelativeLayout
-                android:id="@+id/homeContextRL"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="145dp"
+                android:layout_height="145dp"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="23dp"
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/dynamicArcView2"
                     android:layout_width="match_parent"
-                    android:layout_height="330dp"
-                    android:background="@drawable/gradientbackground">
+                    android:layout_height="match_parent" />
 
-
-                    <RelativeLayout
-                        android:id="@+id/rl_main_booster"
-                        android:layout_width="170dp"
-                        android:layout_height="170dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="290dp"
-                            android:layout_height="190dp"
-                            android:padding="120dp"
-                            android:paddingLeft="40dp"
-                            android:src="@mipmap/bg_outer_shadow" />
-
-                        <LinearLayout
-                            android:layout_width="145dp"
-                            android:layout_height="145dp"
-                            android:layout_marginLeft="19dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="23dp"
-                            android:orientation="vertical">
-
-                            <com.hookedonplay.decoviewlib.DecoView
-                                android:id="@+id/dynamicArcView2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-
-                            <com.hookedonplay.decoviewlib.DecoView
-                                android:id="@+id/dynamicArcView3"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:visibility="gone" />
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="190dp"
-                            android:layout_height="190dp"
-                            android:src="@mipmap/bg_inner_charge_booster" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="-15dp"
-                            android:layout_marginTop="-17dp"
-                            android:gravity="center">
-
-                            <com.frogobox.evpn.CustomTxTRegular
-                                android:id="@+id/top"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:text="Servers"
-                                android:textAppearance="?android:textAppearanceLarge"
-                                android:textColor="@color/grey_cc"
-                                android:textSize="11sp" />
-
-                            <com.frogobox.evpn.CustomTxTRegular
-                                android:id="@+id/centree"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/top"
-                                android:layout_centerHorizontal="true"
-                                android:text="1000"
-                                android:textColor="#000000"
-                                android:textSize="12sp" />
-
-                            <com.frogobox.evpn.CustomTxTRegular
-                                android:id="@+id/bottom"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/centree"
-                                android:layout_centerHorizontal="true"
-                                android:text="Free"
-                                android:textAppearance="?android:textAppearanceLarge"
-                                android:textColor="@color/disconnect_red"
-                                android:textSize="11sp" />
-                        </RelativeLayout>
-
-
-                    </RelativeLayout>
-
-
-                    <Button
-                        android:id="@+id/elapse2"
-                        style="@style/buttons"
-                        android:layout_width="150dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="105dp"
-                        android:background="@drawable/button2"
-                        android:minWidth="180dp"
-                        android:minHeight="40dp"
-                        android:padding="5dp"
-                        android:text="No VPN Connected" />
-
-
-                </RelativeLayout>
-
-                <androidx.cardview.widget.CardView
+                <com.hookedonplay.decoviewlib.DecoView
+                    android:id="@+id/dynamicArcView3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:src="@mipmap/bg_inner_charge_booster" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-15dp"
+                android:layout_marginTop="-17dp"
+                android:gravity="center">
+
+                <com.frogobox.evpn.CustomTxTRegular
+                    android:id="@+id/top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="235dp"
-                    android:background="@drawable/buttonstyle">
+                    android:text="Servers"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/grey_cc"
+                    android:textSize="11sp" />
 
+                <com.frogobox.evpn.CustomTxTRegular
+                    android:id="@+id/centree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/top"
+                    android:layout_centerHorizontal="true"
+                    android:text="1000"
+                    android:textColor="#000000"
+                    android:textSize="12sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/texts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:background="@android:drawable/bottom_bar"
-                            android:gravity="center"
-                            android:paddingLeft="5dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="5dp"
-                            android:paddingBottom="10dp"
-                            android:text="@string/mainText"
-                            android:textAlignment="gravity"
-                            android:textColor="@color/cardview_light_background"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                        <androidx.gridlayout.widget.GridLayout xmlns:grid="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/mainGrid"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_weight="4"
-                            grid:alignmentMode="alignMargins"
-                            grid:columnCount="2"
-                            grid:columnOrderPreserved="false"
-                            grid:rowCount="2">
-
-
-                            <!-- Row 1 -->
-
-                            <!-- Column 1 -->
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/homeBtnRandomConnection"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp"
-                                grid:layout_columnWeight="1"
-                                grid:layout_rowWeight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal|center_vertical"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:layout_gravity="center_horizontal"
-                                        android:src="@drawable/vpn" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Quick Connect"
-                                        android:textAlignment="center"
-                                        android:textColor="@android:color/black"
-                                        android:textSize="14sp"
-                                        android:visibility="visible" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <!-- Column 2 -->
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/homeBtnChooseCountry"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp"
-                                grid:layout_columnWeight="1"
-                                grid:layout_rowWeight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal|center_vertical"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:layout_gravity="center_horizontal"
-                                        android:src="@drawable/field" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Choose Country"
-                                        android:textAlignment="center"
-                                        android:textColor="@android:color/black"
-                                        android:textSize="14sp"
-                                        android:visibility="visible" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-
-                            <!-- Row 2 -->
-
-                            <!-- Column 1 -->
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/button"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp"
-                                grid:layout_columnWeight="1"
-                                grid:layout_rowWeight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal|center_vertical"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:layout_gravity="center_horizontal"
-                                        android:src="@drawable/performance" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Speed Test"
-                                        android:textAlignment="center"
-                                        android:textColor="@android:color/black"
-                                        android:textSize="14sp"
-                                        android:visibility="visible" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-                            <!-- Column 2 -->
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/CardViewShare"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp"
-                                android:layout_marginBottom="16dp"
-                                app:cardCornerRadius="8dp"
-                                app:cardElevation="8dp"
-                                grid:layout_columnWeight="1"
-                                grid:layout_rowWeight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_horizontal|center_vertical"
-                                    android:orientation="vertical">
-
-                                    <ImageView
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:layout_gravity="center_horizontal"
-                                        android:src="@drawable/share2" />
-
-                                    <TextView
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="center"
-                                        android:text="Share It"
-                                        android:textAlignment="center"
-                                        android:textColor="@android:color/black"
-                                        android:textSize="14sp"
-                                        android:visibility="visible" />
-
-                                </LinearLayout>
-
-                            </androidx.cardview.widget.CardView>
-
-
-                            <!-- Row 2 -->
-
-                            <!-- Column 1 -->
-
-                            <!-- Column 2 -->
-
-
-                        </androidx.gridlayout.widget.GridLayout>
-
-                        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/admob_adview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:visibility="visible"
-                            ads:adSize="BANNER"
-                            ads:adUnitId="@string/admob_banner" />
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-
+                <com.frogobox.evpn.CustomTxTRegular
+                    android:id="@+id/bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/centree"
+                    android:layout_centerHorizontal="true"
+                    android:text="Free"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/disconnect_red"
+                    android:textSize="11sp" />
             </RelativeLayout>
 
 
-        </LinearLayout>
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/elapse2"
+            style="@style/buttons"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="105dp"
+            android:background="@drawable/button2"
+            android:minWidth="180dp"
+            android:minHeight="40dp"
+            android:padding="5dp"
+            android:text="No VPN Connected" />
 
 
     </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        android:visibility="visible"
-        app:headerLayout="@layout/nav_header"
-        app:itemIconTint="@color/nav_draw_icon"
-        app:menu="@menu/activity_drawer" />
+        android:layout_below="@id/header_layout"
+        android:orientation="vertical">
 
-</androidx.drawerlayout.widget.DrawerLayout>
+        <LinearLayout
+            android:id="@+id/homeBtnRandomConnection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/vpn" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quick Connect"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/homeBtnChooseCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/field" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Country"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/ads_banner" />
+
+</RelativeLayout>

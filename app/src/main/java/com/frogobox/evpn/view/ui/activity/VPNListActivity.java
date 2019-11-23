@@ -38,7 +38,7 @@ public class VPNListActivity extends BaseActivity {
         setContentView(R.layout.activity_vpnlist);
         MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarr);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

@@ -148,5 +148,11 @@
     <string name="missing_ca_certificate">Missing CA certificate</string>
     <string name="reread_log">Reread (%d) log items from log cache file</string>
     <string name="state_waitconnectretry">Waiting %s seconds between connection attempt</string>
+    <string name="text_info_title_privacy">PRIVACY and SECURITY</string>
+    <string name="text_info_title_be_safe">BE SAFE</string>
+    <string name="text_info_title_online_freedom">ONLINE FREEDOM</string>
+    <string name="text_info_desc_be_safe">You can browse the internet in the most secure possible way. With full data encryption, We let you anonymously browse the internet and protect your private information.</string>
+    <string name="text_info_desc_online_freedom">Bypass censorship and get unlimited access to all of your favourite websites and apps without any fear of being monitored by someone.</string>
+    <string name="text_info_desc_privacy">Using free WI-fi and open connections puts your information at risk. We\'ll keep your sensitive information away from hackers and ISPs.</string>
 
 </resources>
