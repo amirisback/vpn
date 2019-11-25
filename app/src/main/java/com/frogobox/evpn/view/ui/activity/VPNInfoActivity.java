@@ -15,21 +15,14 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.VpnService;
 import android.os.AsyncTask;
-import android.os.IBinder;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-import android.view.MenuItem;
-import android.view.ViewGroup.LayoutParams;
-
 import android.os.Bundle;
-
-
-import androidx.appcompat.app.AlertDialog;
+import android.os.IBinder;
 import android.util.Base64;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +31,10 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
@@ -69,14 +66,14 @@ import de.blinkt.openvpn.core.VpnStatus;
 
 public class VPNInfoActivity extends BaseActivity {
 
+    public final static String BROADCAST_ACTION = "de.blinkt.openvpn.VPN_STATUS";
     private static final int START_VPN_PROFILE = 70;
+    private static OpenVPNService mVPNService;
+    private static Stopwatch stopwatch;
+    CircleProgressView mCircleView;
     private BroadcastReceiver br;
     private BroadcastReceiver trafficReceiver;
-    public final static String BROADCAST_ACTION = "de.blinkt.openvpn.VPN_STATUS";
-
-    private static OpenVPNService mVPNService;
     private VpnProfile vpnProfile;
-
     private Server currentServer = null;
     private Button unblockCheck;
     private Button serverConnect;
@@ -87,24 +84,35 @@ public class VPNInfoActivity extends BaseActivity {
     private TextView trafficInTotally;
     private TextView trafficOutTotally;
     private TextView trafficIn;
+
+    //   private static boolean filterAds = false;
+    // private static boolean defaultFilterAds = true;
     private TextView trafficOut;
     private ImageButton bookmark;
-
- //   private static boolean filterAds = false;
-   // private static boolean defaultFilterAds = true;
-
     private boolean autoConnection;
     private boolean fastConnection;
     private Server autoServer;
-
     private boolean statusConnection = false;
     private boolean firstData = true;
-
     private WaitConnectionAsync waitConnection;
     private boolean inBackground;
-    private static Stopwatch stopwatch;
     private boolean isBindedService = false;
-    CircleProgressView mCircleView;
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            OpenVPNService.LocalBinder binder = (OpenVPNService.LocalBinder) service;
+            mVPNService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mVPNService = null;
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,7 +229,7 @@ public class VPNInfoActivity extends BaseActivity {
 
         autoConnection = intent.getBooleanExtra("autoConnection", false);
         fastConnection = intent.getBooleanExtra("fastConnection", false);
-        currentServer = (Server)intent.getParcelableExtra(Server.class.getCanonicalName());
+        currentServer = (Server) intent.getParcelableExtra(Server.class.getCanonicalName());
 
         if (currentServer == null) {
             if (connectedServer != null) {
@@ -244,11 +252,6 @@ public class VPNInfoActivity extends BaseActivity {
                                 getPackageName()));
 
 
-
-
-
-
-
         String localeCountryName = localeCountries.get(currentServer.getCountryShort()) != null ?
                 localeCountries.get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
@@ -258,9 +261,6 @@ public class VPNInfoActivity extends BaseActivity {
 
         double speedValue = (double) Integer.parseInt(currentServer.getSpeed()) / 1048576;
         speedValue = new BigDecimal(speedValue).setScale(3, RoundingMode.UP).doubleValue();
-
-
-
 
 
         mCircleView = (CircleProgressView) findViewById(R.id.circleView);
@@ -281,14 +281,14 @@ public class VPNInfoActivity extends BaseActivity {
 
             }
         });
-        if(currentServer.getPing().equals("-")){
+        if (currentServer.getPing().equals("-")) {
             mCircleView3.setValue(0);
             mCircleView3.setUnit("Ms");
         } else {
             mCircleView3.setValue(Integer.parseInt(currentServer.getPing()));
             mCircleView3.setUnit("Ms");
         }
-        CircleProgressView  mCircleView2 = (CircleProgressView) findViewById(R.id.circleView2);
+        CircleProgressView mCircleView2 = (CircleProgressView) findViewById(R.id.circleView2);
         mCircleView2.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
             @Override
             public void onProgressChanged(float value) {
@@ -386,7 +386,7 @@ public class VPNInfoActivity extends BaseActivity {
 
                 if (!inBackground) {
 
-                        chooseAction();
+                    chooseAction();
 
                 }
                 serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
@@ -421,7 +421,6 @@ public class VPNInfoActivity extends BaseActivity {
     public void serverOnClick(View view) {
         switch (view.getId()) {
             case R.id.serverConnect:
-                sendTouchButton("serverConnect");
                 if (checkStatus()) {
                     stopVpn();
                 } else {
@@ -566,7 +565,7 @@ public class VPNInfoActivity extends BaseActivity {
         super.onDestroy();
         unregisterReceiver(br);
         unregisterReceiver(trafficReceiver);
-        if ( popupWindow != null && popupWindow.isShowing() ){
+        if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
     }
@@ -577,7 +576,7 @@ public class VPNInfoActivity extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case START_VPN_PROFILE :
+                case START_VPN_PROFILE:
                     VPNLaunchHelper.startOpenVpn(vpnProfile, getBaseContext());
                     break;
 
@@ -587,7 +586,7 @@ public class VPNInfoActivity extends BaseActivity {
 
     private void chooseAction() {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.conected,null);
+        View view = inflater.inflate(R.layout.conected, null);
 
         popupWindow = new PopupWindow(
                 view,
@@ -599,11 +598,10 @@ public class VPNInfoActivity extends BaseActivity {
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        Button marketButton = (Button)view.findViewById(R.id.successPopUpBtnPlayMarket);
+        Button marketButton = (Button) view.findViewById(R.id.successPopUpBtnPlayMarket);
         marketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendTouchButton("successPopUpBtnPlayMarket");
                 final String appPackageName = getPackageName();
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -614,81 +612,31 @@ public class VPNInfoActivity extends BaseActivity {
         });
 
 
-        ((Button)view.findViewById(R.id.successPopUpBtnBrowser)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.successPopUpBtnBrowser)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendTouchButton("successPopUpBtnBrowser");
-                startActivity( new Intent( Intent.ACTION_VIEW, Uri.parse("http://google.com")));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com")));
             }
         });
-        ((Button)view.findViewById(R.id.successPopUpBtnDesktop)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.successPopUpBtnDesktop)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendTouchButton("successPopUpBtnDesktop");
                 Intent startMain = new Intent(Intent.ACTION_MAIN);
                 startMain.addCategory(Intent.CATEGORY_HOME);
                 startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(startMain);
             }
         });
-        ((Button)view.findViewById(R.id.successPopUpBtnClose)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.successPopUpBtnClose)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendTouchButton("successPopUpBtnClose");
                 popupWindow.dismiss();
             }
         });
 
 
-        popupWindow.showAtLocation(parentLayout, Gravity.CENTER,0, 0);
+        popupWindow.showAtLocation(parentLayout, Gravity.CENTER, 0, 0);
 
-    }
-
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            OpenVPNService.LocalBinder binder = (OpenVPNService.LocalBinder) service;
-            mVPNService = binder.getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mVPNService = null;
-        }
-
-    };
-
-    private class WaitConnectionAsync extends AsyncTask<Void, Void, Void>
-    {
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                TimeUnit.SECONDS.sleep(PropertiesService.getAutomaticSwitchingSeconds());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if (!statusConnection) {
-                if (currentServer != null)
-                    dbHelper.setInactive(currentServer.getIp());
-
-                if (fastConnection) {
-                    stopVpn();
-                    newConnecting(getRandomServer(), true, true);
-                } else if (PropertiesService.getAutomaticSwitching()){
-                    if (!inBackground)
-                        showAlert();
-                }
-            }
-        }
     }
 
     private void showAlert() {
@@ -719,5 +667,34 @@ public class VPNInfoActivity extends BaseActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private class WaitConnectionAsync extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                TimeUnit.SECONDS.sleep(PropertiesService.getAutomaticSwitchingSeconds());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (!statusConnection) {
+                if (currentServer != null)
+                    dbHelper.setInactive(currentServer.getIp());
+
+                if (fastConnection) {
+                    stopVpn();
+                    newConnecting(getRandomServer(), true, true);
+                } else if (PropertiesService.getAutomaticSwitching()) {
+                    if (!inBackground)
+                        showAlert();
+                }
+            }
+        }
     }
 }

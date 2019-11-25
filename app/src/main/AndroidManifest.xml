@@ -49,10 +49,6 @@
             android:noHistory="true" />
 
         <activity
-            android:name=".view.ui.activity.TOSActivity"
-            android:theme="@style/AppTheme2" />
-
-        <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />

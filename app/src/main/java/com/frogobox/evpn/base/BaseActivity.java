@@ -4,18 +4,13 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.frogobox.evpn.App;
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.source.local.DBHelper;
 import com.frogobox.evpn.source.model.Server;
@@ -40,80 +35,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static Server connectedServer = null;
     protected boolean hideCurrentConnection = false;
-    protected int widthWindow;
-    protected int heightWindow;
-    protected DBHelper dbHelper;
-    protected Map<String, String> localeCountries;
-    private DrawerLayout fullLayout;
-    private Toolbar toolbar;
-
-    public static void sendTouchButton(String button) {
-
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-
-        fullLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_base, null);
-        FrameLayout activityContainer = (FrameLayout) fullLayout.findViewById(R.id.activity_content);
-        getLayoutInflater().inflate(layoutResID, activityContainer, true);
-        super.setContentView(fullLayout);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        if (useToolbar()) {
-            setSupportActionBar(toolbar);
-        } else {
-            toolbar.setVisibility(View.GONE);
-        }
-
-        if (useHomeButton()) {
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setDisplayShowHomeEnabled(true);
-            }
-        }
-
-        dbHelper = new DBHelper(this);
-
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-
-        widthWindow = dm.widthPixels;
-        heightWindow = dm.heightPixels;
-
-        localeCountries = CountriesNames.getCountries();
-
-        App application = (App) getApplication();
-    }
+    protected DBHelper dbHelper = new DBHelper(this);
+    protected Map<String, String> localeCountries = CountriesNames.getCountries();
 
     @Override
     protected void onPause() {
         super.onPause();
         TotalTraffic.saveTotal();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    protected boolean useToolbar() {
-        return true;
-    }
-
-    protected boolean useHomeButton() {
-        return true;
-    }
-
-    protected boolean useMenu() {
-        return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -124,10 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (menu.getItem(i).getItemId() == R.id.actionCurrentServer
                     && (connectedServer == null || hideCurrentConnection || !VpnStatus.isVPNActive()))
                 menu.getItem(i).setVisible(false);
-
         }
 
-        return useMenu();
+        return true;
     }
 
     @Override

@@ -1,17 +1,14 @@
 package com.frogobox.evpn.view.ui.activity;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,8 +20,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
@@ -42,10 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY;
+
 
 public class MainActivity extends BaseActivity {
-
-    public static final String EXTRA_COUNTRY = "country";
 
     private DecoView arcView, arcView2;
     private PopupWindow popupWindow;
@@ -169,26 +164,21 @@ public class MainActivity extends BaseActivity {
         }).build());
 
         LinearLayout button1 = findViewById(R.id.homeBtnRandomConnection);
-        button1.setOnClickListener(new View.OnClickListener() {
+        button1.setOnClickListener(v -> {
 
-            public void onClick(View v) {
-
-                sendTouchButton("homeBtnRandomConnection");
-                Server randomServer = getRandomServer();
-                if (randomServer != null) {
-                    newConnecting(randomServer, true, true);
-                } else {
-                    String randomError = String.format(getResources().getString(R.string.error_random_country), PropertiesService.getSelectedCountry());
-                    Toast.makeText(MainActivity.this, randomError, Toast.LENGTH_LONG).show();
-                }
-
-
+            Server randomServer = getRandomServer();
+            if (randomServer != null) {
+                newConnecting(randomServer, true, true);
+            } else {
+                String randomError = String.format(getResources().getString(R.string.error_random_country), PropertiesService.getSelectedCountry());
+                Toast.makeText(MainActivity.this, randomError, Toast.LENGTH_LONG).show();
             }
+
+
         });
 
         LinearLayout button2 = findViewById(R.id.homeBtnChooseCountry);
         button2.setOnClickListener(v -> {
-            sendTouchButton("homeBtnChooseCountry");
             chooseCountry();
 
         });
@@ -212,31 +202,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected boolean useHomeButton() {
-        return true;
-    }
-
-    public void homeOnClick(View view) {
-        switch (view.getId()) {
-            case R.id.homeBtnChooseCountry:
-                sendTouchButton("homeBtnChooseCountry");
-                chooseCountry();
-                break;
-            case R.id.homeBtnRandomConnection:
-                sendTouchButton("homeBtnRandomConnection");
-                Server randomServer = getRandomServer();
-                if (randomServer != null) {
-                    newConnecting(randomServer, true, true);
-                } else {
-                    String randomError = String.format(getResources().getString(R.string.error_random_country), PropertiesService.getSelectedCountry());
-                    Toast.makeText(this, randomError, Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
-
-    }
-
     private void chooseCountry() {
         View view = initPopUp(R.layout.choose_country, 0.6f, 0.8f, 0.8f, 0.7f);
 
@@ -248,16 +213,13 @@ public class MainActivity extends BaseActivity {
         }
 
         ListView lvCountry = view.findViewById(R.id.homeCountryList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, countryListName);
 
         lvCountry.setAdapter(adapter);
-        lvCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                popupWindow.dismiss();
-                onSelectCountry(countryList.get(position));
-            }
+        lvCountry.setOnItemClickListener((parent, view1, position, id) -> {
+            popupWindow.dismiss();
+            onSelectCountry(countryList.get(position));
         });
 
         popupWindow.showAtLocation(homeContextRL, Gravity.CENTER, 0, 0);
@@ -271,6 +233,9 @@ public class MainActivity extends BaseActivity {
 
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(resourse, null);
+
+        int widthWindow = 300;
+        int heightWindow = 500;
 
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             popupWindow = new PopupWindow(

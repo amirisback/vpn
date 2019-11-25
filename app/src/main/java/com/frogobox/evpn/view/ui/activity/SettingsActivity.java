@@ -5,8 +5,9 @@ import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
-import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.frogobox.evpn.App;
 import com.frogobox.evpn.R;
@@ -23,14 +24,13 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.List;
 
 public class SettingsActivity extends PreferenceActivity {
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
-        toolbar = (Toolbar) findViewById(R.id.preferenceToolbar);
+        Toolbar toolbar = findViewById(R.id.preferenceToolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +77,7 @@ public class SettingsActivity extends PreferenceActivity {
         mInterstitial.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                
+
                 super.onAdLoaded();
                 if (mInterstitial.isLoaded()) {
                     mInterstitial.show();
@@ -87,11 +87,15 @@ public class SettingsActivity extends PreferenceActivity {
 
     }
 
-    public static class MyPreferenceFragment extends PreferenceFragment
-    {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    public static class MyPreferenceFragment extends PreferenceFragment {
         @Override
-        public void onCreate(final Bundle savedInstanceState)
-        {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
@@ -119,11 +123,5 @@ public class SettingsActivity extends PreferenceActivity {
                     listPreference.setValueIndex(0);
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 }

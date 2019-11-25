@@ -1,12 +1,9 @@
 package com.frogobox.evpn.view.ui.activity;
 
 import android.content.Intent;
-
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.view.adapter.ServerListAdapter;
 import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
+import com.frogobox.evpn.view.adapter.ServerListAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -27,6 +27,8 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.List;
 
 import de.blinkt.openvpn.core.VpnStatus;
+
+import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY;
 
 public class VPNListActivity extends BaseActivity {
     private ListView listView;
@@ -38,7 +40,7 @@ public class VPNListActivity extends BaseActivity {
         setContentView(R.layout.activity_vpnlist);
         MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -84,7 +86,7 @@ public class VPNListActivity extends BaseActivity {
         mInterstitial.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                
+
                 super.onAdLoaded();
                 if (mInterstitial.isLoaded()) {
                     mInterstitial.show();
@@ -122,14 +124,14 @@ public class VPNListActivity extends BaseActivity {
     }
 
     private void buildList() {
-        String country = getIntent().getStringExtra(MainActivity.EXTRA_COUNTRY);
+        String country = getIntent().getStringExtra(EXTRA_COUNTRY);
         final List<Server> serverList = dbHelper.getServersByCountryCode(country);
         serverListAdapter = new ServerListAdapter(this, serverList);
 
         TextView countryname = (TextView) findViewById(R.id.elapse);
         countryname.setText(country);
 
-        String code = getIntent().getStringExtra(MainActivity.EXTRA_COUNTRY).toLowerCase();
+        String code = getIntent().getStringExtra(EXTRA_COUNTRY).toLowerCase();
         if (code.equals("do"))
             code = "dom";
 
@@ -140,15 +142,11 @@ public class VPNListActivity extends BaseActivity {
                                 getPackageName()));
 
         listView.setAdapter(serverListAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Server server = serverList.get(position);
-                BaseActivity.sendTouchButton("detailsServer");
-                Intent intent = new Intent(VPNListActivity.this, VPNInfoActivity.class);
-                intent.putExtra(Server.class.getCanonicalName(), server);
-                VPNListActivity.this.startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Server server = serverList.get(position);
+            Intent intent = new Intent(VPNListActivity.this, VPNInfoActivity.class);
+            intent.putExtra(Server.class.getCanonicalName(), server);
+            VPNListActivity.this.startActivity(intent);
         });
 
         getIpInfo(serverList);

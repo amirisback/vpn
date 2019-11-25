@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/homeContextRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_main"/>
+    <include layout="@layout/toolbar_main" />
 
     <RelativeLayout
         android:id="@+id/header_layout"
@@ -151,7 +150,8 @@
             android:id="@+id/homeBtnChooseCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@color/colorPrimary"
             android:orientation="vertical">
 
             <ImageView

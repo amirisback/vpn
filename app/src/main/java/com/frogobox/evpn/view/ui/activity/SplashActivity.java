@@ -142,16 +142,6 @@ public class SplashActivity extends BaseActivity {
         downloadCSVFile(BASE_URL, BASE_FILE_NAME);
     }
 
-    @Override
-    protected boolean useHomeButton() {
-        return false;
-    }
-
-    @Override
-    protected boolean useMenu() {
-        return false;
-    }
-
     private void downloadCSVFile(String url, String fileName) {
         stopwatch = new Stopwatch();
 

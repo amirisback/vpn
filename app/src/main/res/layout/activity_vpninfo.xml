@@ -23,7 +23,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
-                android:background="@drawable/gradientbackground">
+                android:background="@color/colorPrimary">
 
                 <RelativeLayout
                     android:id="@+id/bg"
