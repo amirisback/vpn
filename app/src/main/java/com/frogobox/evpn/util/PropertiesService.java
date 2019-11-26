@@ -3,7 +3,7 @@ package com.frogobox.evpn.util;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.frogobox.evpn.App;
+import com.frogobox.evpn.BaseApplication;
 
 
 
@@ -22,7 +22,7 @@ public class PropertiesService {
 
     private synchronized static SharedPreferences getPrefs(){
         if (prefs == null) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(App.getInstance());
+            prefs = PreferenceManager.getDefaultSharedPreferences(BaseApplication.getInstance());
         }
         return prefs;
     }
