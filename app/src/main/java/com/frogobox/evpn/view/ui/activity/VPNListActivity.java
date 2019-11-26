@@ -5,24 +5,14 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.view.adapter.ServerListAdapter;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import java.util.List;
 
@@ -31,6 +21,7 @@ import de.blinkt.openvpn.core.VpnStatus;
 import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY;
 
 public class VPNListActivity extends BaseActivity {
+
     private ListView listView;
     private ServerListAdapter serverListAdapter;
 
@@ -38,74 +29,31 @@ public class VPNListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vpnlist);
-        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
 
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+        setSupportActionBar(findViewById(R.id.toolbar_main));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
+
         upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-        actionBar.setHomeAsUpIndicator(upArrow);
-        AdView mAdMobAdView = (AdView) findViewById(R.id.admob_adview);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdMobAdView.loadAd(adRequest);
 
-        mAdMobAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-            }
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdOpened() {
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdClosed() {
-            }
-        });
-
-
-        final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
-        mInterstitial.loadAd(new AdRequest.Builder().build());
-        mInterstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-
-                super.onAdLoaded();
-                if (mInterstitial.isLoaded()) {
-                    mInterstitial.show();
-                }
-            }
-        });
+        setupShowAdsBanner(findViewById(R.id.admob_adview));
+        setupShowAdsInterstitial();
 
         if (!VpnStatus.isVPNActive())
             connectedServer = null;
 
-        listView = (ListView) findViewById(R.id.list);
+        listView = findViewById(R.id.list);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         invalidateOptionsMenu();
-
         buildList();
     }
 
@@ -128,7 +76,7 @@ public class VPNListActivity extends BaseActivity {
         final List<Server> serverList = dbHelper.getServersByCountryCode(country);
         serverListAdapter = new ServerListAdapter(this, serverList);
 
-        TextView countryname = (TextView) findViewById(R.id.elapse);
+        TextView countryname = findViewById(R.id.elapse);
         countryname.setText(country);
 
         String code = getIntent().getStringExtra(EXTRA_COUNTRY).toLowerCase();

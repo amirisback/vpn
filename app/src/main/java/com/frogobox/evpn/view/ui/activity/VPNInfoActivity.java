@@ -117,80 +117,37 @@ public class VPNInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vpninfo);
-        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+
+        parentLayout = findViewById(R.id.serverParentLayout);
+        connectingProgress = findViewById(R.id.serverConnectingProgress);
+        lastLog = findViewById(R.id.serverStatus);
+        serverConnect = findViewById(R.id.serverConnect);
+
+        trafficInTotally = findViewById(R.id.serverTrafficInTotally);
+        trafficOutTotally = findViewById(R.id.serverTrafficOutTotally);
+        trafficIn = findViewById(R.id.serverTrafficIn);
+        trafficOut = findViewById(R.id.serverTrafficOut);
+
+        setSupportActionBar(findViewById(R.id.toolbar_main));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
         upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-        actionBar.setHomeAsUpIndicator(upArrow);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-        AdView mAdMobAdView = (AdView) findViewById(R.id.admob_adview);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdMobAdView.loadAd(adRequest);
-
-        mAdMobAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdOpened() {
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdClosed() {
-            }
-        });
-
-        final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
-        mInterstitial.loadAd(new AdRequest.Builder().build());
-        mInterstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // TODO Auto-generated method stub
-                super.onAdLoaded();
-                if (mInterstitial.isLoaded()) {
-                    mInterstitial.show();
-                }
-            }
-        });
-
-
-        parentLayout = (LinearLayout) findViewById(R.id.serverParentLayout);
-        connectingProgress = (ProgressBar) findViewById(R.id.serverConnectingProgress);
-        lastLog = (TextView) findViewById(R.id.serverStatus);
-        serverConnect = (Button) findViewById(R.id.serverConnect);
+        setupShowAdsBanner(findViewById(R.id.admob_adview));
+        setupShowAdsInterstitial();
 
         String totalIn = String.format(getResources().getString(R.string.traffic_in),
                 TotalTraffic.getTotalTraffic().get(0));
-        trafficInTotally = (TextView) findViewById(R.id.serverTrafficInTotally);
+
         trafficInTotally.setText(totalIn);
 
         String totalOut = String.format(getResources().getString(R.string.traffic_out),
                 TotalTraffic.getTotalTraffic().get(1));
-        trafficOutTotally = (TextView) findViewById(R.id.serverTrafficOutTotally);
-        trafficOutTotally.setText(totalOut);
 
-        trafficIn = (TextView) findViewById(R.id.serverTrafficIn);
+        trafficOutTotally.setText(totalOut);
         trafficIn.setText("");
-        trafficOut = (TextView) findViewById(R.id.serverTrafficOut);
         trafficOut.setText("");
 
         br = new BroadcastReceiver() {
@@ -229,7 +186,7 @@ public class VPNInfoActivity extends BaseActivity {
 
         autoConnection = intent.getBooleanExtra("autoConnection", false);
         fastConnection = intent.getBooleanExtra("fastConnection", false);
-        currentServer = (Server) intent.getParcelableExtra(Server.class.getCanonicalName());
+        currentServer = intent.getParcelableExtra(Server.class.getCanonicalName());
 
         if (currentServer == null) {
             if (connectedServer != null) {
@@ -255,7 +212,7 @@ public class VPNInfoActivity extends BaseActivity {
         String localeCountryName = localeCountries.get(currentServer.getCountryShort()) != null ?
                 localeCountries.get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
-        TextView countryname = (TextView) findViewById(R.id.elapse);
+        TextView countryname = findViewById(R.id.elapse);
         countryname.setText(localeCountryName);
 
 
@@ -598,7 +555,7 @@ public class VPNInfoActivity extends BaseActivity {
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        Button marketButton = (Button) view.findViewById(R.id.successPopUpBtnPlayMarket);
+        Button marketButton = view.findViewById(R.id.successPopUpBtnPlayMarket);
         marketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

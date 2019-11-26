@@ -24,14 +24,11 @@ import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 import com.hookedonplay.decoviewlib.DecoView;
 import com.hookedonplay.decoviewlib.charts.SeriesItem;
 import com.hookedonplay.decoviewlib.events.DecoEvent;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +39,8 @@ import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY;
 
 public class MainActivity extends BaseActivity {
 
-    private DecoView arcView, arcView2;
     private PopupWindow popupWindow;
     private RelativeLayout homeContextRL;
-    private TextView centree;
     private List<Server> countryList;
 
     @Override
@@ -53,80 +48,32 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this, String.valueOf(R.string.admob_publisher_id));
+        TextView centree = findViewById(R.id.centree);
+        DecoView dynamicArcView2 = findViewById(R.id.dynamicArcView2);
+        DecoView dynamicArcView3 = findViewById(R.id.dynamicArcView3);
         homeContextRL = findViewById(R.id.homeContextRL);
-        countryList = dbHelper.getUniqueCountries();
-
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar);
-
-        AdView mAdMobAdView = findViewById(R.id.admob_adview);
-        AdRequest adRequest = new AdRequest.Builder()
-                .build();
-        mAdMobAdView.loadAd(adRequest);
-        mAdMobAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdOpened() {
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                AdRequest adRequest = new AdRequest.Builder().build();
-                mAdMobAdView.loadAd(adRequest);
-            }
-
-            @Override
-            public void onAdClosed() {
-            }
-        });
-
-        final InterstitialAd mInterstitial = new InterstitialAd(this);
-        mInterstitial.setAdUnitId(getString(R.string.admob_interstitial));
-        mInterstitial.loadAd(new AdRequest.Builder().build());
-        mInterstitial.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-
-                super.onAdLoaded();
-                if (mInterstitial.isLoaded()) {
-                    mInterstitial.show();
-                }
-            }
-        });
-
-        Button hello = findViewById(R.id.elapse2);
-
-        if (connectedServer == null) {
-            hello.setText("No VPN Connected");
-            hello.setBackgroundResource(R.drawable.button2);
-        } else {
-            hello.setText("Connected");
-            hello.setBackgroundResource(R.drawable.button3);
-        }
-
-        centree = findViewById(R.id.centree);
-        arcView = findViewById(R.id.dynamicArcView2);
-        arcView2 = findViewById(R.id.dynamicArcView3);
+        LinearLayout button1 = findViewById(R.id.homeBtnRandomConnection);
+        LinearLayout button2 = findViewById(R.id.homeBtnChooseCountry);
 
         long totalServ = dbHelper.getCount();
-
         String totalServers = String.format(getResources().getString(R.string.total_servers), totalServ);
+
+        countryList = dbHelper.getUniqueCountries();
+
+        setSupportActionBar(toolbar);
+
+        setupShowAdsInterstitial();
+        setupShowAdsBanner(findViewById(R.id.admob_adview));
+
+        checkState();
+
         centree.setText(totalServers);
 
-        arcView2.setVisibility(View.VISIBLE);
-        arcView.setVisibility(View.GONE);
+        dynamicArcView3.setVisibility(View.VISIBLE);
+        dynamicArcView2.setVisibility(View.GONE);
 
-        arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
+        dynamicArcView2.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
                 .setRange(0, 100, 0)
                 .setInterpolator(new AccelerateInterpolator())
                 .build());
@@ -141,16 +88,15 @@ public class MainActivity extends BaseActivity {
                 .setLineWidth(32f)
                 .build();
 
-        int series1Index2 = arcView.addSeries(seriesItem2);
-        Random ran2 = new Random();
-        int proc = ran2.nextInt(10) + 5;
-        arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
+        int series1Index2 = dynamicArcView2.addSeries(seriesItem2);
+        int proc = new Random().nextInt(10) + 5;
+        dynamicArcView2.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
                 .setDelay(0)
                 .setDuration(600)
                 .build());
 
 
-        arcView.addEvent(new DecoEvent.Builder(proc).setIndex(series1Index2).setDelay(2000).setListener(new DecoEvent.ExecuteEventListener() {
+        dynamicArcView2.addEvent(new DecoEvent.Builder(proc).setIndex(series1Index2).setDelay(2000).setListener(new DecoEvent.ExecuteEventListener() {
             @Override
             public void onEventStart(DecoEvent decoEvent) {
             }
@@ -163,7 +109,7 @@ public class MainActivity extends BaseActivity {
             }
         }).build());
 
-        LinearLayout button1 = findViewById(R.id.homeBtnRandomConnection);
+
         button1.setOnClickListener(v -> {
 
             Server randomServer = getRandomServer();
@@ -173,66 +119,36 @@ public class MainActivity extends BaseActivity {
                 String randomError = String.format(getResources().getString(R.string.error_random_country), PropertiesService.getSelectedCountry());
                 Toast.makeText(MainActivity.this, randomError, Toast.LENGTH_LONG).show();
             }
-
-
+            
         });
 
-        LinearLayout button2 = findViewById(R.id.homeBtnChooseCountry);
         button2.setOnClickListener(v -> {
-            chooseCountry();
-
+            chooseCountry(initPopUp());
         });
 
+    }
+
+    private void checkState() {
+        Button hello = findViewById(R.id.elapse2);
+        if (connectedServer == null) {
+            hello.setBackgroundResource(R.drawable.button2);
+            hello.setText("No VPN Connected");
+        } else {
+            hello.setText("Connected");
+            hello.setBackgroundResource(R.drawable.button3);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (connectedServer == null) {
-            Button hello = findViewById(R.id.elapse2);
-            hello.setText("No VPN Connected");
-        } else {
-            Button hello = findViewById(R.id.elapse2);
-            hello.setText("Connected");
-            hello.setBackgroundResource(R.drawable.button3);
-        }
-
+        checkState();
         invalidateOptionsMenu();
-
-
     }
 
-    private void chooseCountry() {
-        View view = initPopUp(R.layout.choose_country, 0.6f, 0.8f, 0.8f, 0.7f);
-
-        final List<String> countryListName = new ArrayList<>();
-        for (Server server : countryList) {
-            String localeCountryName = localeCountries.get(server.getCountryShort()) != null ?
-                    localeCountries.get(server.getCountryShort()) : server.getCountryLong();
-            countryListName.add(localeCountryName);
-        }
-
-        ListView lvCountry = view.findViewById(R.id.homeCountryList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, countryListName);
-
-        lvCountry.setAdapter(adapter);
-        lvCountry.setOnItemClickListener((parent, view1, position, id) -> {
-            popupWindow.dismiss();
-            onSelectCountry(countryList.get(position));
-        });
-
-        popupWindow.showAtLocation(homeContextRL, Gravity.CENTER, 0, 0);
-    }
-
-    private View initPopUp(int resourse,
-                           float landPercentW,
-                           float landPercentH,
-                           float portraitPercentW,
-                           float portraitPercentH) {
-
+    private View initPopUp() {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(resourse, null);
+        View view = inflater.inflate(R.layout.choose_country, null);
 
         int widthWindow = 300;
         int heightWindow = 500;
@@ -240,14 +156,14 @@ public class MainActivity extends BaseActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             popupWindow = new PopupWindow(
                     view,
-                    (int) (widthWindow * landPercentW),
-                    (int) (heightWindow * landPercentH)
+                    (int) (widthWindow * (float) 0.6),
+                    (int) (heightWindow * (float) 0.8)
             );
         } else {
             popupWindow = new PopupWindow(
                     view,
-                    (int) (widthWindow * portraitPercentW),
-                    (int) (heightWindow * portraitPercentH)
+                    (int) (widthWindow * (float) 0.8),
+                    (int) (heightWindow * (float) 0.7)
             );
         }
 
@@ -259,10 +175,27 @@ public class MainActivity extends BaseActivity {
         return view;
     }
 
-    private void onSelectCountry(Server server) {
-        Intent intent = new Intent(getApplicationContext(), VPNListActivity.class);
-        intent.putExtra(EXTRA_COUNTRY, server.getCountryShort());
-        startActivity(intent);
-    }
+    private void chooseCountry(@NotNull View view) {
 
+        ListView lvCountry = view.findViewById(R.id.homeCountryList);
+
+        final List<String> countryListName = new ArrayList<>();
+        for (Server server : countryList) {
+            String localeCountryName = localeCountries.get(server.getCountryShort()) != null ?
+                    localeCountries.get(server.getCountryShort()) : server.getCountryLong();
+            countryListName.add(localeCountryName);
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, countryListName);
+
+        lvCountry.setAdapter(adapter);
+        lvCountry.setOnItemClickListener((parent, view1, position, id) -> {
+            popupWindow.dismiss();
+            startActivity(new Intent(this, VPNListActivity.class).putExtra(EXTRA_COUNTRY, countryList.get(position).getCountryShort()));
+        });
+
+        popupWindow.showAtLocation(homeContextRL, Gravity.CENTER, 0, 0);
+    }
+    
 }

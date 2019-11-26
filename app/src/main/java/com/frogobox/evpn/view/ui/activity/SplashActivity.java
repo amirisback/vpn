@@ -2,25 +2,24 @@ package com.frogobox.evpn.view.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
-import com.frogobox.evpn.base.BaseActivity;
-import com.frogobox.evpn.util.NetworkState;
+import androidx.appcompat.app.AlertDialog;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.daimajia.numberprogressbar.NumberProgressBar;
-
 import com.frogobox.evpn.R;
+import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
+import com.frogobox.evpn.util.NetworkState;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
 
@@ -33,11 +32,7 @@ import okhttp3.OkHttpClient;
 
 public class SplashActivity extends BaseActivity {
 
-    private NumberProgressBar progressBar;
-    private TextView commentsText;
     private static boolean loadStatus = false;
-    private Handler updateHandler;
-
     private final int LOAD_ERROR = 0;
     private final int DOWNLOAD_PROGRESS = 1;
     private final int PARSE_PROGRESS = 2;
@@ -45,7 +40,9 @@ public class SplashActivity extends BaseActivity {
     private final int SWITCH_TO_RESULT = 4;
     private final String BASE_URL = "http://www.vpngate.net/api/iphone/";
     private final String BASE_FILE_NAME = "vpngate.csv";
-
+    private NumberProgressBar progressBar;
+    private TextView commentsText;
+    private Handler updateHandler;
     private boolean premiumStage = true;
 
     private int percentDownload = 0;
@@ -56,6 +53,8 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        progressBar = findViewById(R.id.number_progress_bar);
+        commentsText = findViewById(R.id.commentsText);
 
         if (NetworkState.isOnline()) {
             if (loadStatus) {
@@ -81,12 +80,8 @@ public class SplashActivity extends BaseActivity {
             alert.show();
         }
 
-
-        progressBar = (NumberProgressBar)findViewById(R.id.number_progress_bar);
-        commentsText = (TextView)findViewById(R.id.commentsText);
-
         if (getIntent().getBooleanExtra("firstPremiumLoad", false))
-            ((TextView)findViewById(R.id.loaderPremiumText)).setVisibility(View.VISIBLE);
+            ((TextView) findViewById(R.id.loaderPremiumText)).setVisibility(View.VISIBLE);
 
         progressBar.setMax(100);
 
@@ -97,23 +92,27 @@ public class SplashActivity extends BaseActivity {
                     case LOAD_ERROR: {
                         commentsText.setText(msg.arg2);
                         progressBar.setProgress(100);
-                    } break;
+                    }
+                    break;
                     case DOWNLOAD_PROGRESS: {
                         commentsText.setText(R.string.downloading_csv_text);
                         progressBar.setProgress(msg.arg2);
 
-                    } break;
+                    }
+                    break;
                     case PARSE_PROGRESS: {
                         commentsText.setText(R.string.parsing_csv_text);
                         progressBar.setProgress(msg.arg2);
-                    } break;
+                    }
+                    break;
                     case LOADING_SUCCESS: {
                         commentsText.setText(R.string.successfully_loaded);
                         progressBar.setProgress(100);
                         Message end = new Message();
                         end.arg1 = SWITCH_TO_RESULT;
-                        updateHandler.sendMessageDelayed(end,500);
-                    } break;
+                        updateHandler.sendMessageDelayed(end, 500);
+                    }
+                    break;
                     case SWITCH_TO_RESULT: {
 
                         if (PropertiesService.getConnectOnStart()) {
@@ -159,14 +158,12 @@ public class SplashActivity extends BaseActivity {
                 .setDownloadProgressListener(new DownloadProgressListener() {
                     @Override
                     public void onProgress(long bytesDownloaded, long totalBytes) {
-                        if(totalBytes <= 0) {
+                        if (totalBytes <= 0) {
                             // when we dont know the file size, assume it is 1200000 bytes :)
                             totalBytes = 1200000;
                         }
 
-
-                            percentDownload = (int)((100 * bytesDownloaded) / totalBytes);
-
+                        percentDownload = (int) ((100 * bytesDownloaded) / totalBytes);
 
                         Message msg = new Message();
                         msg.arg1 = DOWNLOAD_PROGRESS;
@@ -177,10 +174,9 @@ public class SplashActivity extends BaseActivity {
                 .startDownload(new DownloadListener() {
                     @Override
                     public void onDownloadComplete() {
-
-                            parseCSVFile(BASE_FILE_NAME);
-
+                        parseCSVFile(BASE_FILE_NAME);
                     }
+
                     @Override
                     public void onError(ANError error) {
                         Message msg = new Message();
@@ -207,9 +203,7 @@ public class SplashActivity extends BaseActivity {
                 int startLine = 2;
                 int type = 0;
 
-
-                    dbHelper.clearTable();
-
+                dbHelper.clearTable();
 
                 int counter = 0;
                 String line = null;
@@ -218,13 +212,11 @@ public class SplashActivity extends BaseActivity {
                         dbHelper.putLine(line, type);
                     }
                     counter++;
-
                 }
 
-                    Message end = new Message();
-                    end.arg1 = LOADING_SUCCESS;
-                    updateHandler.sendMessageDelayed(end,200);
-
+                Message end = new Message();
+                end.arg1 = LOADING_SUCCESS;
+                updateHandler.sendMessageDelayed(end, 200);
 
             } catch (Exception e) {
                 e.printStackTrace();
