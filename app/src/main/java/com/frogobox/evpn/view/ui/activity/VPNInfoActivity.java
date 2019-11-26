@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -32,9 +31,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
@@ -43,11 +40,6 @@ import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
 import com.frogobox.evpn.util.TotalTraffic;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -64,30 +56,32 @@ import de.blinkt.openvpn.core.ProfileManager;
 import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
 
+import static com.frogobox.evpn.helper.Constant.Variable.BROADCAST_ACTION;
+import static com.frogobox.evpn.helper.Constant.Variable.START_VPN_PROFILE;
+
 public class VPNInfoActivity extends BaseActivity {
 
-    public final static String BROADCAST_ACTION = "de.blinkt.openvpn.VPN_STATUS";
-    private static final int START_VPN_PROFILE = 70;
+
     private static OpenVPNService mVPNService;
     private static Stopwatch stopwatch;
-    CircleProgressView mCircleView;
+    private CircleProgressView circleView;
     private BroadcastReceiver br;
     private BroadcastReceiver trafficReceiver;
     private VpnProfile vpnProfile;
     private Server currentServer = null;
     private Button unblockCheck;
     private Button serverConnect;
-    private TextView lastLog;
-    private ProgressBar connectingProgress;
+    private TextView serverStatus;
+    private ProgressBar serverConnectingProgress;
     private PopupWindow popupWindow;
-    private LinearLayout parentLayout;
-    private TextView trafficInTotally;
-    private TextView trafficOutTotally;
-    private TextView trafficIn;
+    private LinearLayout serverParentLayout;
+    private TextView serverTrafficInTotally;
+    private TextView serverTrafficOutTotally;
+    private TextView serverTrafficIn;
 
     //   private static boolean filterAds = false;
     // private static boolean defaultFilterAds = true;
-    private TextView trafficOut;
+    private TextView serverTrafficOut;
     private ImageButton bookmark;
     private boolean autoConnection;
     private boolean fastConnection;
@@ -118,15 +112,15 @@ public class VPNInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vpninfo);
 
-        parentLayout = findViewById(R.id.serverParentLayout);
-        connectingProgress = findViewById(R.id.serverConnectingProgress);
-        lastLog = findViewById(R.id.serverStatus);
+        serverParentLayout = findViewById(R.id.serverParentLayout);
+        serverConnectingProgress = findViewById(R.id.serverConnectingProgress);
+        serverStatus = findViewById(R.id.serverStatus);
         serverConnect = findViewById(R.id.serverConnect);
 
-        trafficInTotally = findViewById(R.id.serverTrafficInTotally);
-        trafficOutTotally = findViewById(R.id.serverTrafficOutTotally);
-        trafficIn = findViewById(R.id.serverTrafficIn);
-        trafficOut = findViewById(R.id.serverTrafficOut);
+        serverTrafficInTotally = findViewById(R.id.serverTrafficInTotally);
+        serverTrafficOutTotally = findViewById(R.id.serverTrafficOutTotally);
+        serverTrafficIn = findViewById(R.id.serverTrafficIn);
+        serverTrafficOut = findViewById(R.id.serverTrafficOut);
 
         setSupportActionBar(findViewById(R.id.toolbar_main));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -141,14 +135,14 @@ public class VPNInfoActivity extends BaseActivity {
         String totalIn = String.format(getResources().getString(R.string.traffic_in),
                 TotalTraffic.getTotalTraffic().get(0));
 
-        trafficInTotally.setText(totalIn);
+        serverTrafficInTotally.setText(totalIn);
 
         String totalOut = String.format(getResources().getString(R.string.traffic_out),
                 TotalTraffic.getTotalTraffic().get(1));
 
-        trafficOutTotally.setText(totalOut);
-        trafficIn.setText("");
-        trafficOut.setText("");
+        serverTrafficOutTotally.setText(totalOut);
+        serverTrafficIn.setText("");
+        serverTrafficOut.setText("");
 
         br = new BroadcastReceiver() {
             @Override
@@ -168,7 +162,7 @@ public class VPNInfoActivity extends BaseActivity {
 
         registerReceiver(trafficReceiver, new IntentFilter(TotalTraffic.TRAFFIC_ACTION));
 
-        lastLog.setText(R.string.server_not_connected);
+        serverStatus.setText(R.string.server_not_connected);
 
         initView(getIntent());
     }
@@ -212,48 +206,39 @@ public class VPNInfoActivity extends BaseActivity {
         String localeCountryName = localeCountries.get(currentServer.getCountryShort()) != null ?
                 localeCountries.get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
-        TextView countryname = findViewById(R.id.elapse);
-        countryname.setText(localeCountryName);
+        TextView elapse = findViewById(R.id.elapse);
+        elapse.setText(localeCountryName);
 
 
         double speedValue = (double) Integer.parseInt(currentServer.getSpeed()) / 1048576;
         speedValue = new BigDecimal(speedValue).setScale(3, RoundingMode.UP).doubleValue();
 
 
-        mCircleView = (CircleProgressView) findViewById(R.id.circleView);
-        mCircleView.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
+        circleView = findViewById(R.id.circleView);
+        circleView.setOnProgressChangedListener(value -> {
 
-            }
         });
-        mCircleView.setValue(Integer.parseInt(currentServer.getSpeed()) / 1048576);
-        mCircleView.setUnit("Mbps");
+        circleView.setValue(Integer.parseInt(currentServer.getSpeed()) / 1048576);
+        circleView.setUnit("Mbps");
 
 
-        CircleProgressView mCircleView3 = (CircleProgressView) findViewById(R.id.circleView3);
-        mCircleView3.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
+        CircleProgressView circleView3 = findViewById(R.id.circleView3);
+        circleView3.setOnProgressChangedListener(value -> {
 
-            }
         });
         if (currentServer.getPing().equals("-")) {
-            mCircleView3.setValue(0);
-            mCircleView3.setUnit("Ms");
+            circleView3.setValue(0);
+            circleView3.setUnit("Ms");
         } else {
-            mCircleView3.setValue(Integer.parseInt(currentServer.getPing()));
-            mCircleView3.setUnit("Ms");
+            circleView3.setValue(Integer.parseInt(currentServer.getPing()));
+            circleView3.setUnit("Ms");
         }
-        CircleProgressView mCircleView2 = (CircleProgressView) findViewById(R.id.circleView2);
-        mCircleView2.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
+        CircleProgressView circleView2 = findViewById(R.id.circleView2);
+        circleView2.setOnProgressChangedListener(value -> {
 
-            }
         });
 
-        mCircleView2.setValue(Integer.parseInt(currentServer.getNumVpnSessions()));
+        circleView2.setValue(Integer.parseInt(currentServer.getNumVpnSessions()));
         if (checkStatus()) {
             serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
             serverConnect.setText(getString(R.string.server_btn_disconnect));
@@ -284,23 +269,23 @@ public class VPNInfoActivity extends BaseActivity {
                         intent.getStringExtra(TotalTraffic.UPLOAD_SESSION));
             }
 
-            trafficIn.setText(in);
-            trafficOut.setText(out);
+            serverTrafficIn.setText(in);
+            serverTrafficOut.setText(out);
 
             String inTotal = String.format(getResources().getString(R.string.traffic_in),
                     intent.getStringExtra(TotalTraffic.DOWNLOAD_ALL));
-            trafficInTotally.setText(inTotal);
+            serverTrafficInTotally.setText(inTotal);
 
             String outTotal = String.format(getResources().getString(R.string.traffic_out),
                     intent.getStringExtra(TotalTraffic.UPLOAD_ALL));
-            trafficOutTotally.setText(outTotal);
+            serverTrafficOutTotally.setText(outTotal);
         }
     }
 
     private void receiveStatus(Context context, Intent intent) {
         if (checkStatus()) {
             changeServerStatus(VpnStatus.ConnectionStatus.valueOf(intent.getStringExtra("status")));
-            lastLog.setText(VpnStatus.getLastCleanLogMessage(getApplicationContext()));
+            serverStatus.setText(VpnStatus.getLastCleanLogMessage(getApplicationContext()));
         }
 
         if (intent.getStringExtra("detailstatus").equals("NOPROCESS")) {
@@ -339,7 +324,7 @@ public class VPNInfoActivity extends BaseActivity {
         switch (status) {
             case LEVEL_CONNECTED:
                 statusConnection = true;
-                connectingProgress.setVisibility(View.GONE);
+                serverConnectingProgress.setVisibility(View.GONE);
 
                 if (!inBackground) {
 
@@ -357,12 +342,12 @@ public class VPNInfoActivity extends BaseActivity {
                 serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
                 serverConnect.setText(getString(R.string.server_btn_disconnect));
                 statusConnection = false;
-                connectingProgress.setVisibility(View.VISIBLE);
+                serverConnectingProgress.setVisibility(View.VISIBLE);
         }
     }
 
     private void prepareVpn() {
-        connectingProgress.setVisibility(View.VISIBLE);
+        serverConnectingProgress.setVisibility(View.VISIBLE);
         if (loadVpnProfile()) {
             waitConnection = new WaitConnectionAsync();
             waitConnection.execute();
@@ -370,7 +355,7 @@ public class VPNInfoActivity extends BaseActivity {
             serverConnect.setText(getString(R.string.server_btn_disconnect));
             startVpn();
         } else {
-            connectingProgress.setVisibility(View.GONE);
+            serverConnectingProgress.setVisibility(View.GONE);
             Toast.makeText(this, getString(R.string.server_error_loading_profile), Toast.LENGTH_SHORT).show();
         }
     }
@@ -418,7 +403,7 @@ public class VPNInfoActivity extends BaseActivity {
     private void prepareStopVPN() {
         if (!BuildConfig.DEBUG) {
             try {
-                String download = trafficIn.getText().toString();
+                String download = serverTrafficIn.getText().toString();
                 download = download.substring(download.lastIndexOf(":") + 2);
 
             } catch (Exception e) {
@@ -429,8 +414,8 @@ public class VPNInfoActivity extends BaseActivity {
         statusConnection = false;
         if (waitConnection != null)
             waitConnection.cancel(false);
-        connectingProgress.setVisibility(View.GONE);
-        lastLog.setText(R.string.server_not_connected);
+        serverConnectingProgress.setVisibility(View.GONE);
+        serverStatus.setText(R.string.server_not_connected);
         serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
         serverConnect.setText(getString(R.string.server_btn_connect));
         connectedServer = null;
@@ -495,7 +480,7 @@ public class VPNInfoActivity extends BaseActivity {
                 connectedServer = null;
                 serverConnect.setText(getString(R.string.server_btn_connect));
                 serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
-                lastLog.setText(R.string.server_not_connected);
+                serverStatus.setText(R.string.server_not_connected);
             }
         } else {
             serverConnect.setText(getString(R.string.server_btn_connect));
@@ -592,7 +577,7 @@ public class VPNInfoActivity extends BaseActivity {
         });
 
 
-        popupWindow.showAtLocation(parentLayout, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(serverParentLayout, Gravity.CENTER, 0, 0);
 
     }
 
@@ -600,27 +585,23 @@ public class VPNInfoActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.try_another_server_text))
                 .setPositiveButton(getString(R.string.try_another_server_ok),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                                stopVpn();
-                                autoServer = dbHelper.getSimilarServer(currentServer.getCountryLong(), currentServer.getIp());
-                                if (autoServer != null) {
-                                    newConnecting(autoServer, false, true);
-                                } else {
-                                    onBackPressed();
-                                }
+                        (dialog, id) -> {
+                            dialog.cancel();
+                            stopVpn();
+                            autoServer = dbHelper.getSimilarServer(currentServer.getCountryLong(), currentServer.getIp());
+                            if (autoServer != null) {
+                                newConnecting(autoServer, false, true);
+                            } else {
+                                onBackPressed();
                             }
                         })
                 .setNegativeButton(getString(R.string.try_another_server_no),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if (!statusConnection) {
-                                    waitConnection = new WaitConnectionAsync();
-                                    waitConnection.execute();
-                                }
-                                dialog.cancel();
+                        (dialog, id) -> {
+                            if (!statusConnection) {
+                                waitConnection = new WaitConnectionAsync();
+                                waitConnection.execute();
                             }
+                            dialog.cancel();
                         });
         AlertDialog alert = builder.create();
         alert.show();

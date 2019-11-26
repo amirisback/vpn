@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity {
     private PopupWindow popupWindow;
     private RelativeLayout homeContextRL;
     private List<Server> countryList;
+    private Button elapse2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,17 @@ public class MainActivity extends BaseActivity {
         DecoView dynamicArcView2 = findViewById(R.id.dynamicArcView2);
         DecoView dynamicArcView3 = findViewById(R.id.dynamicArcView3);
         homeContextRL = findViewById(R.id.homeContextRL);
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
-        LinearLayout button1 = findViewById(R.id.homeBtnRandomConnection);
-        LinearLayout button2 = findViewById(R.id.homeBtnChooseCountry);
+        Toolbar toolbar_main = findViewById(R.id.toolbar_main);
+        LinearLayout homeBtnRandomConnection = findViewById(R.id.homeBtnRandomConnection);
+        LinearLayout homeBtnChooseCountry = findViewById(R.id.homeBtnChooseCountry);
+        elapse2 = findViewById(R.id.elapse2);
 
         long totalServ = dbHelper.getCount();
         String totalServers = String.format(getResources().getString(R.string.total_servers), totalServ);
 
         countryList = dbHelper.getUniqueCountries();
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar_main);
 
         setupShowAdsInterstitial();
         setupShowAdsBanner(findViewById(R.id.admob_adview));
@@ -110,7 +112,7 @@ public class MainActivity extends BaseActivity {
         }).build());
 
 
-        button1.setOnClickListener(v -> {
+        homeBtnRandomConnection.setOnClickListener(v -> {
 
             Server randomServer = getRandomServer();
             if (randomServer != null) {
@@ -122,20 +124,20 @@ public class MainActivity extends BaseActivity {
             
         });
 
-        button2.setOnClickListener(v -> {
+        homeBtnChooseCountry.setOnClickListener(v -> {
             chooseCountry(initPopUp());
         });
 
     }
 
     private void checkState() {
-        Button hello = findViewById(R.id.elapse2);
+
         if (connectedServer == null) {
-            hello.setBackgroundResource(R.drawable.button2);
-            hello.setText("No VPN Connected");
+            elapse2.setBackgroundResource(R.drawable.button2);
+            elapse2.setText("No VPN Connected");
         } else {
-            hello.setText("Connected");
-            hello.setBackgroundResource(R.drawable.button3);
+            elapse2.setText("Connected");
+            elapse2.setBackgroundResource(R.drawable.button3);
         }
     }
 
@@ -177,7 +179,7 @@ public class MainActivity extends BaseActivity {
 
     private void chooseCountry(@NotNull View view) {
 
-        ListView lvCountry = view.findViewById(R.id.homeCountryList);
+        ListView homeCountryList = view.findViewById(R.id.homeCountryList);
 
         final List<String> countryListName = new ArrayList<>();
         for (Server server : countryList) {
@@ -189,8 +191,8 @@ public class MainActivity extends BaseActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, countryListName);
 
-        lvCountry.setAdapter(adapter);
-        lvCountry.setOnItemClickListener((parent, view1, position, id) -> {
+        homeCountryList.setAdapter(adapter);
+        homeCountryList.setOnItemClickListener((parent, view1, position, id) -> {
             popupWindow.dismiss();
             startActivity(new Intent(this, VPNListActivity.class).putExtra(EXTRA_COUNTRY, countryList.get(position).getCountryShort()));
         });

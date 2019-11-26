@@ -7,7 +7,7 @@ import android.preference.PreferenceFragment;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.frogobox.evpn.App;
+import com.frogobox.evpn.BaseApplication;
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.BaseActivity;
 import com.frogobox.evpn.source.local.DBHelper;
@@ -24,11 +24,11 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        App application = (App) getApplication();
-        Toolbar toolbar = findViewById(R.id.preferenceToolbar);
+        BaseApplication application = (BaseApplication) getApplication();
+        Toolbar preferenceToolbar = findViewById(R.id.preferenceToolbar);
 
-        toolbar.setTitle(R.string.app_name);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        preferenceToolbar.setTitle(R.string.app_name);
+        preferenceToolbar.setNavigationOnClickListener(v -> finish());
         getFragmentManager().beginTransaction().replace(R.id.preferenceContent, new MyPreferenceFragment()).commit();
 
         setupShowAdsBanner(findViewById(R.id.admob_adview));

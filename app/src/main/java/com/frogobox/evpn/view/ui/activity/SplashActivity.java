@@ -1,6 +1,5 @@
 package com.frogobox.evpn.view.ui.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,17 +29,19 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
+import static com.frogobox.evpn.helper.Constant.Variable.BASE_FILE_NAME;
+import static com.frogobox.evpn.helper.Constant.Variable.BASE_URL;
+import static com.frogobox.evpn.helper.Constant.Variable.DOWNLOAD_PROGRESS;
+import static com.frogobox.evpn.helper.Constant.Variable.LOADING_SUCCESS;
+import static com.frogobox.evpn.helper.Constant.Variable.LOAD_ERROR;
+import static com.frogobox.evpn.helper.Constant.Variable.PARSE_PROGRESS;
+import static com.frogobox.evpn.helper.Constant.Variable.SWITCH_TO_RESULT;
+
 public class SplashActivity extends BaseActivity {
 
     private static boolean loadStatus = false;
-    private final int LOAD_ERROR = 0;
-    private final int DOWNLOAD_PROGRESS = 1;
-    private final int PARSE_PROGRESS = 2;
-    private final int LOADING_SUCCESS = 3;
-    private final int SWITCH_TO_RESULT = 4;
-    private final String BASE_URL = "http://www.vpngate.net/api/iphone/";
-    private final String BASE_FILE_NAME = "vpngate.csv";
-    private NumberProgressBar progressBar;
+
+    private NumberProgressBar number_progress_bar;
     private TextView commentsText;
     private Handler updateHandler;
     private boolean premiumStage = true;
@@ -53,7 +54,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        progressBar = findViewById(R.id.number_progress_bar);
+        number_progress_bar = findViewById(R.id.number_progress_bar);
         commentsText = findViewById(R.id.commentsText);
 
         if (NetworkState.isOnline()) {
@@ -70,20 +71,18 @@ public class SplashActivity extends BaseActivity {
             builder.setTitle(getString(R.string.network_error))
                     .setMessage(getString(R.string.network_error_message))
                     .setNegativeButton(getString(R.string.ok),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                    onBackPressed();
-                                }
+                            (dialog, id) -> {
+                                dialog.cancel();
+                                onBackPressed();
                             });
             AlertDialog alert = builder.create();
             alert.show();
         }
 
         if (getIntent().getBooleanExtra("firstPremiumLoad", false))
-            ((TextView) findViewById(R.id.loaderPremiumText)).setVisibility(View.VISIBLE);
+            (findViewById(R.id.loaderPremiumText)).setVisibility(View.VISIBLE);
 
-        progressBar.setMax(100);
+        number_progress_bar.setMax(100);
 
         updateHandler = new Handler(new Handler.Callback() {
             @Override
@@ -91,23 +90,23 @@ public class SplashActivity extends BaseActivity {
                 switch (msg.arg1) {
                     case LOAD_ERROR: {
                         commentsText.setText(msg.arg2);
-                        progressBar.setProgress(100);
+                        number_progress_bar.setProgress(100);
                     }
                     break;
                     case DOWNLOAD_PROGRESS: {
                         commentsText.setText(R.string.downloading_csv_text);
-                        progressBar.setProgress(msg.arg2);
+                        number_progress_bar.setProgress(msg.arg2);
 
                     }
                     break;
                     case PARSE_PROGRESS: {
                         commentsText.setText(R.string.parsing_csv_text);
-                        progressBar.setProgress(msg.arg2);
+                        number_progress_bar.setProgress(msg.arg2);
                     }
                     break;
                     case LOADING_SUCCESS: {
                         commentsText.setText(R.string.successfully_loaded);
-                        progressBar.setProgress(100);
+                        number_progress_bar.setProgress(100);
                         Message end = new Message();
                         end.arg1 = SWITCH_TO_RESULT;
                         updateHandler.sendMessageDelayed(end, 500);
@@ -130,7 +129,7 @@ public class SplashActivity extends BaseActivity {
                 return true;
             }
         });
-        progressBar.setProgress(0);
+        number_progress_bar.setProgress(0);
 
 
     }

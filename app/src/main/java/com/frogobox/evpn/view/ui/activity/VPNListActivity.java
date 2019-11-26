@@ -22,7 +22,7 @@ import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY;
 
 public class VPNListActivity extends BaseActivity {
 
-    private ListView listView;
+    private ListView list;
     private ServerListAdapter serverListAdapter;
 
     @Override
@@ -47,7 +47,7 @@ public class VPNListActivity extends BaseActivity {
         if (!VpnStatus.isVPNActive())
             connectedServer = null;
 
-        listView = findViewById(R.id.list);
+        list = findViewById(R.id.list);
     }
 
     @Override
@@ -76,8 +76,8 @@ public class VPNListActivity extends BaseActivity {
         final List<Server> serverList = dbHelper.getServersByCountryCode(country);
         serverListAdapter = new ServerListAdapter(this, serverList);
 
-        TextView countryname = findViewById(R.id.elapse);
-        countryname.setText(country);
+        TextView elapse = findViewById(R.id.elapse);
+        elapse.setText(country);
 
         String code = getIntent().getStringExtra(EXTRA_COUNTRY).toLowerCase();
         if (code.equals("do"))
@@ -89,8 +89,8 @@ public class VPNListActivity extends BaseActivity {
                                 "drawable",
                                 getPackageName()));
 
-        listView.setAdapter(serverListAdapter);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        list.setAdapter(serverListAdapter);
+        list.setOnItemClickListener((parent, view, position, id) -> {
             Server server = serverList.get(position);
             Intent intent = new Intent(VPNListActivity.this, VPNInfoActivity.class);
             intent.putExtra(Server.class.getCanonicalName(), server);
