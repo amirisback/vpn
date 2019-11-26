@@ -22,7 +22,7 @@ public class PropertiesService {
 
     private synchronized static SharedPreferences getPrefs(){
         if (prefs == null) {
-            prefs = PreferenceManager.getDefaultSharedPreferences(BaseApplication.getInstance());
+            prefs = PreferenceManager.getDefaultSharedPreferences(BaseApplication.instance);
         }
         return prefs;
     }
