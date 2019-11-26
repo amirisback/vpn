@@ -1,11 +1,8 @@
 package com.frogobox.evpn.base;
 
 import android.content.Intent;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -31,7 +28,7 @@ import java.util.Map;
 import de.blinkt.openvpn.core.VpnStatus;
 
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends BaseAdmobActivity {
 
     public static Server connectedServer = null;
     protected boolean hideCurrentConnection = false;

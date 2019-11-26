@@ -41,15 +41,16 @@ class AdmobHelper {
             mInterstitialAd.loadAd(AdRequest.Builder().build())
             mInterstitialAd.adListener = object : AdListener() {
                 override fun onAdClosed() {
-                    mInterstitialAd.loadAd(AdRequest.Builder().build())
                 }
 
                 override fun onAdLoaded() {
                     Log.d("Interstitial Load State", "loaded");
+                    showInterstitial(mInterstitialAd)
                 }
 
                 override fun onAdFailedToLoad(i: Int) {
                     Log.w("Interstitial Load State", "onAdFailedToLoad:" + i)
+                    mInterstitialAd.loadAd(AdRequest.Builder().build())
                 }
             }
         }
@@ -69,10 +70,14 @@ class AdmobHelper {
         fun setupBanner(mAdView: AdView) {
             mAdView.adListener = object : AdListener() {
                 override fun onAdLoaded() {}
-                override fun onAdFailedToLoad(errorCode: Int) {}
+                override fun onAdFailedToLoad(errorCode: Int) {
+                    mAdView.loadAd(AdRequest.Builder().build())
+                }
                 override fun onAdOpened() {}
                 override fun onAdClicked() {}
-                override fun onAdLeftApplication() {}
+                override fun onAdLeftApplication() {
+                    mAdView.loadAd(AdRequest.Builder().build())
+                }
                 override fun onAdClosed() {}
             }
         }
