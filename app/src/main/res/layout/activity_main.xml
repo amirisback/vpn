@@ -7,12 +7,15 @@
 
     <include layout="@layout/toolbar_main" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="330dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_main"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_big_super_24dp">
 
         <RelativeLayout
             android:id="@+id/rl_main_booster"
@@ -98,36 +101,37 @@
 
         </RelativeLayout>
 
-
         <Button
             android:id="@+id/elapse2"
             style="@style/buttons"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="105dp"
+            android:layout_marginTop="@dimen/dimen_big_super_24dp"
             android:background="@drawable/button2"
-            android:minWidth="180dp"
-            android:minHeight="40dp"
-            android:padding="5dp"
             android:text="No VPN Connected" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/header_layout"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/homeBtnRandomConnection"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/dimen_big_16dp"
+            android:background="@drawable/bg_card"
+            android:elevation="@dimen/dimen_small_4dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_big_super_24dp">
 
             <ImageView
                 android:layout_width="60dp"
@@ -148,11 +152,13 @@
 
         <LinearLayout
             android:id="@+id/homeBtnChooseCountry"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/dimen_big_16dp"
+            android:background="@drawable/bg_card"
+            android:elevation="@dimen/dimen_small_4dp"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_big_super_24dp">
 
             <ImageView
                 android:layout_width="60dp"

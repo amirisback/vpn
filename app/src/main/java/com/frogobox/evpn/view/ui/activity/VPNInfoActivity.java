@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +75,7 @@ public class VPNInfoActivity extends BaseActivity {
     private TextView serverStatus;
     private ProgressBar serverConnectingProgress;
     private PopupWindow popupWindow;
-    private LinearLayout serverParentLayout;
+    private RelativeLayout serverParentLayout;
     private TextView serverTrafficInTotally;
     private TextView serverTrafficOutTotally;
     private TextView serverTrafficIn;
