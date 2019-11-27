@@ -55,7 +55,7 @@ public class ServerListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View v, ViewGroup parent) {
 
-        v = inflater.inflate(R.layout.vpn_row, parent, false);
+        v = inflater.inflate(R.layout.recyclerview_item_vpn, parent, false);
 
         final Server server = getItem(position);
 
