@@ -7,6 +7,10 @@
         <item name="colorControlNormal">@color/toolbarTitle</item>
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="serverList" >
         <item name="android:textSize">14sp</item>
     </style>
