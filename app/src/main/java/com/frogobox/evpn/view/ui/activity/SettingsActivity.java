@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.frogobox.evpn.BaseApplication;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.base.ui.BaseActivity;
 import com.frogobox.evpn.source.local.DBHelper;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.CountriesNames;

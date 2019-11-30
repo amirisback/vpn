@@ -16,7 +16,8 @@ import com.androidnetworking.interfaces.DownloadListener;
 import com.androidnetworking.interfaces.DownloadProgressListener;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.base.ui.BaseActivity;
+import com.frogobox.evpn.helper.Constant;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.NetworkState;
 import com.frogobox.evpn.util.PropertiesService;
@@ -34,8 +35,6 @@ import static com.frogobox.evpn.helper.Constant.Variable.BASE_URL;
 import static com.frogobox.evpn.helper.Constant.Variable.DOWNLOAD_PROGRESS;
 import static com.frogobox.evpn.helper.Constant.Variable.LOADING_SUCCESS;
 import static com.frogobox.evpn.helper.Constant.Variable.LOAD_ERROR;
-import static com.frogobox.evpn.helper.Constant.Variable.PARSE_PROGRESS;
-import static com.frogobox.evpn.helper.Constant.Variable.SWITCH_TO_RESULT;
 
 public class SplashActivity extends BaseActivity {
 
@@ -84,50 +83,47 @@ public class SplashActivity extends BaseActivity {
 
         number_progress_bar.setMax(100);
 
-        updateHandler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                switch (msg.arg1) {
-                    case LOAD_ERROR: {
-                        commentsText.setText(msg.arg2);
-                        number_progress_bar.setProgress(100);
-                    }
-                    break;
-                    case DOWNLOAD_PROGRESS: {
-                        commentsText.setText(R.string.downloading_csv_text);
-                        number_progress_bar.setProgress(msg.arg2);
+        updateHandler = new Handler(msg -> {
+            switch (msg.arg1) {
+                case Constant.Variable.LOAD_ERROR: {
+                    commentsText.setText(msg.arg2);
+                    number_progress_bar.setProgress(100);
+                }
+                break;
+                case Constant.Variable.DOWNLOAD_PROGRESS: {
+                    commentsText.setText(R.string.downloading_csv_text);
+                    number_progress_bar.setProgress(msg.arg2);
 
-                    }
-                    break;
-                    case PARSE_PROGRESS: {
-                        commentsText.setText(R.string.parsing_csv_text);
-                        number_progress_bar.setProgress(msg.arg2);
-                    }
-                    break;
-                    case LOADING_SUCCESS: {
-                        commentsText.setText(R.string.successfully_loaded);
-                        number_progress_bar.setProgress(100);
-                        Message end = new Message();
-                        end.arg1 = SWITCH_TO_RESULT;
-                        updateHandler.sendMessageDelayed(end, 500);
-                    }
-                    break;
-                    case SWITCH_TO_RESULT: {
+                }
+                break;
+                case Constant.Variable.PARSE_PROGRESS: {
+                    commentsText.setText(R.string.parsing_csv_text);
+                    number_progress_bar.setProgress(msg.arg2);
+                }
+                break;
+                case Constant.Variable.LOADING_SUCCESS: {
+                    commentsText.setText(R.string.successfully_loaded);
+                    number_progress_bar.setProgress(100);
+                    Message end = new Message();
+                    end.arg1 = Constant.Variable.SWITCH_TO_RESULT;
+                    updateHandler.sendMessageDelayed(end, 500);
+                }
+                break;
+                case Constant.Variable.SWITCH_TO_RESULT: {
 
-                        if (PropertiesService.getConnectOnStart()) {
-                            Server randomServer = getRandomServer();
-                            if (randomServer != null) {
-                                newConnecting(randomServer, true, true);
-                            } else {
-                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                            }
+                    if (PropertiesService.getConnectOnStart()) {
+                        Server randomServer = getRandomServer();
+                        if (randomServer != null) {
+                            newConnecting(randomServer, true, true);
                         } else {
                             startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         }
+                    } else {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     }
                 }
-                return true;
             }
+            return true;
         });
         number_progress_bar.setProgress(0);
 
@@ -202,13 +198,13 @@ public class SplashActivity extends BaseActivity {
                 int startLine = 2;
                 int type = 0;
 
-                dbHelper.clearTable();
+                getDbHelper().clearTable();
 
                 int counter = 0;
                 String line = null;
                 while ((line = reader.readLine()) != null) {
                     if (counter >= startLine) {
-                        dbHelper.putLine(line, type);
+                        getDbHelper().putLine(line, type);
                     }
                     counter++;
                 }

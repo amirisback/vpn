@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.base.ui.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.view.adapter.ServerListAdapter;
 
@@ -45,7 +45,7 @@ public class VPNListActivity extends BaseActivity {
         setupShowAdsInterstitial();
 
         if (!VpnStatus.isVPNActive())
-            connectedServer = null;
+            setConnectedServer(null);
 
         list = findViewById(R.id.list);
     }
@@ -73,7 +73,7 @@ public class VPNListActivity extends BaseActivity {
 
     private void buildList() {
         String country = getIntent().getStringExtra(EXTRA_COUNTRY);
-        final List<Server> serverList = dbHelper.getServersByCountryCode(country);
+        final List<Server> serverList = getDbHelper().getServersByCountryCode(country);
         serverListAdapter = new ServerListAdapter(this, serverList);
 
         TextView elapse = findViewById(R.id.elapse);
@@ -97,6 +97,6 @@ public class VPNListActivity extends BaseActivity {
             VPNListActivity.this.startActivity(intent);
         });
 
-        getIpInfo(serverList);
+        getIpInfoFromServerList(serverList);
     }
 }

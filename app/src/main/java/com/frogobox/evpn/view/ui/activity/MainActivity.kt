@@ -13,7 +13,7 @@ import android.view.animation.AccelerateInterpolator
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import com.frogobox.evpn.R
-import com.frogobox.evpn.base.BaseActivity
+import com.frogobox.evpn.base.ui.BaseActivity
 import com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY
 import com.frogobox.evpn.source.model.Server
 import com.frogobox.evpn.util.PropertiesService
@@ -71,12 +71,12 @@ class MainActivity : BaseActivity() {
             }
         }).build())
         homeBtnRandomConnection.setOnClickListener { v: View? ->
-            val randomServer = randomServer
+            val randomServer = getRandomServer()
             if (randomServer != null) {
                 newConnecting(randomServer, true, true)
             } else {
                 val randomError = String.format(resources.getString(R.string.error_random_country), PropertiesService.getSelectedCountry())
-                Toast.makeText(this@MainActivity, randomError, Toast.LENGTH_LONG).show()
+                showToast(randomError)
             }
         }
         homeBtnChooseCountry.setOnClickListener { v: View? -> chooseCountry(initPopUp()) }
@@ -101,8 +101,8 @@ class MainActivity : BaseActivity() {
     private fun initPopUp(): View {
         val inflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.choose_country, null)
-        val widthWindow = 300
-        val heightWindow = 500
+        val widthWindow = 720
+        val heightWindow = 1024
         popupWindow = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             PopupWindow(
                     view,

@@ -25,7 +25,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -36,7 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.base.ui.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
@@ -58,6 +57,8 @@ import de.blinkt.openvpn.core.VPNLaunchHelper;
 import de.blinkt.openvpn.core.VpnStatus;
 
 import static com.frogobox.evpn.helper.Constant.Variable.BROADCAST_ACTION;
+import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_AUTO_CONNECTION;
+import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_FAST_CONNECTION;
 import static com.frogobox.evpn.helper.Constant.Variable.START_VPN_PROFILE;
 
 public class VPNInfoActivity extends BaseActivity {
@@ -179,13 +180,13 @@ public class VPNInfoActivity extends BaseActivity {
 
     private void initView(Intent intent) {
 
-        autoConnection = intent.getBooleanExtra("autoConnection", false);
-        fastConnection = intent.getBooleanExtra("fastConnection", false);
+        autoConnection = intent.getBooleanExtra(EXTRA_AUTO_CONNECTION, false);
+        fastConnection = intent.getBooleanExtra(EXTRA_FAST_CONNECTION, false);
         currentServer = intent.getParcelableExtra(Server.class.getCanonicalName());
 
         if (currentServer == null) {
-            if (connectedServer != null) {
-                currentServer = connectedServer;
+            if (getConnectedServer() != null) {
+                currentServer = getConnectedServer();
             } else {
                 onBackPressed();
                 return;
@@ -204,8 +205,8 @@ public class VPNInfoActivity extends BaseActivity {
                                 getPackageName()));
 
 
-        String localeCountryName = localeCountries.get(currentServer.getCountryShort()) != null ?
-                localeCountries.get(currentServer.getCountryShort()) : currentServer.getCountryLong();
+        String localeCountryName = getLocaleCountries().get(currentServer.getCountryShort()) != null ?
+                getLocaleCountries().get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
         TextView elapse = findViewById(R.id.elapse);
         elapse.setText(localeCountryName);
@@ -314,7 +315,7 @@ public class VPNInfoActivity extends BaseActivity {
     }
 
     private boolean checkStatus() {
-        if (connectedServer != null && connectedServer.getHostName().equals(currentServer.getHostName())) {
+        if (getConnectedServer() != null && getConnectedServer().getHostName().equals(currentServer.getHostName())) {
             return VpnStatus.isVPNActive();
         }
 
@@ -419,7 +420,7 @@ public class VPNInfoActivity extends BaseActivity {
         serverStatus.setText(R.string.server_not_connected);
         serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
         serverConnect.setText(getString(R.string.server_btn_connect));
-        connectedServer = null;
+        setConnectedServer(null);
     }
 
     private void stopVpn() {
@@ -431,8 +432,8 @@ public class VPNInfoActivity extends BaseActivity {
 
     private void startVpn() {
         stopwatch = new Stopwatch();
-        connectedServer = currentServer;
-        hideCurrentConnection = true;
+        setConnectedServer(currentServer);
+        setHideCurrentConnection(true);
 
         Intent intent = VpnService.prepare(this);
 
@@ -449,9 +450,6 @@ public class VPNInfoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void ipInfoResult() {
-    }
 
     @Override
     protected void onResume() {
@@ -461,8 +459,8 @@ public class VPNInfoActivity extends BaseActivity {
         if (currentServer.getCity() == null)
             getIpInfo(currentServer);
 
-        if (connectedServer != null && currentServer.getIp().equals(connectedServer.getIp())) {
-            hideCurrentConnection = true;
+        if (getConnectedServer() != null && currentServer.getIp().equals(getConnectedServer().getIp())) {
+            setHideCurrentConnection(true);
             invalidateOptionsMenu();
         }
 
@@ -478,7 +476,7 @@ public class VPNInfoActivity extends BaseActivity {
                 e.printStackTrace();
             }
             if (!checkStatus()) {
-                connectedServer = null;
+                setConnectedServer(null);
                 serverConnect.setText(getString(R.string.server_btn_connect));
                 serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
                 serverStatus.setText(R.string.server_not_connected);
@@ -589,7 +587,7 @@ public class VPNInfoActivity extends BaseActivity {
                         (dialog, id) -> {
                             dialog.cancel();
                             stopVpn();
-                            autoServer = dbHelper.getSimilarServer(currentServer.getCountryLong(), currentServer.getIp());
+                            autoServer = getDbHelper().getSimilarServer(currentServer.getCountryLong(), currentServer.getIp());
                             if (autoServer != null) {
                                 newConnecting(autoServer, false, true);
                             } else {
@@ -624,7 +622,7 @@ public class VPNInfoActivity extends BaseActivity {
             super.onPostExecute(aVoid);
             if (!statusConnection) {
                 if (currentServer != null)
-                    dbHelper.setInactive(currentServer.getIp());
+                    getDbHelper().setInactive(currentServer.getIp());
 
                 if (fastConnection) {
                     stopVpn();

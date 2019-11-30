@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frogobox.evpn.R;
-import com.frogobox.evpn.base.BaseActivity;
+import com.frogobox.evpn.base.ui.BaseActivity;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.ConnectionQuality;
 import com.frogobox.evpn.util.CountriesNames;
@@ -83,7 +83,7 @@ public class ServerListAdapter extends BaseAdapter {
                 localeCountries.get(server.getCountryShort()) : server.getCountryLong();
         ((TextView) v.findViewById(R.id.textCountry)).setText(localeCountryName);
 
-        if (BaseActivity.connectedServer != null && BaseActivity.connectedServer.getHostName().equals(server.getHostName())) {
+        if (new BaseActivity().getConnectedServer() != null && new BaseActivity().getConnectedServer().getHostName().equals(server.getHostName())) {
             v.setBackgroundColor(ContextCompat.getColor(context, R.color.activeServer));
         }
 
