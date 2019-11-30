@@ -12,42 +12,35 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.frogobox.evpn.BaseApplication"
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".view.ui.activity.CountryListActivity"></activity>
         <activity
             android:name=".view.ui.activity.SplashActivity"
             android:noHistory="true"
             android:theme="@style/Splash">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".view.ui.activity.MainActivity"
             android:label="@string/app_name" />
-
         <activity android:name=".view.ui.activity.VPNListActivity" />
-
         <activity
             android:name=".view.ui.activity.VPNInfoActivity"
             android:launchMode="singleTop" />
-
         <activity
             android:name=".view.ui.activity.SettingsActivity"
             android:label="@string/action_settings"
             android:noHistory="true" />
-
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
@@ -60,13 +53,11 @@
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
-
         <service android:name=".util.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".util.service.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -76,11 +67,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_publisher_id" />
-
     </application>
 
 </manifest>
