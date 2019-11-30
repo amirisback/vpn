@@ -1,4 +1,4 @@
-package com.frogobox.evpn.base
+package com.frogobox.evpn.base.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
