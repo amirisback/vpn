@@ -102,7 +102,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/elapse2"
+            android:id="@+id/tv_connection_state"
             style="@style/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

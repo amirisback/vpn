@@ -10,8 +10,11 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.PopupWindow
 import com.frogobox.evpn.R
 import com.frogobox.evpn.base.ui.BaseActivity
 import com.frogobox.evpn.helper.Constant.Variable.EXTRA_COUNTRY
@@ -33,14 +36,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val totalServ = dbHelper.count
-        val totalServers = String.format(resources.getString(R.string.total_servers), totalServ)
         countryList = dbHelper.uniqueCountries
         setSupportActionBar(toolbar_main)
+
         setupShowAdsInterstitial()
         setupShowAdsBanner(findViewById(R.id.admob_adview))
+
         checkState()
-        centree.text = totalServers
+        centree.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)
 
         dynamicArcView3.visibility = View.VISIBLE
         dynamicArcView2.visibility = View.GONE
@@ -57,26 +60,23 @@ class MainActivity : BaseActivity() {
                 .setLineWidth(32f)
                 .build()
         val series1Index2 = dynamicArcView2.addSeries(seriesItem2)
-        val proc = (Random().nextInt(10) + 5).toFloat()
+
         dynamicArcView2.addEvent(DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
                 .setDelay(0)
                 .setDuration(600)
                 .build())
-        dynamicArcView2.addEvent(DecoEvent.Builder(proc).setIndex(series1Index2).setDelay(2000).setListener(object : ExecuteEventListener {
+
+        dynamicArcView2.addEvent(DecoEvent.Builder((Random().nextInt(10) + 5).toFloat()).setIndex(series1Index2).setDelay(2000).setListener(object : ExecuteEventListener {
             override fun onEventStart(decoEvent: DecoEvent) {}
             override fun onEventEnd(decoEvent: DecoEvent) {
-                val totalServ = dbHelper.count
-                val totalServers = String.format(resources.getString(R.string.total_servers), totalServ)
-                centree.text = totalServers
+                centree.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)
             }
         }).build())
         homeBtnRandomConnection.setOnClickListener { v: View? ->
-            val randomServer = getRandomServer()
-            if (randomServer != null) {
-                newConnecting(randomServer, true, true)
+            if (getRandomServer() != null) {
+                newConnecting(getRandomServer(), fastConnection = true, autoConnection = true)
             } else {
-                val randomError = String.format(resources.getString(R.string.error_random_country), PropertiesService.getSelectedCountry())
-                showToast(randomError)
+                showToast(String.format(resources.getString(R.string.error_random_country), PropertiesService.getSelectedCountry()))
             }
         }
         homeBtnChooseCountry.setOnClickListener { v: View? -> chooseCountry(initPopUp()) }
@@ -84,11 +84,11 @@ class MainActivity : BaseActivity() {
 
     private fun checkState() {
         if (connectedServer == null) {
-            elapse2.setBackgroundResource(R.drawable.button2)
-            elapse2.text = "No VPN Connected"
+            tv_connection_state.setBackgroundResource(R.drawable.button2)
+            tv_connection_state.text = "No VPN Connected"
         } else {
-            elapse2.text = "Connected"
-            elapse2.setBackgroundResource(R.drawable.button3)
+            tv_connection_state.text = "Connected"
+            tv_connection_state.setBackgroundResource(R.drawable.button3)
         }
     }
 
@@ -99,7 +99,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initPopUp(): View {
-        val inflater = applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.choose_country, null)
         val widthWindow = 720
         val heightWindow = 1024

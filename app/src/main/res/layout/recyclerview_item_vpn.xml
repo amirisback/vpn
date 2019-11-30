@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/CardViewShare"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,47 +11,57 @@
     android:background="@drawable/bg_card"
     android:elevation="@dimen/dimen_small_4dp"
     android:foreground="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textCountry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nepal"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:visibility="gone" />
+    android:padding="@dimen/dimen_medium_8dp">
 
     <ImageView
         android:id="@+id/imageFlag"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/ar"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="96dp"
+        android:layout_height="72dp"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ar" />
 
-    <TextView
-        android:id="@+id/textCity"
-        style="@style/serverList"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="17sp"
-        android:textStyle="bold" />
+        android:layout_toRightOf="@id/imageFlag"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textHostName"
-        style="@style/serverList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nepal"
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textIP"
-        style="@style/serverList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textCity"
+            style="@style/serverList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem" />
 
-    <ImageView
-        android:id="@+id/imageConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textHostName"
+            style="@style/serverList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textIP"
+            style="@style/serverList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="@tools:sample/lorem" />
+
+        <ImageView
+            android:id="@+id/imageConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+</RelativeLayout>

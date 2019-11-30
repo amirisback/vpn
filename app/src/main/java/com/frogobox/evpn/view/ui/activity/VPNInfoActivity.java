@@ -527,7 +527,7 @@ public class VPNInfoActivity extends BaseActivity {
 
     private void chooseAction() {
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.conected, null);
+        View view = inflater.inflate(R.layout.popup_connected, null);
 
         popupWindow = new PopupWindow(
                 view,
