@@ -21,7 +21,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener
  * LinkedIn : linkedin.com/in/faisalamircs
  * -----------------------------------------
  * FrogoBox Software Industries
- * com.frogobox.admobhelper
+ * com.frogobox.evpn
  *
  */
 class AdmobHelper {

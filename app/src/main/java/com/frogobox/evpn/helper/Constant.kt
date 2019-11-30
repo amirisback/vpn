@@ -33,7 +33,9 @@ class Constant {
         const val BASE_FILE_NAME = "vpngate.csv"
         const val BROADCAST_ACTION = "de.blinkt.openvpn.VPN_STATUS"
 
-        const val EXTRA_COUNTRY = "country";
+        const val EXTRA_COUNTRY = "EXTRA_COUNTRY"
+        const val EXTRA_FAST_CONNECTION = "EXTRA_FAST_CONNECTION"
+        const val EXTRA_AUTO_CONNECTION = "EXTRA_AUTO_CONNECTION"
 
     }
 
