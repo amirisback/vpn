@@ -24,6 +24,7 @@ import com.hookedonplay.decoviewlib.charts.SeriesItem
 import com.hookedonplay.decoviewlib.events.DecoEvent
 import com.hookedonplay.decoviewlib.events.DecoEvent.ExecuteEventListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.ads_banner.*
 import kotlinx.android.synthetic.main.toolbar_main.*
 import java.util.*
 
@@ -40,7 +41,7 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar_main)
 
         setupShowAdsInterstitial()
-        setupShowAdsBanner(findViewById(R.id.admob_adview))
+        setupShowAdsBanner(admob_adview)
 
         checkState()
         centree.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)

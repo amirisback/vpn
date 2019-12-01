@@ -58,12 +58,10 @@ public class SplashActivity extends BaseActivity {
 
         if (NetworkState.isOnline()) {
             if (loadStatus) {
-                Intent myIntent = new Intent(this, MainActivity.class);
-                startActivity(myIntent);
+                startActivity(new Intent(this, MainActivity.class));
                 finish();
             } else {
                 loadStatus = true;
-
             }
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -74,8 +72,7 @@ public class SplashActivity extends BaseActivity {
                                 dialog.cancel();
                                 onBackPressed();
                             });
-            AlertDialog alert = builder.create();
-            alert.show();
+            builder.create().show();
         }
 
         if (getIntent().getBooleanExtra("firstPremiumLoad", false))

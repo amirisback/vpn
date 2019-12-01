@@ -33,7 +33,6 @@ import androidx.appcompat.app.AlertDialog;
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.ui.BaseActivity;
-import com.frogobox.evpn.base.util.BaseHelper;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
@@ -64,31 +63,30 @@ public class VPNInfoActivity extends BaseActivity {
 
     private static OpenVPNService mVPNService;
     private static Stopwatch stopwatch;
+    private static boolean filterAds = false;
+    private static boolean defaultFilterAds = true;
     private CircleProgressView circleView;
     private BroadcastReceiver br;
     private BroadcastReceiver trafficReceiver;
     private VpnProfile vpnProfile;
     private Server currentServer = null;
+    private Server autoServer;
     private Button unblockCheck;
     private Button serverConnect;
-    private TextView serverStatus;
+    private WaitConnectionAsync waitConnection;
     private ProgressBar serverConnectingProgress;
     private PopupWindow popupWindow;
     private RelativeLayout serverParentLayout;
     private TextView serverTrafficInTotally;
     private TextView serverTrafficOutTotally;
-    private TextView serverTrafficIn;
-
-    //   private static boolean filterAds = false;
-    // private static boolean defaultFilterAds = true;
     private TextView serverTrafficOut;
+    private TextView serverTrafficIn;
+    private TextView serverStatus;
     private ImageButton bookmark;
     private boolean autoConnection;
     private boolean fastConnection;
-    private Server autoServer;
     private boolean statusConnection = false;
     private boolean firstData = true;
-    private WaitConnectionAsync waitConnection;
     private boolean inBackground;
     private boolean isBindedService = false;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -345,18 +343,13 @@ public class VPNInfoActivity extends BaseActivity {
     }
 
     public void serverOnClick(View view) {
-        switch (view.getId()) {
-            case R.id.serverConnect:
-                if (checkStatus()) {
-                    stopVpn();
-                } else {
-                    prepareVpn();
-                }
-                break;
-
-
+        if (view.getId() == R.id.serverConnect) {
+            if (checkStatus()) {
+                stopVpn();
+            } else {
+                prepareVpn();
+            }
         }
-
     }
 
     private boolean loadVpnProfile() {
@@ -446,7 +439,6 @@ public class VPNInfoActivity extends BaseActivity {
             invalidateOptionsMenu();
         }
 
-
         Intent intent = new Intent(this, OpenVPNService.class);
         intent.setAction(OpenVPNService.START_SERVICE);
         isBindedService = bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
@@ -521,42 +513,25 @@ public class VPNInfoActivity extends BaseActivity {
         popupWindow.setFocusable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        Button marketButton = view.findViewById(R.id.successPopUpBtnPlayMarket);
-        marketButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String appPackageName = getPackageName();
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                } catch (android.content.ActivityNotFoundException anfe) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
-                }
+        Button successPopUpBtnPlayMarket = view.findViewById(R.id.successPopUpBtnPlayMarket);
+        successPopUpBtnPlayMarket.setOnClickListener(v -> {
+            final String appPackageName = getPackageName();
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
             }
         });
 
 
-        ((Button) view.findViewById(R.id.successPopUpBtnBrowser)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com")));
-            }
+        (view.findViewById(R.id.successPopUpBtnBrowser)).setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"))));
+        (view.findViewById(R.id.successPopUpBtnDesktop)).setOnClickListener(v -> {
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(startMain);
         });
-        ((Button) view.findViewById(R.id.successPopUpBtnDesktop)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startMain = new Intent(Intent.ACTION_MAIN);
-                startMain.addCategory(Intent.CATEGORY_HOME);
-                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(startMain);
-            }
-        });
-        ((Button) view.findViewById(R.id.successPopUpBtnClose)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-
+        view.findViewById(R.id.successPopUpBtnClose).setOnClickListener(v -> popupWindow.dismiss());
 
         popupWindow.showAtLocation(serverParentLayout, Gravity.CENTER, 0, 0);
 

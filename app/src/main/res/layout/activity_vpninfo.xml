@@ -19,7 +19,7 @@
             android:id="@+id/serverFlag"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/gm"
+            CircleProgressView:srcCompat="@drawable/ca"
             android:visibility="visible" />
 
         <TextView

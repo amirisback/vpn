@@ -175,7 +175,7 @@ open class BaseActivity : BaseAdmobActivity() {
     protected open fun newConnecting(server: Server?, fastConnection: Boolean, autoConnection: Boolean) {
         if (server != null) {
             val intent = Intent(this, VPNInfoActivity::class.java)
-            intent.putExtra(Server::class.java.canonicalName, server)
+            intent.putExtra(Server::class.java.canonicalName, BaseHelper().baseToJson(server))
             intent.putExtra(EXTRA_FAST_CONNECTION, fastConnection)
             intent.putExtra(EXTRA_AUTO_CONNECTION, autoConnection)
             startActivity(intent)
