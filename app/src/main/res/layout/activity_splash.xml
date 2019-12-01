@@ -3,88 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".view.ui.activity.SplashActivity">
 
-    <LinearLayout
-        android:id="@+id/splashh"
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@id/tv_app_name"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_above="@id/number_progress_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="149dp"
-        android:orientation="vertical">
+        android:padding="10dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/splashImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/splashTextt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/activity_background"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/splashTexttt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:text="@string/app_description"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#d3d1d1" />
-
-    </LinearLayout>
-
-    <LinearLayout
-
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/loaderPremiumText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/splashh"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="7dp"
-        android:indeterminate="true"
-        android:indeterminateTint="#fff"
-        android:orientation="vertical"
-        tools:targetApi="lollipop">
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:text="@string/loading_additional_servers"
+        android:textAlignment="center"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/loaderPremiumText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:text="@string/loading_additional_servers"
-            android:textAlignment="center"
-            android:visibility="gone" />
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/number_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
-        <com.daimajia.numberprogressbar.NumberProgressBar
-            android:id="@+id/number_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/commentsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/number_progress_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:text="@string/loading_text"
+        android:textAllCaps="true"
+        android:textColor="@color/stop_yellow" />
 
-        <TextView
-            android:id="@+id/commentsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/loading_text"
-            android:textAllCaps="true"
-            android:textColor="@color/additionalServer" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tv_version_app"
+        android:layout_centerHorizontal="true"
+        android:text="@string/app_description"
+        android:textColor="@color/colorTextBlack" />
+
+    <TextView
+        android:id="@+id/tv_version_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        tools:text="@tools:sample/lorem"
+        android:textSize="@dimen/text_size_default_12sp"
+        android:textColor="@color/colorTextBlack" />
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_description" translatable="false">Free Ultimate VPN</string>
-    <string name="all_rights_reserved">Copyright © pharid.com. All Rights Reserved.</string>
+    <string name="app_description" translatable="false">Free Premium VPN</string>
+    <string name="all_rights_reserved">Copyright ©Frogobox. All Rights Reserved.</string>
     <string name="url_check_ip_batch">http://ip-api.com/batch</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -21,8 +21,8 @@
     <string name="server_txt_status">Status connection:</string>
     <string name="server_not_connected">Not connected</string>
     <string name="loading_text">Loading...</string>
-    <string name="downloading_csv_text">Getting free servers...</string>
-    <string name="parsing_csv_text">Parsing free servers...</string>
+    <string name="downloading_csv_text">Getting all servers...</string>
+    <string name="parsing_csv_text">Parsing all servers...</string>
     <string name="csv_file_error">Problem with a file reading...</string>
     <string name="csv_file_error_parsing">Problem with a file parsing...</string>
     <string name="network_error">Network error...</string>

@@ -27,6 +27,8 @@ class Constant {
         const val LOADING_SUCCESS = 3
         const val SWITCH_TO_RESULT = 4
 
+        const val PRECENTAGE_MAX = 100
+
         const val START_VPN_PROFILE = 70
 
         const val BASE_URL = "http://www.vpngate.net/api/iphone/"
@@ -36,6 +38,7 @@ class Constant {
         const val EXTRA_COUNTRY = "EXTRA_COUNTRY"
         const val EXTRA_FAST_CONNECTION = "EXTRA_FAST_CONNECTION"
         const val EXTRA_AUTO_CONNECTION = "EXTRA_AUTO_CONNECTION"
+        const val EXTRA_FIRST_PREMIUM_LOAD = "firstPremiumLoad"
 
     }
 
