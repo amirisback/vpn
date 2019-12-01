@@ -6,29 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/imgv"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible"
-        app:srcCompat="@drawable/my" />
-
-    <TextView
-        android:id="@+id/tv_country_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imgv"
-        android:layout_centerHorizontal="true"
-        android:text="Country Name"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_country_name"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dimen_big_16dp"
         tools:listitem="@layout/recyclerview_item_vpn" />

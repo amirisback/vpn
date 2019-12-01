@@ -41,12 +41,9 @@ class ServerViewAdapter : BaseViewAdapter<Server>() {
         private val tv_host_name = view.textHostName
         private val tv_ip = view.textIP
         private val tv_city = view.textCity
-        private val tv_country = view.textCountry
 
         override fun initComponent(data: Server) {
             super.initComponent(data)
-
-            val localeCountryName = if (localeCountries[data.countryShort] != null) localeCountries[data.countryShort] else data.countryLong
 
             var code: String = data.countryShort!!.toLowerCase()
             if (code == "do") code = "dom"
@@ -56,7 +53,6 @@ class ServerViewAdapter : BaseViewAdapter<Server>() {
             tv_host_name.text = data.hostName
             tv_ip.text = data.ip
             tv_city.text = data.city
-            tv_country.text = localeCountryName
         }
 
     }

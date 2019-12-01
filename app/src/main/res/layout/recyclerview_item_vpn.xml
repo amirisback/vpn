@@ -27,14 +27,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nepal"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/textCity"
             style="@style/serverList"
             android:layout_width="wrap_content"

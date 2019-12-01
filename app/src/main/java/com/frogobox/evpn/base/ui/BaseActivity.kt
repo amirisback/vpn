@@ -121,17 +121,11 @@ open class BaseActivity : BaseAdmobActivity() {
     }
 
     protected fun setupDetailActivity(title: String) {
-        setTitle(title)
         val upArrow = ContextCompat.getDrawable(this, R.drawable.ic_toolbar_back_home)
+        supportActionBar?.title = title
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(upArrow)
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    this,
-                    R.color.colorBaseWhite
-                )
-            )
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.colorBaseWhite))
         )
     }
 

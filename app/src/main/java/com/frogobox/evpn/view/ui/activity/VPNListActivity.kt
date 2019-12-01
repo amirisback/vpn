@@ -16,7 +16,6 @@ class VPNListActivity : BaseActivity(), BaseViewListener<Server> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vpnlist)
-        setupDetailActivity("")
         setupAdsMonetize()
         setupComponentView()
     }
@@ -28,14 +27,8 @@ class VPNListActivity : BaseActivity(), BaseViewListener<Server> {
 
     private fun setupComponentView() {
         val country = intent.getStringExtra(EXTRA_COUNTRY)
-        var code = intent.getStringExtra(EXTRA_COUNTRY).toLowerCase()
-        if (code == "do") code = "dom"
-
         if (!VpnStatus.isVPNActive()) connectedServer = null
-
-        tv_country_name.text = country
-        imgv.setImageResource(resources.getIdentifier(code, "drawable", packageName))
-
+        setupDetailActivity("")
         setupRecyclerView(country)
     }
 
