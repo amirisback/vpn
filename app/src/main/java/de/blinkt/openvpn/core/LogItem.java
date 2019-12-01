@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.annotation.SuppressLint;
@@ -26,14 +24,11 @@ import java.util.FormatFlagsConversionMismatchException;
 import java.util.Locale;
 import java.util.UnknownFormatConversionException;
 
-
-
-
 public class LogItem implements Parcelable {
     private Object[] mArgs = null;
     private String mMessage = null;
     private int mRessourceId;
-    
+
     VpnStatus.LogLevel mLevel = VpnStatus.LogLevel.INFO;
     private long logtime = System.currentTimeMillis();
     private int mVerbosityLevel = -1;
@@ -88,9 +83,9 @@ public class LogItem implements Parcelable {
         ByteBuffer bb = ByteBuffer.allocate(16384);
 
 
-        bb.put((byte) 0x0);               
-        bb.putLong(logtime);              
-        bb.putInt(mVerbosityLevel);      
+        bb.put((byte) 0x0);
+        bb.putLong(logtime);
+        bb.putInt(mVerbosityLevel);
         bb.putInt(mLevel.getInt());
         bb.putInt(mRessourceId);
         if (mMessage == null || mMessage.length() == 0) {
@@ -137,7 +132,7 @@ public class LogItem implements Parcelable {
 
     public LogItem(byte[] in, int length) throws UnsupportedEncodingException {
         ByteBuffer bb = ByteBuffer.wrap(in, 0, length);
-        bb.get(); 
+        bb.get();
         logtime = bb.getLong();
         mVerbosityLevel = bb.getInt();
         mLevel = VpnStatus.LogLevel.getEnumByValue(bb.getInt());
@@ -277,7 +272,7 @@ public class LogItem implements Parcelable {
     }
 
 
-    
+
     public static String join(CharSequence delimiter, Object[] tokens) {
         StringBuilder sb = new StringBuilder();
         boolean firstTime = true;
@@ -303,7 +298,7 @@ public class LogItem implements Parcelable {
         return getString(null);
     }
 
-    
+
     @SuppressLint("StringFormatMatches")
     private String getMobileInfoString(Context c) {
         c.getPackageManager();
@@ -353,8 +348,8 @@ public class LogItem implements Parcelable {
 
     public int getVerbosityLevel() {
         if (mVerbosityLevel == -1) {
-            
-            
+
+
             return mLevel.getInt();
         }
         return mVerbosityLevel;

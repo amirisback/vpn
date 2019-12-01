@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.text.TextUtils;
@@ -7,6 +5,8 @@ import android.text.TextUtils;
 import java.io.Serializable;
 
 public class Connection implements Serializable, Cloneable {
+    public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
+    private static final long serialVersionUID = 92031902903829089L;
     public String mServerName = "de.blinkt.openvpn";
     public String mServerPort = "1194";
     public boolean mUseUdp = true;
@@ -14,15 +14,9 @@ public class Connection implements Serializable, Cloneable {
     public boolean mUseCustomConfig = false;
     public boolean mEnabled = true;
     public int mConnectTimeout = 0;
-    public static final int CONNECTION_DEFAULT_TIMEOUT = 120;
-
-    private static final long serialVersionUID = 92031902903829089L;
-
 
     public String getConnectionBlock() {
         String cfg = "";
-
-        
         cfg += "remote ";
         cfg += mServerName;
         cfg += " ";

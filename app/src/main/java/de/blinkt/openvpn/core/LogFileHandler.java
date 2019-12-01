@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.os.Handler;
@@ -21,24 +19,31 @@ import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.util.Locale;
 
-
-
-
 class LogFileHandler extends Handler {
+    public static final int LOG_MESSAGE = 103;
+    public static final int MAGIC_BYTE = 0x55;
+    public static final String LOGFILE_NAME = "logcache.dat";
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
     static final int TRIM_LOG_FILE = 100;
     static final int FLUSH_TO_DISK = 101;
     static final int LOG_INIT = 102;
-    public static final int LOG_MESSAGE = 103;
-    public static final int MAGIC_BYTE = 0x55;
     protected OutputStream mLogFile;
-
-    public static final String LOGFILE_NAME = "logcache.dat";
 
 
     public LogFileHandler(Looper looper) {
         super(looper);
     }
 
+    public static String bytesToHex(byte[] bytes, int len) {
+        len = Math.min(bytes.length, len);
+        char[] hexChars = new char[len * 2];
+        for (int j = 0; j < len; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 
     @Override
     public void handleMessage(Message msg) {
@@ -49,7 +54,7 @@ class LogFileHandler extends Handler {
                 readLogCache((File) msg.obj);
                 openLogFile((File) msg.obj);
             } else if (msg.what == LOG_MESSAGE && msg.obj instanceof LogItem) {
-                
+
                 if (mLogFile == null)
                     return;
                 writeLogItemToDisk((LogItem) msg.obj);
@@ -84,8 +89,6 @@ class LogFileHandler extends Handler {
 
     private void writeLogItemToDisk(LogItem li) throws IOException {
 
-        
-        
 
         byte[] liBytes = li.getMarschaledBytes();
 
@@ -133,14 +136,13 @@ class LogFileHandler extends Handler {
 
             readCacheContents(new FileInputStream(logfile));
 
-        } catch (java.io.IOException | java.lang.RuntimeException e ) {
+        } catch (java.io.IOException | java.lang.RuntimeException e) {
             VpnStatus.logError("Reading cached logfile failed");
             VpnStatus.logException(e);
             e.printStackTrace();
-            
+
         }
     }
-
 
     protected void readCacheContents(InputStream in) throws IOException {
 
@@ -165,9 +167,9 @@ class LogFileHandler extends Handler {
             if (skipped > 0)
                 VpnStatus.logDebug(String.format(Locale.US, "Skipped %d bytes before finding a magic byte", skipped));
 
-            int len = ByteBuffer.wrap(buf, skipped+1, 4).asIntBuffer().get();
+            int len = ByteBuffer.wrap(buf, skipped + 1, 4).asIntBuffer().get();
 
-            
+
             int pos = 0;
             byte buf2[] = new byte[buf.length];
 
@@ -194,7 +196,7 @@ class LogFileHandler extends Handler {
 
             restoreLogItem(buf2, len);
 
-            
+
             read = logFile.read(buf, 0, 5);
             itemsRead++;
             if (itemsRead > 2 * VpnStatus.MAXLOGENTRIES) {
@@ -204,8 +206,6 @@ class LogFileHandler extends Handler {
 
         }
         VpnStatus.logDebug(R.string.reread_log, itemsRead);
-
-
     }
 
     protected void restoreLogItem(byte[] buf, int len) throws UnsupportedEncodingException {
@@ -216,22 +216,8 @@ class LogFileHandler extends Handler {
         } else {
             VpnStatus.logError(String.format(Locale.getDefault(),
                     "Could not read log item from file: %d: %s",
-                     len, bytesToHex(buf, Math.max(len, 80))));
+                    len, bytesToHex(buf, Math.max(len, 80))));
         }
     }
-
-    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-
-    public static String bytesToHex(byte[] bytes, int len) {
-        len = Math.min(bytes.length, len);
-        char[] hexChars = new char[len * 2];
-        for (int j = 0; j < len; j++) {
-            int v = bytes[j] & 0xFF;
-            hexChars[j * 2] = hexArray[v >>> 4];
-            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
-        }
-        return new String(hexChars);
-    }
-
 
 }

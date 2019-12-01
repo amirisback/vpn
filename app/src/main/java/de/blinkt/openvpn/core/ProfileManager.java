@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.app.Activity;
@@ -25,9 +23,11 @@ public class ProfileManager {
     private static ProfileManager instance;
 
     private static VpnProfile mLastConnectedVpn = null;
-    private HashMap<String, VpnProfile> profiles = new HashMap<>();
     private static VpnProfile tmpprofile = null;
+    private HashMap<String, VpnProfile> profiles = new HashMap<>();
 
+    private ProfileManager() {
+    }
 
     private static VpnProfile get(String key) {
         if (tmpprofile != null && tmpprofile.getUUIDString().equals(key))
@@ -37,10 +37,6 @@ public class ProfileManager {
             return null;
         return instance.profiles.get(key);
 
-    }
-
-
-    private ProfileManager() {
     }
 
     private static void checkInstance(Context context) {
@@ -63,7 +59,7 @@ public class ProfileManager {
 
     }
 
-    
+
     public static void setConnectedVpnProfile(Context c, VpnProfile connectedProfile) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         Editor prefsedit = prefs.edit();
@@ -74,7 +70,7 @@ public class ProfileManager {
 
     }
 
-    
+
     public static VpnProfile getLastConnectedProfile(Context c) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 
@@ -85,6 +81,31 @@ public class ProfileManager {
             return null;
     }
 
+    public static void setTemporaryProfile(VpnProfile tmp) {
+        ProfileManager.tmpprofile = tmp;
+    }
+
+    public static boolean isTempProfile() {
+        return mLastConnectedVpn == tmpprofile;
+    }
+
+    public static VpnProfile get(Context context, String profileUUID) {
+        checkInstance(context);
+        return get(profileUUID);
+    }
+
+    public static VpnProfile getLastConnectedVpn() {
+        return mLastConnectedVpn;
+    }
+
+    public static VpnProfile getAlwaysOnVPN(Context context) {
+        checkInstance(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String uuid = prefs.getString("alwaysOnVpn", null);
+        return get(uuid);
+
+    }
 
     public Collection<VpnProfile> getProfiles() {
         return profiles.values();
@@ -104,9 +125,7 @@ public class ProfileManager {
         Editor editor = sharedprefs.edit();
         editor.putStringSet("vpnlist", profiles.keySet());
 
-        
-        
-        
+
         int counter = sharedprefs.getInt("counter", 0);
         editor.putInt("counter", counter + 1);
         editor.apply();
@@ -117,16 +136,6 @@ public class ProfileManager {
         profiles.put(profile.getUUID().toString(), profile);
 
     }
-
-    public static void setTemporaryProfile(VpnProfile tmp) {
-        ProfileManager.tmpprofile = tmp;
-    }
-
-    public static boolean isTempProfile()
-    {
-        return mLastConnectedVpn == tmpprofile;
-    }
-
 
     public void saveProfile(Context context, VpnProfile profile) {
         ObjectOutputStream vpnfile;
@@ -142,7 +151,6 @@ public class ProfileManager {
         }
     }
 
-
     private void loadVPNList(Context context) {
         profiles = new HashMap<>();
         SharedPreferences listpref = context.getSharedPreferences(PREFS_NAME, Activity.MODE_PRIVATE);
@@ -156,7 +164,7 @@ public class ProfileManager {
                 ObjectInputStream vpnfile = new ObjectInputStream(context.openFileInput(vpnentry + ".vp"));
                 VpnProfile vp = ((VpnProfile) vpnfile.readObject());
 
-                
+
                 if (vp == null || vp.mName == null || vp.getUUID() == null)
                     continue;
 
@@ -169,7 +177,6 @@ public class ProfileManager {
         }
     }
 
-
     public void removeProfile(Context context, VpnProfile profile) {
         String vpnentry = profile.getUUID().toString();
         profiles.remove(vpnentry);
@@ -177,24 +184,6 @@ public class ProfileManager {
         context.deleteFile(vpnentry + ".vp");
         if (mLastConnectedVpn == profile)
             mLastConnectedVpn = null;
-
-    }
-
-    public static VpnProfile get(Context context, String profileUUID) {
-        checkInstance(context);
-        return get(profileUUID);
-    }
-
-    public static VpnProfile getLastConnectedVpn() {
-        return mLastConnectedVpn;
-    }
-
-    public static VpnProfile getAlwaysOnVPN(Context context) {
-        checkInstance(context);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        String uuid = prefs.getString("alwaysOnVpn", null);
-        return get(uuid);
 
     }
 }

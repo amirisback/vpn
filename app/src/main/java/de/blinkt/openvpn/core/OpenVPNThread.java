@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.annotation.SuppressLint;
@@ -21,19 +19,18 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import de.blinkt.openvpn.core.VpnStatus.ConnectionStatus;
 
 public class OpenVPNThread implements Runnable {
+    public static final int M_FATAL = (1 << 4);
+    public static final int M_NONFATAL = (1 << 5);
+    public static final int M_WARN = (1 << 6);
+    public static final int M_DEBUG = (1 << 7);
     private static final String DUMP_PATH_STRING = "Dump path: ";
     @SuppressLint("SdCardPath")
     private static final String BROKEN_PIE_SUPPORT = "/data/data/de.blinkt.openvpn/cache/pievpn";
     private final static String BROKEN_PIE_SUPPORT2 = "syntax error";
     private static final String TAG = "OpenVPN";
-    public static final int M_FATAL = (1 << 4);
-    public static final int M_NONFATAL = (1 << 5);
-    public static final int M_WARN = (1 << 6);
-    public static final int M_DEBUG = (1 << 7);
     private String[] mArgv;
     private Process mProcess;
     private String mNativeDir;
@@ -52,9 +49,8 @@ public class OpenVPNThread implements Runnable {
         mProcess.destroy();
     }
 
-    void setReplaceConnection()
-    {
-        mNoProcessExitStatus=true;
+    void setReplaceConnection() {
+        mNoProcessExitStatus = true;
     }
 
     @Override
@@ -79,10 +75,10 @@ public class OpenVPNThread implements Runnable {
             if (exitvalue != 0) {
                 VpnStatus.logError("Process exited with exit value " + exitvalue);
                 if (mBrokenPie) {
-                    
+
                     String[] noPieArgv = VPNLaunchHelper.replacePieWithNoPie(mArgv);
 
-                    
+
                     if (!noPieArgv.equals(mArgv)) {
                         mArgv = noPieArgv;
                         VpnStatus.logInfo("PIE Version could not be executed. Trying no PIE version");
@@ -119,20 +115,15 @@ public class OpenVPNThread implements Runnable {
 
     private void startOpenVPNThreadArgs(String[] argv) {
         LinkedList<String> argvlist = new LinkedList<String>();
-
         Collections.addAll(argvlist, argv);
-
         ProcessBuilder pb = new ProcessBuilder(argvlist);
-        
-
         String lbpath = genLibraryPath(argv, pb);
-
         pb.environment().put("LD_LIBRARY_PATH", lbpath);
 
         pb.redirectErrorStream(true);
         try {
             mProcess = pb.start();
-            
+
             mProcess.getOutputStream().close();
             InputStream in = mProcess.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -148,8 +139,6 @@ public class OpenVPNThread implements Runnable {
                 if (logline.startsWith(BROKEN_PIE_SUPPORT) || logline.contains(BROKEN_PIE_SUPPORT2))
                     mBrokenPie = true;
 
-
-                
 
                 Pattern p = Pattern.compile("(\\d+).(\\d+) ([0-9a-f])+ (.*)");
                 Matcher m = p.matcher(logline);
@@ -189,7 +178,7 @@ public class OpenVPNThread implements Runnable {
     }
 
     private String genLibraryPath(String[] argv, ProcessBuilder pb) {
-        
+
         String applibpath = argv[0].replaceFirst("/cache/.*$", "/lib");
 
         String lbpath = pb.environment().get("LD_LIBRARY_PATH");

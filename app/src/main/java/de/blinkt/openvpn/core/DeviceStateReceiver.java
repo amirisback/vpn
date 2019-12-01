@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.content.BroadcastReceiver;
@@ -12,33 +10,25 @@ import android.net.NetworkInfo.State;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-
 import com.frogobox.evpn.R;
 
-import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
-
 import java.util.LinkedList;
+
+import de.blinkt.openvpn.core.VpnStatus.ByteCountListener;
 
 import static de.blinkt.openvpn.core.OpenVPNManagement.pauseReason;
 
 public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountListener, OpenVPNManagement.PausedStateCallback {
     private final Handler mDisconnectHandler;
-    private int lastNetwork = -1;
-    private OpenVPNManagement mManagement;
-
-    
     private final int TRAFFIC_WINDOW = 60;
-    
     private final long TRAFFIC_LIMIT = 64 * 1024;
-
-    
     private final int DISCONNECT_WAIT = 20;
-
-
     connectState network = connectState.DISCONNECTED;
     connectState screen = connectState.SHOULDBECONNECTED;
     connectState userpause = connectState.SHOULDBECONNECTED;
-
+    LinkedList<Datapoint> trafficdata = new LinkedList<DeviceStateReceiver.Datapoint>();
+    private int lastNetwork = -1;
+    private OpenVPNManagement mManagement;
     private String lastStateMsg = null;
     private java.lang.Runnable mDelayDisconnectRunnable = new Runnable() {
         @Override
@@ -48,7 +38,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
 
             network = connectState.DISCONNECTED;
 
-            
+
             if (screen == connectState.PENDINGDISCONNECT)
                 screen = connectState.DISCONNECTED;
 
@@ -57,29 +47,21 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     };
     private NetworkInfo lastConnectedNetwork;
 
+    public DeviceStateReceiver(OpenVPNManagement magnagement) {
+        super();
+        mManagement = magnagement;
+        mManagement.setPauseCallback(this);
+        mDisconnectHandler = new Handler();
+    }
+
+    public static boolean equalsObj(Object a, Object b) {
+        return (a == null) ? (b == null) : a.equals(b);
+    }
+
     @Override
     public boolean shouldBeRunning() {
         return shouldBeConnected();
     }
-
-    enum connectState {
-        SHOULDBECONNECTED,
-        PENDINGDISCONNECT,
-        DISCONNECTED
-    }
-
-    static class Datapoint {
-        private Datapoint(long t, long d) {
-            timestamp = t;
-            data = d;
-        }
-
-        long timestamp;
-        long data;
-    }
-
-    LinkedList<Datapoint> trafficdata = new LinkedList<DeviceStateReceiver.Datapoint>();
-
 
     @Override
     public void updateByteCount(long in, long out, long diffIn, long diffOut) {
@@ -110,7 +92,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
     public void userPause(boolean pause) {
         if (pause) {
             userpause = connectState.DISCONNECTED;
-            
+
             mManagement.pause(getPauseReason());
         } else {
             boolean wereConnected = shouldBeConnected();
@@ -118,18 +100,10 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             if (shouldBeConnected() && !wereConnected)
                 mManagement.resume();
             else
-                
+
                 mManagement.pause(getPauseReason());
         }
     }
-
-    public DeviceStateReceiver(OpenVPNManagement magnagement) {
-        super();
-        mManagement = magnagement;
-        mManagement.setPauseCallback(this);
-        mDisconnectHandler = new Handler();
-    }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -151,31 +125,25 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                     screen = connectState.DISCONNECTED;
             }
         } else if (Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
-            
+
             boolean connected = shouldBeConnected();
             screen = connectState.SHOULDBECONNECTED;
 
-            
+
             mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
-            
+
             if (shouldBeConnected() != connected)
                 mManagement.resume();
             else if (!shouldBeConnected())
-                
+
                 mManagement.pause(getPauseReason());
 
         }
     }
 
-
     private void fillTrafficData() {
         trafficdata.add(new Datapoint(System.currentTimeMillis(), TRAFFIC_LIMIT));
     }
-    public static boolean equalsObj(Object a, Object b) {
-        return (a == null) ? (b == null) : a.equals(b);
-    }
-
-
 
     public void networkStateChange(Context context) {
         NetworkInfo networkInfo = getCurrentNetworkInfo(context);
@@ -194,8 +162,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             if (extrainfo == null)
                 extrainfo = "";
 
-			
-
 
             netstatestring = String.format("%2$s %4$s to %1$s %3$s", networkInfo.getTypeName(),
                     networkInfo.getDetailedState(), extrainfo, subtype);
@@ -211,18 +177,18 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
             if (lastConnectedNetwork == null
                     || lastConnectedNetwork.getType() != networkInfo.getType()
                     || !equalsObj(lastConnectedNetwork.getExtraInfo(), networkInfo.getExtraInfo())
-                    )
+            )
                 sameNetwork = false;
             else
                 sameNetwork = true;
 
-            
+
             if (pendingDisconnect && sameNetwork) {
                 mDisconnectHandler.removeCallbacks(mDelayDisconnectRunnable);
-                
+
                 mManagement.networkChange(true);
             } else {
-                
+
 
                 if (screen == connectState.PENDINGDISCONNECT)
                     screen = connectState.DISCONNECTED;
@@ -240,7 +206,7 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                 lastConnectedNetwork = networkInfo;
             }
         } else if (networkInfo == null) {
-            
+
             lastNetwork = -1;
             if (sendusr1) {
                 network = connectState.PENDINGDISCONNECT;
@@ -255,7 +221,6 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
         lastStateMsg = netstatestring;
 
     }
-
 
     public boolean isUserPaused() {
         return userpause == connectState.DISCONNECTED;
@@ -284,5 +249,21 @@ public class DeviceStateReceiver extends BroadcastReceiver implements ByteCountL
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return conn.getActiveNetworkInfo();
+    }
+
+    enum connectState {
+        SHOULDBECONNECTED,
+        PENDINGDISCONNECT,
+        DISCONNECTED
+    }
+
+    static class Datapoint {
+        long timestamp;
+        long data;
+
+        private Datapoint(long t, long d) {
+            timestamp = t;
+            data = d;
+        }
     }
 }

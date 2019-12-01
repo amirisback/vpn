@@ -1,19 +1,16 @@
-
-
 package de.blinkt.openvpn.core;
 
 import java.util.Locale;
 
 class CIDRIP {
+
     String mIp;
     int len;
-
 
     public CIDRIP(String ip, String mask) {
         mIp = ip;
         long netmask = getInt(mask);
 
-        
         netmask += 1l << 32;
 
         int lenZeros = 0;
@@ -21,9 +18,9 @@ class CIDRIP {
             lenZeros++;
             netmask = netmask >> 1;
         }
-        
+
         if (netmask != (0x1ffffffffl >> lenZeros)) {
-            
+
             len = 32;
         } else {
             len = 32 - lenZeros;
@@ -34,6 +31,18 @@ class CIDRIP {
     public CIDRIP(String address, int prefix_length) {
         len = prefix_length;
         mIp = address;
+    }
+
+    static long getInt(String ipaddr) {
+        String[] ipt = ipaddr.split("\\.");
+        long ip = 0;
+
+        ip += Long.parseLong(ipt[0]) << 24;
+        ip += Integer.parseInt(ipt[1]) << 16;
+        ip += Integer.parseInt(ipt[2]) << 8;
+        ip += Integer.parseInt(ipt[3]);
+
+        return ip;
     }
 
     @Override
@@ -52,18 +61,6 @@ class CIDRIP {
             return false;
         }
 
-    }
-
-    static long getInt(String ipaddr) {
-        String[] ipt = ipaddr.split("\\.");
-        long ip = 0;
-
-        ip += Long.parseLong(ipt[0]) << 24;
-        ip += Integer.parseInt(ipt[1]) << 16;
-        ip += Integer.parseInt(ipt[2]) << 8;
-        ip += Integer.parseInt(ipt[3]);
-
-        return ip;
     }
 
     public long getInt() {

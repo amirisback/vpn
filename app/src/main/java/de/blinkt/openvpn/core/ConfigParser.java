@@ -1,5 +1,3 @@
-
-
 package de.blinkt.openvpn.core;
 
 import android.text.TextUtils;
@@ -17,227 +15,10 @@ import java.util.Vector;
 import de.blinkt.openvpn.VpnProfile;
 
 
-
-
-
-
-
 public class ConfigParser {
 
-
     public static final String CONVERTED_PROFILE = "converted Profile";
-    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
-    private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
-    private String auth_user_pass_file;
-
-    public void parseConfig(Reader reader) throws IOException, ConfigParseError {
-
-        HashMap<String, String> optionAliases = new HashMap<>();
-        optionAliases.put("server-poll-timeout", "timeout-connect");
-
-        BufferedReader br = new BufferedReader(reader);
-
-        int lineno = 0;
-        try {
-            while (true) {
-                String line = br.readLine();
-                lineno++;
-                if (line == null)
-                    break;
-
-                if (lineno == 1) {
-                    if ((line.startsWith("PK\003\004")
-                            || (line.startsWith("PK\007\008")))) {
-                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
-                    }
-                    if (line.startsWith("\uFEFF")) {
-                        line = line.substring(1);
-                    }
-                }
-
-                
-                if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
-                    Vector<String> metaarg = parsemeta(line);
-                    meta.put(metaarg.get(0), metaarg);
-                    continue;
-                }
-                Vector<String> args = parseline(line);
-
-                if (args.size() == 0)
-                    continue;
-
-
-                if (args.get(0).startsWith("--"))
-                    args.set(0, args.get(0).substring(2));
-
-                checkinlinefile(args, br);
-
-                String optionname = args.get(0);
-                if (optionAliases.get(optionname)!=null)
-                    optionname = optionAliases.get(optionname);
-
-                if (!options.containsKey(optionname)) {
-                    options.put(optionname, new Vector<Vector<String>>());
-                }
-                options.get(optionname).add(args);
-            }
-        } catch (java.lang.OutOfMemoryError memoryError) {
-            throw new ConfigParseError("File too large to parse: " + memoryError.getLocalizedMessage());
-        }
-    }
-
-    private Vector<String> parsemeta(String line) {
-        String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
-        String[] parts = meta.split("=", 2);
-        Vector<String> rval = new Vector<String>();
-        Collections.addAll(rval, parts);
-        return rval;
-
-    }
-
-    private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
-        String arg0 = args.get(0).trim();
-        
-        if (arg0.startsWith("<") && arg0.endsWith(">")) {
-            String argname = arg0.substring(1, arg0.length() - 1);
-            String inlinefile = VpnProfile.INLINE_TAG;
-
-            String endtag = String.format("</%s>", argname);
-            do {
-                String line = br.readLine();
-                if (line == null) {
-                    throw new ConfigParseError(String.format("No endtag </%s> for starttag <%s> found", argname, argname));
-                }
-                if (line.trim().equals(endtag))
-                    break;
-                else {
-                    inlinefile += line;
-                    inlinefile += "\n";
-                }
-            } while (true);
-
-            args.clear();
-            args.add(argname);
-            args.add(inlinefile);
-        }
-
-    }
-
-    public String getAuthUserPassFile() {
-        return auth_user_pass_file;
-    }
-
-    enum linestate {
-        initial,
-        readin_single_quote, reading_quoted, reading_unquoted, done
-    }
-
-    private boolean space(char c) {
-        
-        
-        return Character.isWhitespace(c) || c == '\0';
-
-    }
-
-    public static class ConfigParseError extends Exception {
-        private static final long serialVersionUID = -60L;
-
-        public ConfigParseError(String msg) {
-            super(msg);
-        }
-    }
-
-
-    
-    private Vector<String> parseline(String line) throws ConfigParseError {
-        Vector<String> parameters = new Vector<String>();
-
-        if (line.length() == 0)
-            return parameters;
-
-
-        linestate state = linestate.initial;
-        boolean backslash = false;
-        char out = 0;
-
-        int pos = 0;
-        String currentarg = "";
-
-        do {
-            
-            char in;
-            if (pos < line.length())
-                in = line.charAt(pos);
-            else
-                in = '\0';
-
-            if (!backslash && in == '\\' && state != linestate.readin_single_quote) {
-                backslash = true;
-            } else {
-                if (state == linestate.initial) {
-                    if (!space(in)) {
-                        if (in == ';' || in == '#') 
-                            break;
-                        if (!backslash && in == '\"')
-                            state = linestate.reading_quoted;
-                        else if (!backslash && in == '\'')
-                            state = linestate.readin_single_quote;
-                        else {
-                            out = in;
-                            state = linestate.reading_unquoted;
-                        }
-                    }
-                } else if (state == linestate.reading_unquoted) {
-                    if (!backslash && space(in))
-                        state = linestate.done;
-                    else
-                        out = in;
-                } else if (state == linestate.reading_quoted) {
-                    if (!backslash && in == '\"')
-                        state = linestate.done;
-                    else
-                        out = in;
-                } else if (state == linestate.readin_single_quote) {
-                    if (in == '\'')
-                        state = linestate.done;
-                    else
-                        out = in;
-                }
-
-                if (state == linestate.done) {
-                    
-                    state = linestate.initial;
-                    parameters.add(currentarg);
-                    currentarg = "";
-                    out = 0;
-                }
-
-                if (backslash && out != 0) {
-                    if (!(out == '\\' || out == '\"' || space(out))) {
-                        throw new ConfigParseError("Options warning: Bad backslash ('\\') usage");
-                    }
-                }
-                backslash = false;
-            }
-
-			
-            if (out != 0) {
-                currentarg += out;
-            }
-        } while (pos++ < line.length());
-
-        return parameters;
-    }
-
-
-    final String[] unsupportedOptions = {"config",
-            "tls-server"
-
-    };
-
-    
-    
-    
+    final String[] unsupportedOptions = {"config", "tls-server"};
     final String[] ignoreOptions = {"tls-client",
             "askpass",
             "auth-nocache",
@@ -287,7 +68,6 @@ public class ConfigParser {
             "user",
             "win-sys",
     };
-
     final String[][] ignoreOptionsWithArg =
             {
                     {"setenv", "IV_GUI_VER"},
@@ -295,7 +75,6 @@ public class ConfigParser {
                     {"engine", "dynamic"},
                     {"setenv", "CLIENT_CERT"}
             };
-
     final String[] connectionOptions = {
             "local",
             "remote",
@@ -323,14 +102,208 @@ public class ConfigParser {
             "explicit-exit-notify",
             "mssfix"
     };
+    private HashMap<String, Vector<Vector<String>>> options = new HashMap<String, Vector<Vector<String>>>();
+    private HashMap<String, Vector<String>> meta = new HashMap<String, Vector<String>>();
+    private String auth_user_pass_file;
+
+    static public void useEmbbedUserAuth(VpnProfile np, String inlinedata) {
+        String data = VpnProfile.getEmbeddedContent(inlinedata);
+        String[] parts = data.split("\n");
+        if (parts.length >= 2) {
+            np.mUsername = parts[0];
+            np.mPassword = parts[1];
+        }
+    }
+
+    public void parseConfig(Reader reader) throws IOException, ConfigParseError {
+
+        HashMap<String, String> optionAliases = new HashMap<>();
+        optionAliases.put("server-poll-timeout", "timeout-connect");
+
+        BufferedReader br = new BufferedReader(reader);
+
+        int lineno = 0;
+        try {
+            while (true) {
+                String line = br.readLine();
+                lineno++;
+                if (line == null)
+                    break;
+
+                if (lineno == 1) {
+                    if ((line.startsWith("PK\003\004")
+                            || (line.startsWith("PK\007\008")))) {
+                        throw new ConfigParseError("Input looks like a ZIP Archive. Import is only possible for OpenVPN config files (.ovpn/.conf)");
+                    }
+                    if (line.startsWith("\uFEFF")) {
+                        line = line.substring(1);
+                    }
+                }
 
 
-    
+                if (line.startsWith("# OVPN_ACCESS_SERVER_")) {
+                    Vector<String> metaarg = parsemeta(line);
+                    meta.put(metaarg.get(0), metaarg);
+                    continue;
+                }
+                Vector<String> args = parseline(line);
+
+                if (args.size() == 0)
+                    continue;
+
+
+                if (args.get(0).startsWith("--"))
+                    args.set(0, args.get(0).substring(2));
+
+                checkinlinefile(args, br);
+
+                String optionname = args.get(0);
+                if (optionAliases.get(optionname) != null)
+                    optionname = optionAliases.get(optionname);
+
+                if (!options.containsKey(optionname)) {
+                    options.put(optionname, new Vector<Vector<String>>());
+                }
+                options.get(optionname).add(args);
+            }
+        } catch (java.lang.OutOfMemoryError memoryError) {
+            throw new ConfigParseError("File too large to parse: " + memoryError.getLocalizedMessage());
+        }
+    }
+
+    private Vector<String> parsemeta(String line) {
+        String meta = line.split("#\\sOVPN_ACCESS_SERVER_", 2)[1];
+        String[] parts = meta.split("=", 2);
+        Vector<String> rval = new Vector<String>();
+        Collections.addAll(rval, parts);
+        return rval;
+
+    }
+
+    private void checkinlinefile(Vector<String> args, BufferedReader br) throws IOException, ConfigParseError {
+        String arg0 = args.get(0).trim();
+
+        if (arg0.startsWith("<") && arg0.endsWith(">")) {
+            String argname = arg0.substring(1, arg0.length() - 1);
+            String inlinefile = VpnProfile.INLINE_TAG;
+
+            String endtag = String.format("</%s>", argname);
+            do {
+                String line = br.readLine();
+                if (line == null) {
+                    throw new ConfigParseError(String.format("No endtag </%s> for starttag <%s> found", argname, argname));
+                }
+                if (line.trim().equals(endtag))
+                    break;
+                else {
+                    inlinefile += line;
+                    inlinefile += "\n";
+                }
+            } while (true);
+
+            args.clear();
+            args.add(argname);
+            args.add(inlinefile);
+        }
+
+    }
+
+    public String getAuthUserPassFile() {
+        return auth_user_pass_file;
+    }
+
+    private boolean space(char c) {
+
+
+        return Character.isWhitespace(c) || c == '\0';
+
+    }
+
+    private Vector<String> parseline(String line) throws ConfigParseError {
+        Vector<String> parameters = new Vector<String>();
+
+        if (line.length() == 0)
+            return parameters;
+
+
+        linestate state = linestate.initial;
+        boolean backslash = false;
+        char out = 0;
+
+        int pos = 0;
+        String currentarg = "";
+
+        do {
+
+            char in;
+            if (pos < line.length())
+                in = line.charAt(pos);
+            else
+                in = '\0';
+
+            if (!backslash && in == '\\' && state != linestate.readin_single_quote) {
+                backslash = true;
+            } else {
+                if (state == linestate.initial) {
+                    if (!space(in)) {
+                        if (in == ';' || in == '#')
+                            break;
+                        if (!backslash && in == '\"')
+                            state = linestate.reading_quoted;
+                        else if (!backslash && in == '\'')
+                            state = linestate.readin_single_quote;
+                        else {
+                            out = in;
+                            state = linestate.reading_unquoted;
+                        }
+                    }
+                } else if (state == linestate.reading_unquoted) {
+                    if (!backslash && space(in))
+                        state = linestate.done;
+                    else
+                        out = in;
+                } else if (state == linestate.reading_quoted) {
+                    if (!backslash && in == '\"')
+                        state = linestate.done;
+                    else
+                        out = in;
+                } else if (state == linestate.readin_single_quote) {
+                    if (in == '\'')
+                        state = linestate.done;
+                    else
+                        out = in;
+                }
+
+                if (state == linestate.done) {
+
+                    state = linestate.initial;
+                    parameters.add(currentarg);
+                    currentarg = "";
+                    out = 0;
+                }
+
+                if (backslash && out != 0) {
+                    if (!(out == '\\' || out == '\"' || space(out))) {
+                        throw new ConfigParseError("Options warning: Bad backslash ('\\') usage");
+                    }
+                }
+                backslash = false;
+            }
+
+
+            if (out != 0) {
+                currentarg += out;
+            }
+        } while (pos++ < line.length());
+
+        return parameters;
+    }
+
     @SuppressWarnings("ConstantConditions")
     public VpnProfile convertProfile() throws ConfigParseError, IOException {
         boolean noauthtypeset = true;
         VpnProfile np = new VpnProfile(CONVERTED_PROFILE);
-        
+
         np.clearDefaults();
 
         if (options.containsKey("client") || options.containsKey("pull")) {
@@ -394,10 +367,10 @@ public class ConfigParser {
         }
 
         Vector<String> routeNoPull = getOption("route-nopull", 1, 1);
-        if (routeNoPull!=null)
-            np.mRoutenopull=true;
+        if (routeNoPull != null)
+            np.mRoutenopull = true;
 
-        
+
         Vector<Vector<String>> tlsauthoptions = getAllOption("tls-auth", 1, 2);
         if (tlsauthoptions != null) {
             for (Vector<String> tlsauth : tlsauthoptions) {
@@ -432,7 +405,7 @@ public class ConfigParser {
         if ((devtype != null && devtype.get(1).equals("tun")) ||
                 (dev != null && dev.get(1).startsWith("tun")) ||
                 (devtype == null && dev == null)) {
-            
+
         } else {
             throw new ConfigParseError("Sorry. Only tun mode is supported. See the FAQ for more detail");
         }
@@ -447,7 +420,7 @@ public class ConfigParser {
                     throw new ConfigParseError("Argument to --mssfix has to be an integer");
                 }
             } else {
-                np.mMssFix = 1450; 
+                np.mMssFix = 1450;
             }
         }
 
@@ -565,9 +538,9 @@ public class ConfigParser {
 
         }
 
-        Vector<String> x509usernamefield = getOption("x509-username-field", 1,1);
-        if (x509usernamefield!=null) {
-            np.mx509UsernameField =  x509usernamefield.get(1);
+        Vector<String> x509usernamefield = getOption("x509-username-field", 1, 1);
+        if (x509usernamefield != null) {
+            np.mx509UsernameField = x509usernamefield.get(1);
         }
 
 
@@ -624,11 +597,11 @@ public class ConfigParser {
 
         Vector<String> crlfile = getOption("crl-verify", 1, 2);
         if (crlfile != null) {
-            
+
             if (crlfile.size() == 3 && crlfile.get(2).equals("dir"))
                 np.mCustomConfigOptions += TextUtils.join(" ", crlfile) + "\n";
             else
-                
+
                 np.mCrlFilename = crlfile.get(1);
 
         }
@@ -676,7 +649,7 @@ public class ConfigParser {
                     conn.mEnabled = false;
         }
 
-        
+
         Vector<String> friendlyname = meta.get("FRIENDLY_NAME");
         if (friendlyname != null && friendlyname.size() > 1)
             np.mName = friendlyname.get(1);
@@ -693,7 +666,6 @@ public class ConfigParser {
     }
 
     private Pair<Connection, Connection[]> parseConnection(String connection, Connection defaultValues) throws IOException, ConfigParseError {
-        
 
 
         ConfigParser connectionParser = new ConfigParser();
@@ -743,11 +715,10 @@ public class ConfigParser {
             }
         }
 
-                    
+
         Vector<Vector<String>> remotes = getAllOption("remote", 1, 3);
 
 
-        
         if (connDefault != null) {
             for (Vector<Vector<String>> option : options.values()) {
 
@@ -757,7 +728,7 @@ public class ConfigParser {
             if (!TextUtils.isEmpty(conn.mCustomConfiguration))
                 conn.mUseCustomConfig = true;
         }
-        
+
         if (remotes == null)
             remotes = new Vector<Vector<String>>();
 
@@ -809,22 +780,13 @@ public class ConfigParser {
         return isudp;
     }
 
-    static public void useEmbbedUserAuth(VpnProfile np, String inlinedata) {
-        String data = VpnProfile.getEmbeddedContent(inlinedata);
-        String[] parts = data.split("\n");
-        if (parts.length >= 2) {
-            np.mUsername = parts[0];
-            np.mPassword = parts[1];
-        }
-    }
-
     private void checkIgnoreAndInvalidOptions(VpnProfile np) throws ConfigParseError {
         for (String option : unsupportedOptions)
             if (options.containsKey(option))
                 throw new ConfigParseError(String.format("Unsupported Option %s encountered in config file. Aborting", option));
 
         for (String option : ignoreOptions)
-            
+
             options.remove(option);
 
 
@@ -841,7 +803,6 @@ public class ConfigParser {
 
         }
     }
-
 
     boolean ignoreThisOption(Vector<String> option) {
         for (String[] ignoreOption : ignoreOptionsWithArg) {
@@ -861,13 +822,12 @@ public class ConfigParser {
         return false;
     }
 
-    
     private String getOptionStrings(Vector<Vector<String>> option) {
         String custom = "";
         for (Vector<String> optionsline : option) {
             if (!ignoreThisOption(optionsline)) {
-                
-                if (optionsline.size() == 2 && "extra-certs".equals(optionsline.get(0)) ) {
+
+                if (optionsline.size() == 2 && "extra-certs".equals(optionsline.get(0))) {
                     custom += VpnProfile.insertFileData(optionsline.get(0), optionsline.get(1));
 
 
@@ -880,7 +840,6 @@ public class ConfigParser {
         }
         return custom;
     }
-
 
     private void fixup(VpnProfile np) {
         if (np.mRemoteCN.equals(np.mServerName)) {
@@ -895,7 +854,6 @@ public class ConfigParser {
         else
             return alloptions.lastElement();
     }
-
 
     private Vector<Vector<String>> getAllOption(String option, int minarg, int maxarg) throws ConfigParseError {
         Vector<Vector<String>> args = options.get(option);
@@ -913,8 +871,17 @@ public class ConfigParser {
         return args;
     }
 
+    enum linestate {
+        initial,
+        readin_single_quote, reading_quoted, reading_unquoted, done
+    }
+
+    public static class ConfigParseError extends Exception {
+        private static final long serialVersionUID = -60L;
+
+        public ConfigParseError(String msg) {
+            super(msg);
+        }
+    }
+
 }
-
-
-
-
