@@ -1,5 +1,6 @@
 package com.frogobox.evpn.base.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,13 +26,14 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseViewAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
 
+    protected lateinit var mContext: Context
     private lateinit var mViewListener: BaseViewListener<T>
 
     private val mRecyclerViewDataList = mutableListOf<T>()
     private var mRecyclerViewLayout: Int = 0
 
-    fun setupRequirement(viewListener: BaseViewListener<T>, dataList: List<T>, layoutItem: Int) {
-
+    fun setupRequirement(context: Context, viewListener: BaseViewListener<T>, dataList: List<T>, layoutItem: Int) {
+        mContext = context
         mRecyclerViewLayout = layoutItem
         mViewListener = viewListener
 
