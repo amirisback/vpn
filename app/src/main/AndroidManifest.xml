@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.ui.activity.CountryListActivity"></activity>
+        <activity android:name=".view.ui.activity.CountryListActivity"/>
         <activity
             android:name=".view.ui.activity.SplashActivity"
             android:noHistory="true"
@@ -35,12 +35,7 @@
             android:theme="@style/AppThemeNoToolbar"/>
         <activity android:name=".view.ui.activity.VPNListActivity" />
         <activity
-            android:name=".view.ui.activity.VPNInfoActivity"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".view.ui.activity.SettingsActivity"
-            android:label="@string/action_settings"
-            android:noHistory="true" />
+            android:name=".view.ui.activity.VPNInfoActivity" />
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
