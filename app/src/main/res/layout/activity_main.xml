@@ -12,102 +12,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_main"
-        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/dimen_big_super_24dp">
 
-        <RelativeLayout
-            android:id="@+id/rl_main_booster"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="290dp"
-                android:layout_height="190dp"
-                android:padding="120dp"
-                android:paddingLeft="40dp"
-                android:src="@mipmap/bg_outer_shadow" />
-
-            <LinearLayout
-                android:layout_width="145dp"
-                android:layout_height="145dp"
-                android:layout_marginLeft="19dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="23dp"
-                android:orientation="vertical">
-
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/dynamicArcView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <com.hookedonplay.decoviewlib.DecoView
-                    android:id="@+id/dynamicArcView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="190dp"
-                android:layout_height="190dp"
-                android:src="@mipmap/bg_inner_charge_booster" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="-15dp"
-                android:layout_marginTop="-17dp"
-                android:gravity="center">
-
-                <com.frogobox.evpn.util.xml.CustomTxTRegular
-                    android:id="@+id/top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Servers"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:textColor="@color/grey_cc"
-                    android:textSize="11sp" />
-
-                <com.frogobox.evpn.util.xml.CustomTxTRegular
-                    android:id="@+id/centree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/top"
-                    android:layout_centerHorizontal="true"
-                    android:text="1000"
-                    android:textColor="#000000"
-                    android:textSize="12sp" />
-
-                <com.frogobox.evpn.util.xml.CustomTxTRegular
-                    android:id="@+id/bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/centree"
-                    android:layout_centerHorizontal="true"
-                    android:text="Free"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:textColor="@color/disconnect_red"
-                    android:textSize="11sp" />
-            </RelativeLayout>
-
-
-        </RelativeLayout>
+        <com.frogobox.evpn.util.xml.CustomTxTRegular
+            android:id="@+id/tv_total_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jumlah 1000"
+            android:textColor="#000000"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/tv_connection_state"
             style="@style/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dimen_big_super_24dp"
             android:background="@drawable/button2"
             android:text="No VPN Connected" />

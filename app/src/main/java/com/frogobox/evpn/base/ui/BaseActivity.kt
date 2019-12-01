@@ -25,6 +25,7 @@ import com.frogobox.evpn.util.CountriesNames
 import com.frogobox.evpn.util.PropertiesService
 import com.frogobox.evpn.util.TotalTraffic
 import com.frogobox.evpn.view.ui.activity.VPNInfoActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -184,6 +185,10 @@ open class BaseActivity : BaseAdmobActivity() {
 
     protected open fun ipInfoResult(){
 
+    }
+
+    protected fun hasConnectedServer(): Boolean {
+        return connectedServer != null
     }
 
     protected open fun getIpInfo(server: Server) {

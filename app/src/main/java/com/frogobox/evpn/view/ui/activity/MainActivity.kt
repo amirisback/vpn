@@ -44,35 +44,9 @@ class MainActivity : BaseActivity() {
         setupShowAdsBanner(admob_adview)
 
         checkState()
-        centree.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)
 
-        dynamicArcView3.visibility = View.VISIBLE
-        dynamicArcView2.visibility = View.GONE
-        dynamicArcView2.addSeries(SeriesItem.Builder(Color.argb(255, 218, 218, 218))
-                .setRange(0f, 100f, 0f)
-                .setInterpolator(AccelerateInterpolator())
-                .build())
-        val seriesItem1 = SeriesItem.Builder(Color.parseColor("#00000000"))
-                .setRange(0f, 100f, 0f)
-                .setLineWidth(32f)
-                .build()
-        val seriesItem2 = SeriesItem.Builder(Color.parseColor("#ffffff"))
-                .setRange(0f, 100f, 0f)
-                .setLineWidth(32f)
-                .build()
-        val series1Index2 = dynamicArcView2.addSeries(seriesItem2)
+        tv_total_server.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)
 
-        dynamicArcView2.addEvent(DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
-                .setDelay(0)
-                .setDuration(600)
-                .build())
-
-        dynamicArcView2.addEvent(DecoEvent.Builder((Random().nextInt(10) + 5).toFloat()).setIndex(series1Index2).setDelay(2000).setListener(object : ExecuteEventListener {
-            override fun onEventStart(decoEvent: DecoEvent) {}
-            override fun onEventEnd(decoEvent: DecoEvent) {
-                centree.text = String.format(resources.getString(R.string.total_servers), dbHelper.count)
-            }
-        }).build())
         homeBtnRandomConnection.setOnClickListener { v: View? ->
             if (getRandomServer() != null) {
                 newConnecting(getRandomServer(), fastConnection = true, autoConnection = true)
@@ -84,19 +58,18 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkState() {
-        if (connectedServer == null) {
-            tv_connection_state.setBackgroundResource(R.drawable.button2)
-            tv_connection_state.text = "No VPN Connected"
-        } else {
+        if (hasConnectedServer()) {
             tv_connection_state.text = "Connected"
             tv_connection_state.setBackgroundResource(R.drawable.button3)
+        } else {
+            tv_connection_state.setBackgroundResource(R.drawable.button2)
+            tv_connection_state.text = "No VPN Connected"
         }
     }
 
     override fun onResume() {
         super.onResume()
         checkState()
-        invalidateOptionsMenu()
     }
 
     private fun initPopUp(): View {
