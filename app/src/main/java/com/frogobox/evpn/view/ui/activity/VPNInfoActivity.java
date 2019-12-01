@@ -33,10 +33,12 @@ import androidx.appcompat.app.AlertDialog;
 import com.frogobox.evpn.BuildConfig;
 import com.frogobox.evpn.R;
 import com.frogobox.evpn.base.ui.BaseActivity;
+import com.frogobox.evpn.base.util.BaseHelper;
 import com.frogobox.evpn.source.model.Server;
 import com.frogobox.evpn.util.PropertiesService;
 import com.frogobox.evpn.util.Stopwatch;
 import com.frogobox.evpn.util.TotalTraffic;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -161,7 +163,8 @@ public class VPNInfoActivity extends BaseActivity {
 
         autoConnection = intent.getBooleanExtra(EXTRA_AUTO_CONNECTION, false);
         fastConnection = intent.getBooleanExtra(EXTRA_FAST_CONNECTION, false);
-        currentServer = intent.getParcelableExtra(Server.class.getCanonicalName());
+        String tempServer = intent.getStringExtra(Server.class.getCanonicalName());
+        currentServer = new Gson().fromJson(tempServer, Server.class);
 
         if (currentServer == null) {
             if (getConnectedServer() != null) {
