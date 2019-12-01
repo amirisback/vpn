@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dimen_big_16dp"
-        tools:listitem="@layout/recyclerview_item_vpn" />
+        tools:listitem="@layout/view_item_server" />
 
     <include layout="@layout/ads_banner" />
 

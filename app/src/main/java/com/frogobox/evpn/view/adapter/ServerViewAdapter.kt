@@ -7,7 +7,7 @@ import com.frogobox.evpn.base.adapter.BaseViewHolder
 import com.frogobox.evpn.source.model.Server
 import com.frogobox.evpn.util.ConnectionQuality
 import com.frogobox.evpn.util.CountriesNames
-import kotlinx.android.synthetic.main.recyclerview_item_vpn.view.*
+import kotlinx.android.synthetic.main.view_item_server.view.*
 
 /**
  * Created by Faisal Amir

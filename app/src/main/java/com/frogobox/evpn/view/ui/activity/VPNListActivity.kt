@@ -35,7 +35,7 @@ class VPNListActivity : BaseActivity(), BaseViewListener<Server> {
     private fun setupRecyclerView(country: String) {
         val serverList = dbHelper.getServersByCountryCode(country)
         val serverViewAdapter = ServerViewAdapter()
-        serverViewAdapter.setupRequirement(this, this, serverList, R.layout.recyclerview_item_vpn)
+        serverViewAdapter.setupRequirement(this, this, serverList, R.layout.view_item_server)
         recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recycler_view.adapter = serverViewAdapter
         getIpInfoFromServerList(serverList)
