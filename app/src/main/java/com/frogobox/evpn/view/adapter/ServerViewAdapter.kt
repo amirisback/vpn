@@ -48,7 +48,7 @@ class ServerViewAdapter : BaseViewAdapter<Server>() {
 
             val localeCountryName = if (localeCountries[data.countryShort] != null) localeCountries[data.countryShort] else data.countryLong
 
-            var code: String = data.countryShort.toLowerCase()
+            var code: String = data.countryShort!!.toLowerCase()
             if (code == "do") code = "dom"
 
             iv_flag.setImageResource(mContext.resources.getIdentifier(code, "drawable", mContext.packageName))
