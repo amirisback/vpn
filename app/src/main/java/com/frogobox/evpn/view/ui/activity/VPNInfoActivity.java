@@ -178,7 +178,7 @@ public class VPNInfoActivity extends BaseActivity {
         if (code.equals("do"))
             code = "dom";
 
-        ((ImageView) findViewById(R.id.serverFlag))
+        ((ImageView) findViewById(R.id.ivServerFlag))
                 .setImageResource(
                         getResources().getIdentifier(code,
                                 "drawable",
@@ -196,7 +196,7 @@ public class VPNInfoActivity extends BaseActivity {
         speedValue = new BigDecimal(speedValue).setScale(3, RoundingMode.UP).doubleValue();
 
 
-        circleView = findViewById(R.id.circleView);
+        circleView = findViewById(R.id.circleViewSpeed);
         circleView.setOnProgressChangedListener(value -> {
 
         });
@@ -204,7 +204,7 @@ public class VPNInfoActivity extends BaseActivity {
         circleView.setUnit("Mbps");
 
 
-        CircleProgressView circleView3 = findViewById(R.id.circleView3);
+        CircleProgressView circleView3 = findViewById(R.id.circleViewPing);
         circleView3.setOnProgressChangedListener(value -> {
 
         });
@@ -215,7 +215,7 @@ public class VPNInfoActivity extends BaseActivity {
             circleView3.setValue(Integer.parseInt(currentServer.getPing()));
             circleView3.setUnit("Ms");
         }
-        CircleProgressView circleView2 = findViewById(R.id.circleView2);
+        CircleProgressView circleView2 = findViewById(R.id.circleViewSession);
         circleView2.setOnProgressChangedListener(value -> {
 
         });
