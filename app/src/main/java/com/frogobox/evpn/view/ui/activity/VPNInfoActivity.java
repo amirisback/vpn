@@ -8,9 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.VpnService;
 import android.os.AsyncTask;
@@ -19,7 +17,6 @@ import android.os.IBinder;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -62,7 +59,6 @@ import static com.frogobox.evpn.helper.Constant.Variable.EXTRA_FAST_CONNECTION;
 import static com.frogobox.evpn.helper.Constant.Variable.START_VPN_PROFILE;
 
 public class VPNInfoActivity extends BaseActivity {
-
 
     private static OpenVPNService mVPNService;
     private static Stopwatch stopwatch;
@@ -124,24 +120,15 @@ public class VPNInfoActivity extends BaseActivity {
         serverTrafficIn = findViewById(R.id.serverTrafficIn);
         serverTrafficOut = findViewById(R.id.serverTrafficOut);
 
-        setSupportActionBar(findViewById(R.id.toolbar_main));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        setupDetailActivity("");
 
         setupShowAdsBanner(findViewById(R.id.admob_adview));
         setupShowAdsInterstitial();
 
-        String totalIn = String.format(getResources().getString(R.string.traffic_in),
-                TotalTraffic.getTotalTraffic().get(0));
+        String totalIn = String.format(getResources().getString(R.string.traffic_in), TotalTraffic.getTotalTraffic().get(0));
+        String totalOut = String.format(getResources().getString(R.string.traffic_out), TotalTraffic.getTotalTraffic().get(1));
 
         serverTrafficInTotally.setText(totalIn);
-
-        String totalOut = String.format(getResources().getString(R.string.traffic_out),
-                TotalTraffic.getTotalTraffic().get(1));
-
         serverTrafficOutTotally.setText(totalOut);
         serverTrafficIn.setText("");
         serverTrafficOut.setText("");
@@ -169,14 +156,6 @@ public class VPNInfoActivity extends BaseActivity {
         initView(getIntent());
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void initView(Intent intent) {
 
@@ -208,7 +187,7 @@ public class VPNInfoActivity extends BaseActivity {
         String localeCountryName = getLocaleCountries().get(currentServer.getCountryShort()) != null ?
                 getLocaleCountries().get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
-        TextView elapse = findViewById(R.id.elapse);
+        TextView elapse = findViewById(R.id.tv_country_name);
         elapse.setText(localeCountryName);
 
 
