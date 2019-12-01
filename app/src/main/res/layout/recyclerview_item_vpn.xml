@@ -5,9 +5,9 @@
     android:id="@+id/CardViewShare"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_medium_8dp"
-    android:layout_marginEnd="@dimen/dimen_medium_8dp"
-    android:layout_marginBottom="@dimen/dimen_medium_8dp"
+    android:layout_marginStart="@dimen/dimen_big_16dp"
+    android:layout_marginTop="@dimen/dimen_big_16dp"
+    android:layout_marginEnd="@dimen/dimen_big_16dp"
     android:background="@drawable/bg_card"
     android:elevation="@dimen/dimen_small_4dp"
     android:foreground="?android:attr/selectableItemBackground"
@@ -62,6 +62,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-
     </LinearLayout>
+
 </RelativeLayout>

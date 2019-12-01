@@ -1,52 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/serverParentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar_main" />
+    <ImageView
+        android:id="@+id/imgv"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        app:srcCompat="@drawable/my" />
 
-    <RelativeLayout
-        android:id="@+id/bg"
-        android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_below="@+id/toolbar_main"
-        android:background="@color/colorPrimary">
-
-
-        <ImageView
-            android:id="@+id/imgv"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/my" />
-
-        <TextView
-            android:id="@+id/elapse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="25dp"
-            android:text="Country Name"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-
-    </RelativeLayout>
-
-    <ListView
-        android:id="@+id/list"
+    <TextView
+        android:id="@+id/tv_country_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bg"
-        android:divider="@color/listDivider"
-        android:dividerHeight="1dp" />
+        android:layout_below="@id/imgv"
+        android:layout_centerHorizontal="true"
+        android:text="Country Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_country_name"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/dimen_big_16dp"
+        tools:listitem="@layout/recyclerview_item_vpn" />
 
     <include layout="@layout/ads_banner" />
 
