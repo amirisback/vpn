@@ -2,25 +2,25 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorBaseTransparent"/>
+            <solid android:color="@color/colorBackgroundWhite"/>
             <corners android:radius="@dimen/dimen_medium_8dp" />
             <stroke android:color="@color/colorBackgroundLine"
-                    android:width="2dp"/>
+                android:width="1dp"/>
             <!--<stroke android:color="@color/colorBackground"-->
-                    <!--android:width="1dp"/>-->
+            <!--android:width="1dp"/>-->
         </shape>
     </item>
 
     <!--<item-->
-            <!--android:left="0dp"-->
-            <!--android:right="0dp"-->
-            <!--android:top="0dp"-->
-            <!--android:bottom="2dp">-->
-        <!--<shape android:shape="rectangle">-->
-            <!--<solid android:color="@android:color/white"/>-->
-            <!--<corners android:radius="@dimen/dimen_big_16dp" />-->
-            <!--<stroke android:color="@color/colorBackground"-->
-                    <!--android:width="1dp"/>-->
-        <!--</shape>-->
+    <!--android:left="0dp"-->
+    <!--android:right="0dp"-->
+    <!--android:top="0dp"-->
+    <!--android:bottom="2dp">-->
+    <!--<shape android:shape="rectangle">-->
+    <!--<solid android:color="@android:color/white"/>-->
+    <!--<corners android:radius="@dimen/dimen_big_16dp" />-->
+    <!--<stroke android:color="@color/colorBackground"-->
+    <!--android:width="1dp"/>-->
+    <!--</shape>-->
     <!--</item>-->
 </layer-list>

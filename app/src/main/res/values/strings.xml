@@ -1,5 +1,9 @@
 <resources>
 
+    <string name="about_frogobox">Frogobox Software Industry</string>
+    <string name="title_about_us">toolbar_about_us</string>
+    <string name="about_copyright">© Copyright 2019</string>
+
     <string name="app_description" translatable="false">Free Premium VPN</string>
     <string name="all_rights_reserved">Copyright ©Frogobox. All Rights Reserved.</string>
     <string name="url_check_ip_batch">http://ip-api.com/batch</string>
