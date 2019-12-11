@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
-apply plugin: 'com.google.gms.google-services'
-
 android {
 
     // Declaration app name
@@ -31,7 +29,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion '29.0.1'
     defaultConfig {
-        applicationId "com.frogobox.evpn"
+        applicationId "com.frogobox.vpnhero"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -139,7 +137,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'com.google.android.gms:play-services-ads:18.3.0'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
     implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
     implementation 'com.amitshekhar.android:android-networking:0.2.0'

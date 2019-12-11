@@ -1,16 +1,16 @@
 {
   "project_info": {
     "project_number": "931153235626",
-    "firebase_url": "https://evpn-9ea84.firebaseio.com",
-    "project_id": "evpn-9ea84",
-    "storage_bucket": "evpn-9ea84.appspot.com"
+    "firebase_url": "https://vpnhero-9ea84.firebaseio.com",
+    "project_id": "vpnhero-9ea84",
+    "storage_bucket": "vpnhero-9ea84.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:931153235626:android:bb54bff785afc7f7",
         "android_client_info": {
-          "package_name": "com.frogobox.evpn"
+          "package_name": "com.frogobox.vpnhero"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "931153235626-pdb9l6igr27uko5e8lubuoopk5gag8pb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.frgobox.evpn",
+            "package_name": "com.frgobox.vpnhero",
             "certificate_hash": "373d4fb9347cc81d5c7d8fd9372245f573587144"
           }
         },
