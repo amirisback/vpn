@@ -32,24 +32,24 @@
 
         <TextView
             android:id="@+id/textCity"
-            style="@style/serverList"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorTextBlack"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@color/colorTextBlack"
             tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/textHostName"
-            style="@style/serverList"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/textIP"
-            style="@style/serverList"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem" />

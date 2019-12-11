@@ -23,8 +23,7 @@
     android:id="@+id/admob_adview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
     android:layout_centerHorizontal="true"
-    android:visibility="visible"
-    ads:adSize="BANNER"
-    ads:adUnitId="@string/admob_banner" />
+    android:layout_alignParentBottom="true"
+    ads:adSize="SMART_BANNER"
+    ads:adUnitId="@string/admob_banner"/>
