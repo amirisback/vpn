@@ -7,6 +7,9 @@ android {
     // Declaration app name
     def nameApp = "VPN Hero"
 
+    // Declaration apk / aab name
+    def nameAPK = "vpn-hero"
+
     def versionPropsFile = file('version.properties')
     Properties versionProps = new Properties()
 
@@ -35,9 +38,6 @@ android {
         versionCode 1
         versionName "1.0.0"
         multiDexEnabled true
-
-        // Declaration apk / aab name
-        def nameAPK = "vpn-hero"
 
         // Declaration apps name debug mode
         def debugAttribute = " Development"
@@ -120,35 +120,32 @@ android {
 
     }
 
-
 }
-
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation files('libs/achartengine-1.2.0.jar')
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'com.android.support:multidex:1.0.3'
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.core:core-ktx:1.1.0"
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
 
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-ads:18.3.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
     implementation 'com.amitshekhar.android:android-networking:0.2.0'
-    implementation 'com.caverock:androidsvg:1.2.2-beta-1'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.2.8'
-    implementation 'com.github.bmarrdev:android-DecoView-charting:v1.2'
 
     testImplementation 'junit:junit:4.12'
-}
-
-repositories {
-    mavenCentral()
 }

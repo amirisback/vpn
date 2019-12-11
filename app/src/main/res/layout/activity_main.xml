@@ -15,20 +15,11 @@
         android:layout_centerInParent="true"
         android:background="@drawable/bg_card"
         android:padding="@dimen/dimen_big_16dp"
-        android:text="Quick Connect"
+        android:text="Connect"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14sp"
         android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/tv_connection_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_quick_connect"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dimen_big_16dp"
-        android:text="No VPN Connected" />
 
     <include layout="@layout/ads_banner" />
 

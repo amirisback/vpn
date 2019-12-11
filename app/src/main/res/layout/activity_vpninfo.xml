@@ -10,7 +10,7 @@
         android:layout_width="160dp"
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        CircleProgressView:srcCompat="@drawable/ca" />
+        CircleProgressView:srcCompat="@drawable/ic_dummy_flag" />
 
     <TextView
         android:id="@+id/tv_country_name"
@@ -31,7 +31,7 @@
         android:layout_below="@id/tv_country_name"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen_big_16dp"
-        android:background="@drawable/button_bg"
+        android:background="@drawable/bg_button"
         android:onClick="serverOnClick"
         android:paddingStart="@dimen/dimen_big_16dp"
         android:paddingEnd="@dimen/dimen_big_16dp"

@@ -18,7 +18,7 @@
         android:layout_width="96dp"
         android:layout_height="72dp"
         android:layout_centerVertical="true"
-        app:srcCompat="@drawable/ar" />
+        app:srcCompat="@drawable/ic_dummy_flag" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,6 @@
 
         <TextView
             android:id="@+id/textCity"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/colorTextBlack"
@@ -42,18 +41,15 @@
 
         <TextView
             android:id="@+id/textHostName"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/textIP"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem" />
-
 
     </LinearLayout>
 

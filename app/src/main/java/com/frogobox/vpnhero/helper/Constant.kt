@@ -1,5 +1,9 @@
 package com.frogobox.vpnhero.helper
 
+import com.frogobox.vpnhero.helper.Constant.Variable.BASE_FLAG_IMAGE_SIZE
+import com.frogobox.vpnhero.helper.Constant.Variable.BASE_FLAG_IMAGE_URL
+import com.frogobox.vpnhero.source.model.Server
+
 /**
  * Created by Faisal Amir
  * FrogoBox Inc License
@@ -40,6 +44,15 @@ class Constant {
         const val EXTRA_AUTO_CONNECTION = "EXTRA_AUTO_CONNECTION"
         const val EXTRA_FIRST_PREMIUM_LOAD = "firstPremiumLoad"
 
+        const val BASE_FLAG_IMAGE_URL = "https://www.countryflags.io/"
+        const val BASE_FLAG_IMAGE_SIZE = "/flat/64.png"
+    }
+
+
+    fun getFlagImageUrl(data: Server): String {
+        var code: String = data.countryShort!!.toLowerCase()
+        if (code == "do") code = "dom"
+        return "$BASE_FLAG_IMAGE_URL$code$BASE_FLAG_IMAGE_SIZE"
     }
 
 

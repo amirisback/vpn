@@ -2,8 +2,10 @@ package com.frogobox.vpnhero.view.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.frogobox.vpnhero.base.adapter.BaseViewAdapter
 import com.frogobox.vpnhero.base.adapter.BaseViewHolder
+import com.frogobox.vpnhero.helper.Constant
 import com.frogobox.vpnhero.source.model.Server
 import com.frogobox.vpnhero.util.ConnectionQuality
 import kotlinx.android.synthetic.main.view_item_server.view.*
@@ -41,11 +43,7 @@ class ServerViewAdapter : BaseViewAdapter<Server>() {
 
         override fun initComponent(data: Server) {
             super.initComponent(data)
-
-            var code: String = data.countryShort!!.toLowerCase()
-            if (code == "do") code = "dom"
-
-            iv_flag.setImageResource(mContext.resources.getIdentifier(code, "drawable", mContext.packageName))
+            Glide.with(itemView.context).load(Constant().getFlagImageUrl(data)).into(iv_flag)
             iv_connect.setImageResource(mContext.resources.getIdentifier(ConnectionQuality.getConnectIcon(data.quality), "drawable", mContext.packageName))
             tv_host_name.text = data.hostName
             tv_ip.text = data.ip

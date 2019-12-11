@@ -36,7 +36,7 @@
     </style>
 
     <style name="buttonsPopUp">
-        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:background">@drawable/bg_button</item>
         <item name="android:textColor">@color/buttonText</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">8dp</item>

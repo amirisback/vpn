@@ -20,7 +20,6 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar_main)
         setupShowAdsInterstitial()
         setupShowAdsBanner(admob_adview)
-        setupCheckConnectionState()
         setupViewFunction()
 
     }
@@ -36,6 +35,7 @@ class MainActivity : BaseActivity() {
                 baseStartActivity<AboutUsActivity>()
                 true
             }
+
             R.id.toolbar_location -> {
                 baseStartActivity<CountryActivity>()
                 true
@@ -54,19 +54,6 @@ class MainActivity : BaseActivity() {
             }
         }
 
-    }
-
-    private fun setupCheckConnectionState() {
-        if (hasConnectedServer()) {
-            tv_connection_state.text = "Connected"
-        } else {
-            tv_connection_state.text = "No VPN Connected"
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setupCheckConnectionState()
     }
 
 }

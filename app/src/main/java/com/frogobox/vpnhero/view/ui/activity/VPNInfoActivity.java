@@ -30,9 +30,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.bumptech.glide.Glide;
 import com.frogobox.vpnhero.BuildConfig;
 import com.frogobox.vpnhero.R;
 import com.frogobox.vpnhero.base.ui.BaseActivity;
+import com.frogobox.vpnhero.helper.Constant;
 import com.frogobox.vpnhero.source.model.Server;
 import com.frogobox.vpnhero.util.PropertiesService;
 import com.frogobox.vpnhero.util.Stopwatch;
@@ -173,18 +175,7 @@ public class VPNInfoActivity extends BaseActivity {
             }
         }
 
-
-        String code = currentServer.getCountryShort().toLowerCase();
-        if (code.equals("do"))
-            code = "dom";
-
-        ((ImageView) findViewById(R.id.ivServerFlag))
-                .setImageResource(
-                        getResources().getIdentifier(code,
-                                "drawable",
-                                getPackageName()));
-
-
+        Glide.with(this).load(new Constant().getFlagImageUrl(currentServer)).into((ImageView) findViewById(R.id.ivServerFlag));
         String localeCountryName = getLocaleCountries().get(currentServer.getCountryShort()) != null ?
                 getLocaleCountries().get(currentServer.getCountryShort()) : currentServer.getCountryLong();
 
@@ -222,11 +213,11 @@ public class VPNInfoActivity extends BaseActivity {
 
         circleView2.setValue(Integer.parseInt(currentServer.getNumVpnSessions()));
         if (checkStatus()) {
-            serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
+            serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button3));
             serverConnect.setText(getString(R.string.server_btn_disconnect));
             ((TextView) findViewById(R.id.serverStatus)).setText(VpnStatus.getLastCleanLogMessage(getApplicationContext()));
         } else {
-            serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
+            serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button2));
             serverConnect.setText(getString(R.string.server_btn_connect));
         }
     }
@@ -313,15 +304,15 @@ public class VPNInfoActivity extends BaseActivity {
                     chooseAction();
 
                 }
-                serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
+                serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button3));
                 serverConnect.setText(getString(R.string.server_btn_disconnect));
                 break;
             case LEVEL_NOTCONNECTED:
-                serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
+                serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button2));
                 serverConnect.setText(getString(R.string.server_btn_connect));
                 break;
             default:
-                serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
+                serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button3));
                 serverConnect.setText(getString(R.string.server_btn_disconnect));
                 statusConnection = false;
                 serverConnectingProgress.setVisibility(View.VISIBLE);
@@ -333,7 +324,7 @@ public class VPNInfoActivity extends BaseActivity {
         if (loadVpnProfile()) {
             waitConnection = new WaitConnectionAsync();
             waitConnection.execute();
-            serverConnect.setBackground(getResources().getDrawable(R.drawable.button3));
+            serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button3));
             serverConnect.setText(getString(R.string.server_btn_disconnect));
             startVpn();
         } else {
@@ -393,7 +384,7 @@ public class VPNInfoActivity extends BaseActivity {
             waitConnection.cancel(false);
         serverConnectingProgress.setVisibility(View.GONE);
         serverStatus.setText(R.string.server_not_connected);
-        serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
+        serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button2));
         serverConnect.setText(getString(R.string.server_btn_connect));
         setConnectedServer(null);
     }
@@ -452,12 +443,12 @@ public class VPNInfoActivity extends BaseActivity {
             if (!checkStatus()) {
                 setConnectedServer(null);
                 serverConnect.setText(getString(R.string.server_btn_connect));
-                serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
+                serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button2));
                 serverStatus.setText(R.string.server_not_connected);
             }
         } else {
             serverConnect.setText(getString(R.string.server_btn_connect));
-            serverConnect.setBackground(getResources().getDrawable(R.drawable.button2));
+            serverConnect.setBackground(getResources().getDrawable(R.drawable.bg_button2));
             if (autoConnection) {
                 prepareVpn();
             }
