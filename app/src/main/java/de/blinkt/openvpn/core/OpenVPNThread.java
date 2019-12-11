@@ -3,7 +3,7 @@ package de.blinkt.openvpn.core;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.frogobox.evpn.R;
+import com.frogobox.vpnhero.R;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

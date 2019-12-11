@@ -8,7 +8,7 @@ import android.content.pm.Signature;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.frogobox.evpn.R;
+import com.frogobox.vpnhero.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;

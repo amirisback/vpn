@@ -7,7 +7,7 @@
             android:defaultValue="true"
             android:summary="@string/automatic_switching_summary"
             android:key="automaticSwitching"/>
-        <com.frogobox.evpn.util.NumberPickerPreference
+        <com.frogobox.vpnhero.util.NumberPickerPreference
             android:dependency="automaticSwitching"
             android:key="automaticSwitchingSeconds"
             android:title="@string/automatic_switching_set_seconds"

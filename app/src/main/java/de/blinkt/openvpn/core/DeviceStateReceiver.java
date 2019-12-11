@@ -10,7 +10,7 @@ import android.net.NetworkInfo.State;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 
-import com.frogobox.evpn.R;
+import com.frogobox.vpnhero.R;
 
 import java.util.LinkedList;
 
