@@ -1,61 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeContextRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundWhite"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_main" />
 
-    <LinearLayout
-        android:id="@+id/header_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/admob_adview"
-        android:layout_below="@id/toolbar_main"
-        android:gravity="center"
-        android:orientation="vertical">
+    <Button
+        android:id="@+id/btn_quick_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_card"
+        android:padding="@dimen/dimen_big_16dp"
+        android:text="Quick Connect"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:visibility="visible" />
 
-        <Button
-            android:id="@+id/btn_quick_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:background="@drawable/bg_card"
-            android:padding="@dimen/dimen_big_16dp"
-            android:text="Quick Connect"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_connection_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:text="No VPN Connected" />
-
-        <TextView
-            android:id="@+id/tv_total_server"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:text="Jumlah 1000"
-            android:textColor="#000000"
-            android:textSize="12sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_country"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/dimen_medium_8dp"
-            tools:listitem="@layout/view_item_country" />
-
-    </LinearLayout>
-
+    <TextView
+        android:id="@+id/tv_connection_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_quick_connect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_big_16dp"
+        android:text="No VPN Connected" />
 
     <include layout="@layout/ads_banner" />
 
