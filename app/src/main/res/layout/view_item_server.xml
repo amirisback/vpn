@@ -23,6 +23,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/imageConnect"
+        android:layout_toLeftOf="@id/imageConnect"
+        android:layout_toEndOf="@id/imageFlag"
         android:layout_toRightOf="@id/imageFlag"
         android:orientation="vertical">
 
@@ -33,6 +37,7 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textStyle="bold"
+            android:textColor="@color/colorTextBlack"
             tools:text="@tools:sample/lorem" />
 
         <TextView
@@ -49,11 +54,15 @@
             android:layout_height="wrap_content"
             tools:text="@tools:sample/lorem" />
 
-        <ImageView
-            android:id="@+id/imageConnect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>

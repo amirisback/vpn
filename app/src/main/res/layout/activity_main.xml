@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeContextRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,95 +11,51 @@
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/admob_adview"
         android:layout_below="@id/toolbar_main"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/dimen_big_super_24dp">
+        android:orientation="vertical">
 
-        <com.frogobox.evpn.util.xml.CustomTxTRegular
+        <Button
+            android:id="@+id/btn_quick_connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_big_16dp"
+            android:background="@drawable/bg_card"
+            android:padding="@dimen/dimen_big_16dp"
+            android:text="Quick Connect"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_connection_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_big_16dp"
+            android:text="No VPN Connected" />
+
+        <TextView
             android:id="@+id/tv_total_server"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_big_16dp"
             android:text="Jumlah 1000"
             android:textColor="#000000"
             android:textSize="12sp" />
 
-        <Button
-            android:id="@+id/tv_connection_state"
-            style="@style/buttons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_big_super_24dp"
-            android:background="@drawable/button2"
-            android:text="No VPN Connected" />
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_country"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/dimen_medium_8dp"
+            tools:listitem="@layout/view_item_country" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/header_layout"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/homeBtnRandomConnection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:background="@drawable/bg_card"
-            android:elevation="@dimen/dimen_small_4dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_big_super_24dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/vpn" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Quick Connect"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/homeBtnChooseCountry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:background="@drawable/bg_card"
-            android:elevation="@dimen/dimen_small_4dp"
-            android:orientation="vertical"
-            android:padding="@dimen/dimen_big_super_24dp">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/field" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Choose Country"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-    </LinearLayout>
 
     <include layout="@layout/ads_banner" />
 

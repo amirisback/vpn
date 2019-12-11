@@ -28,8 +28,6 @@ import kotlinx.android.synthetic.main.view_item_server.view.*
  */
 class ServerViewAdapter : BaseViewAdapter<Server>() {
 
-    private val localeCountries: Map<String, String> = CountriesNames.getCountries()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Server> {
         return ServerViewHolder(viewLayout(parent))
     }
