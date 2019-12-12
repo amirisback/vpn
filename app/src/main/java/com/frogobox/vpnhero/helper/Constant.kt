@@ -43,6 +43,7 @@ class Constant {
         const val EXTRA_FAST_CONNECTION = "EXTRA_FAST_CONNECTION"
         const val EXTRA_AUTO_CONNECTION = "EXTRA_AUTO_CONNECTION"
         const val EXTRA_FIRST_PREMIUM_LOAD = "firstPremiumLoad"
+        const val EXTRA_STATUS = "status"
 
         const val BASE_FLAG_IMAGE_URL = "https://www.countryflags.io/"
         const val BASE_FLAG_IMAGE_SIZE = "/flat/64.png"

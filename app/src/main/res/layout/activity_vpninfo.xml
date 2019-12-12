@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/serverParentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,7 +11,7 @@
         android:layout_width="160dp"
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        CircleProgressView:srcCompat="@drawable/ic_dummy_flag" />
+        app:srcCompat="@drawable/ic_dummy_flag" />
 
     <TextView
         android:id="@+id/tv_country_name"
@@ -38,126 +39,14 @@
         android:text="TAP TO CONNECT"
         android:textColor="@color/colorTextWhite" />
 
-    <LinearLayout
-        android:id="@+id/center_info"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/serverStatus"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/serverConnect"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <at.grabner.circleprogress.CircleProgressView
-                android:id="@+id/circleViewSpeed"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginTop="5dp"
-                CircleProgressView:cpv_autoTextSize="true"
-                CircleProgressView:cpv_barColor="@color/disconnect_red"
-                CircleProgressView:cpv_barWidth="30dp"
-                CircleProgressView:cpv_maxValue="40"
-                CircleProgressView:cpv_rimWidth="20dp"
-                CircleProgressView:cpv_seekMode="false"
-                CircleProgressView:cpv_showUnit="true"
-                CircleProgressView:cpv_spinColor="@color/dot_dark_screen1"
-                CircleProgressView:cpv_textColor="@color/colorPrimaryText"
-                CircleProgressView:cpv_textScale="1"
-                CircleProgressView:cpv_unit="MB"
-                CircleProgressView:cpv_unitColor="@color/rate_us_bg"
-                CircleProgressView:cpv_unitPosition="bottom"
-                CircleProgressView:cpv_value="5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Speed"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <at.grabner.circleprogress.CircleProgressView
-                android:id="@+id/circleViewSession"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginTop="5dp"
-                CircleProgressView:cpv_autoTextSize="true"
-                CircleProgressView:cpv_barColor="@color/progress"
-                CircleProgressView:cpv_barWidth="30dp"
-                CircleProgressView:cpv_rimWidth="20dp"
-                CircleProgressView:cpv_seekMode="false"
-                CircleProgressView:cpv_showUnit="true"
-                CircleProgressView:cpv_spinColor="@color/dot_dark_screen1"
-                CircleProgressView:cpv_textColor="@color/colorPrimaryText"
-                CircleProgressView:cpv_textScale="1"
-                CircleProgressView:cpv_unitColor="@color/rate_us_bg"
-                CircleProgressView:cpv_unitPosition="bottom"
-                CircleProgressView:cpv_value="10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Session"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-
-            <at.grabner.circleprogress.CircleProgressView
-                android:id="@+id/circleViewPing"
-                android:layout_width="110dp"
-                android:layout_height="110dp"
-                android:layout_marginTop="5dp"
-                CircleProgressView:cpv_autoTextSize="true"
-                CircleProgressView:cpv_barColor="@color/additionalServer"
-                CircleProgressView:cpv_barWidth="30dp"
-                CircleProgressView:cpv_maxValue="40"
-                CircleProgressView:cpv_rimWidth="20dp"
-                CircleProgressView:cpv_showUnit="true"
-                CircleProgressView:cpv_spinColor="@color/dot_dark_screen1"
-                CircleProgressView:cpv_textColor="@color/colorPrimaryText"
-                CircleProgressView:cpv_textScale="1"
-                CircleProgressView:cpv_unit="MS"
-                CircleProgressView:cpv_unitColor="@color/rate_us_bg"
-                CircleProgressView:cpv_unitPosition="bottom"
-                CircleProgressView:cpv_value="5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ping"
-                android:textColor="@color/colorTextBlack"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_below="@+id/serverConnect"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        tools:text="@tools:sample/lorem" />
 
     <ProgressBar
         android:id="@+id/serverConnectingProgress"
@@ -166,194 +55,143 @@
         android:layout_centerInParent="true"
         android:visibility="gone" />
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/center_info">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/serverStatus"
+        android:padding="@dimen/dimen_big_16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+
+            android:id="@+id/tv_speed"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_big_16dp"
-            android:orientation="vertical">
+            android:text="Speed"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#363b40"
-                android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="13dp"
-                    android:layout_marginLeft="13dp"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textStyle="bold"
-                    android:visibility="visible" />
+        <TextView
+            android:id="@+id/circleViewSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            tools:text="@tools:sample/lorem" />
 
-                <TextView
-                    android:id="@+id/serverStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView"
-                    android:layout_alignBottom="@+id/textView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginRight="34dp"
-                    android:gravity="center"
-                    android:textColor="@color/colorTextWhite"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_ping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_speed"
+            android:text="Ping"
+            android:textColor="@color/colorTextBlack"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorPrimary"
-                android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="Server Traffic In"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/circleViewPing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circleViewSpeed"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            tools:text="@tools:sample/lorem" />
 
-                <TextView
-                    android:id="@+id/serverTrafficIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView1"
-                    android:layout_alignBottom="@+id/textView1"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginRight="34dp"
-                    android:gravity="center"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorTextWhite"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_session"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_ping"
+            android:text="Session"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#363b40"
-                android:visibility="visible">
+        <TextView
+            android:id="@+id/circleViewSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circleViewPing"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            tools:text="@tools:sample/lorem" />
 
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="Server Traffic Out"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/serverTrafficOut"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView2"
-                    android:layout_alignBottom="@+id/textView2"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginRight="34dp"
-                    android:gravity="center"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorTextWhite"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+    </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/colorPrimary"
-                android:visibility="visible">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_big_16dp">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="Total Traffic"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tv_trafficIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Server Traffic In"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/serverTrafficInTotally"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView3"
-                    android:layout_alignBottom="@+id/textView3"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginRight="34dp"
-                    android:gravity="center"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorTextWhite"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/serverTrafficIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem"
+            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#363b40"
-                android:visibility="visible">
+        <TextView
+            android:id="@+id/tv_trafficOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Server Traffic Out"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:text="Traffic Consumed"
-                    android:textColor="@android:color/holo_orange_light"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/serverTrafficOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem"
+            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
 
-                <TextView
-                    android:id="@+id/serverTrafficOutTotally"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView4"
-                    android:layout_alignBottom="@+id/textView4"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginRight="34dp"
-                    android:gravity="center"
-                    android:textAlignment="gravity"
-                    android:textColor="@color/colorTextWhite"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_trafficInTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Traffic"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/serverTrafficInTotally"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem"
+            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Traffic Consumed"
+            android:textColor="@android:color/holo_orange_light"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/serverTrafficOutTotally"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            tools:text="@tools:sample/lorem" />
+    </LinearLayout>
 
     <include layout="@layout/ads_banner" />
 

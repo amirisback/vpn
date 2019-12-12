@@ -145,7 +145,5 @@ dependencies {
     implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
     implementation 'com.amitshekhar.android:android-networking:0.2.0'
 
-    implementation 'com.github.jakob-grabner:Circle-Progress-View:1.2.8'
-
     testImplementation 'junit:junit:4.12'
 }
