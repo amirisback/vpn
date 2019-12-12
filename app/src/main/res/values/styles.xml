@@ -47,4 +47,31 @@
         <item name="android:width">250dp</item>
     </style>
 
+    <style name="tv_state_connection_thumb">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/text_size_title_medium_20sp</item>
+        <item name="android:text">@string/dummy</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorBackgroundSeaBlue</item>
+    </style>
+
+    <style name="tv_title_traffic">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/dummy</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FF9800</item>
+    </style>
+
+    <style name="tv_content_traffic">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">-</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
 </resources>

@@ -2,8 +2,10 @@ package com.frogobox.vpnhero.view.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.frogobox.vpnhero.base.adapter.BaseViewAdapter
 import com.frogobox.vpnhero.base.adapter.BaseViewHolder
+import com.frogobox.vpnhero.helper.Constant
 import com.frogobox.vpnhero.source.model.Server
 import com.frogobox.vpnhero.util.CountriesNames
 import kotlinx.android.synthetic.main.view_item_country.view.*
@@ -34,6 +36,7 @@ class CountryViewAdapter : BaseViewAdapter<Server>() {
     inner class CountryViewHolder(view: View) : BaseViewHolder<Server>(view) {
 
         private val tv_country = view.tv_country_name
+        private val iv_flag = view.ivServerFlag
 
         override fun initComponent(data: Server) {
             super.initComponent(data)
@@ -41,6 +44,7 @@ class CountryViewAdapter : BaseViewAdapter<Server>() {
             val localeCountries: MutableMap<String, String> = CountriesNames.getCountries()
             val localeCountryName = if (localeCountries[data.countryShort] != null) localeCountries[data.countryShort] else data.countryLong
             tv_country.text = localeCountryName
+            Glide.with(itemView.context).load(Constant().getFlagImageUrl(data)).into(iv_flag)
         }
     }
 

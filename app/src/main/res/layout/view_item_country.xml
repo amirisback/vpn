@@ -18,25 +18,34 @@
  -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/dimen_medium_8dp"
-    android:layout_marginEnd="@dimen/dimen_medium_8dp"
-    android:layout_marginBottom="@dimen/dimen_medium_8dp"
-    android:background="@drawable/bg_card"
+    android:layout_marginStart="@dimen/dimen_big_16dp"
+    android:layout_marginLeft="@dimen/dimen_big_16dp"
+    android:layout_marginBottom="@dimen/dimen_big_16dp"
+    android:background="@drawable/bg_card_dark"
     android:elevation="@dimen/dimen_small_4dp"
+    android:gravity="center"
     android:orientation="vertical"
     android:paddingStart="@dimen/dimen_big_16dp"
-    android:paddingEnd="@dimen/dimen_big_16dp"
     android:paddingTop="@dimen/dimen_medium_8dp"
+    android:paddingEnd="@dimen/dimen_big_16dp"
     android:paddingBottom="@dimen/dimen_medium_8dp">
+
+    <ImageView
+        android:id="@+id/ivServerFlag"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/ic_dummy_flag" />
 
     <TextView
         android:id="@+id/tv_country_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Indonesia"
+        android:maxLines="1"
         android:textColor="@color/primary_black_text"
-        android:textSize="@dimen/text_size_title_medium_20sp" />
+        android:textSize="@dimen/text_size_medium_16sp" />
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.util.Base64
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.frogobox.vpnhero.BuildConfig
 import com.frogobox.vpnhero.R
@@ -47,9 +48,9 @@ class VPNInfoActivity : BaseActivity() {
     private var autoConnection = false
     private var fastConnection = false
     private var statusConnection = false
+    private var isBindedService = false
     private var firstData = true
     private var inBackground = false
-    private var isBindedService = false
 
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName,
@@ -71,11 +72,11 @@ class VPNInfoActivity : BaseActivity() {
         setupShowAdsBanner(findViewById(R.id.admob_adview))
         setupShowAdsInterstitial()
 
-        serverTrafficInTotally.text = String.format(resources.getString(R.string.traffic_in), TotalTraffic.getTotalTraffic()[0])
-        serverTrafficOutTotally.text = String.format(resources.getString(R.string.traffic_out), TotalTraffic.getTotalTraffic()[1])
+        serverTrafficInTotally.text = String.format(getString(R.string.traffic_in), TotalTraffic.getTotalTraffic()[0])
+        serverTrafficOutTotally.text = String.format(getString(R.string.traffic_out), TotalTraffic.getTotalTraffic()[1])
         serverTrafficIn.text = ""
         serverTrafficOut.text = ""
-        
+
         br = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 receiveStatus(intent)
@@ -112,11 +113,11 @@ class VPNInfoActivity : BaseActivity() {
         circleViewSession.text = currentServer.numVpnSessions
 
         if (checkStatus()) {
-            serverConnect.background = resources.getDrawable(R.drawable.bg_button3)
+            serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
             serverConnect.text = getString(R.string.server_btn_disconnect)
             serverStatus.text = VpnStatus.getLastCleanLogMessage(applicationContext)
         } else {
-            serverConnect.background = resources.getDrawable(R.drawable.bg_button2)
+            serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
             serverConnect.text = getString(R.string.server_btn_connect)
         }
     }
@@ -133,17 +134,17 @@ class VPNInfoActivity : BaseActivity() {
             if (firstData) {
                 firstData = false
             } else {
-                `in` = String.format(resources.getString(R.string.traffic_in),
+                `in` = String.format(getString(R.string.traffic_in),
                         intent.getStringExtra(TotalTraffic.DOWNLOAD_SESSION))
-                out = String.format(resources.getString(R.string.traffic_out),
+                out = String.format(getString(R.string.traffic_out),
                         intent.getStringExtra(TotalTraffic.UPLOAD_SESSION))
             }
             serverTrafficIn.text = `in`
             serverTrafficOut.text = out
-            val inTotal = String.format(resources.getString(R.string.traffic_in),
+            val inTotal = String.format(getString(R.string.traffic_in),
                     intent.getStringExtra(TotalTraffic.DOWNLOAD_ALL))
             serverTrafficInTotally.text = inTotal
-            val outTotal = String.format(resources.getString(R.string.traffic_out),
+            val outTotal = String.format(getString(R.string.traffic_out),
                     intent.getStringExtra(TotalTraffic.UPLOAD_ALL))
             serverTrafficOutTotally.text = outTotal
         }
@@ -187,15 +188,15 @@ class VPNInfoActivity : BaseActivity() {
                 if (!inBackground) {
                     showToast("Connection VPN Succses")
                 }
-                serverConnect.background = resources.getDrawable(R.drawable.bg_button3)
+                serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
                 serverConnect.text = getString(R.string.server_btn_disconnect)
             }
             ConnectionStatus.LEVEL_NOTCONNECTED -> {
-                serverConnect.background = resources.getDrawable(R.drawable.bg_button2)
+                serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
                 serverConnect.text = getString(R.string.server_btn_connect)
             }
             else -> {
-                serverConnect.background = resources.getDrawable(R.drawable.bg_button3)
+                serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
                 serverConnect.text = getString(R.string.server_btn_disconnect)
                 statusConnection = false
                 serverConnectingProgress.visibility = View.VISIBLE
@@ -208,7 +209,7 @@ class VPNInfoActivity : BaseActivity() {
         if (loadVpnProfile()) {
             waitConnection = WaitConnectionAsync()
             waitConnection.execute()
-            serverConnect.background = resources.getDrawable(R.drawable.bg_button3)
+            serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
             serverConnect.text = getString(R.string.server_btn_disconnect)
             startVpn()
         } else {
@@ -264,7 +265,7 @@ class VPNInfoActivity : BaseActivity() {
         waitConnection.cancel(false)
         serverConnectingProgress.visibility = View.GONE
         serverStatus.text = getString(R.string.server_not_connected)
-        serverConnect.background = resources.getDrawable(R.drawable.bg_button2)
+        serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
         serverConnect.text = getString(R.string.server_btn_connect)
         connectedServer = null
     }
@@ -311,12 +312,12 @@ class VPNInfoActivity : BaseActivity() {
             if (!checkStatus()) {
                 connectedServer = null
                 serverConnect.text = getString(R.string.server_btn_connect)
-                serverConnect.background = resources.getDrawable(R.drawable.bg_button2)
+                serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
                 serverStatus.setText(R.string.server_not_connected)
             }
         } else {
             serverConnect.text = getString(R.string.server_btn_connect)
-            serverConnect.background = resources.getDrawable(R.drawable.bg_button2)
+            serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
             if (autoConnection) {
                 prepareVpn()
             }

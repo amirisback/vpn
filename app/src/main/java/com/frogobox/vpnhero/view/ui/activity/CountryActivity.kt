@@ -3,6 +3,7 @@ package com.frogobox.vpnhero.view.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.frogobox.vpnhero.R
 import com.frogobox.vpnhero.base.adapter.BaseViewListener
 import com.frogobox.vpnhero.base.ui.BaseActivity
@@ -29,7 +30,7 @@ class CountryActivity : BaseActivity(), BaseViewListener<Server> {
         val countryList = dbHelper.uniqueCountries
         val adapter = CountryViewAdapter()
         adapter.setupRequirement(this, this, countryList, R.layout.view_item_country)
-        recycler_view_country.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recycler_view_country.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recycler_view_country.adapter = adapter
 
     }

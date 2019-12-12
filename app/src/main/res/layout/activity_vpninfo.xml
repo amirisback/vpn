@@ -4,194 +4,225 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/serverParentLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackgroundWhite">
 
-    <ImageView
-        android:id="@+id/ivServerFlag"
-        android:layout_width="160dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        app:srcCompat="@drawable/ic_dummy_flag" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/admob_adview">
 
-    <TextView
-        android:id="@+id/tv_country_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ivServerFlag"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_medium_8dp"
-        android:text="Country Name"
-        android:textColor="@color/colorTextBlack"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/serverConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_country_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_big_16dp"
-        android:background="@drawable/bg_button"
-        android:onClick="serverOnClick"
-        android:paddingStart="@dimen/dimen_big_16dp"
-        android:paddingEnd="@dimen/dimen_big_16dp"
-        android:text="TAP TO CONNECT"
-        android:textColor="@color/colorTextWhite" />
+            <ImageView
+                android:id="@+id/ivServerFlag"
+                android:layout_width="160dp"
+                android:layout_height="120dp"
+                app:srcCompat="@drawable/ic_dummy_flag" />
 
-    <TextView
-        android:id="@+id/serverStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/serverConnect"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        tools:text="@tools:sample/lorem" />
+            <TextView
+                android:id="@+id/tv_country_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Country Name"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/serverConnect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_big_16dp"
+                android:background="@drawable/bg_button"
+                android:onClick="serverOnClick"
+                android:paddingStart="@dimen/dimen_big_16dp"
+                android:paddingEnd="@dimen/dimen_big_16dp"
+                android:text="TAP TO CONNECT"
+                android:textColor="@color/colorTextWhite" />
+
+            <TextView
+                android:id="@+id/serverStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_big_16dp"
+                android:textStyle="bold"
+                tools:text="@tools:sample/lorem" />
+
+            <LinearLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_big_16dp"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/circleViewPing"
+                        style="@style/tv_state_connection_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_ping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ping"
+                        android:textColor="@color/colorTextBlack" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/dimen_view_line"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBackgroundLine" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/circleViewSpeed"
+                        style="@style/tv_state_connection_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_speed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Speed"
+                        android:textColor="@color/colorTextBlack" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/dimen_view_line"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBackgroundLine" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/circleViewSession"
+                        style="@style/tv_state_connection_thumb" />
+
+                    <TextView
+                        android:id="@+id/tv_session"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Session"
+                        android:textColor="@color/colorTextBlack" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_big_16dp">
+
+                <TextView
+                    android:id="@+id/tv_trafficIn"
+                    style="@style/tv_title_traffic"
+                    android:text="Server Traffic In" />
+
+                <TextView
+                    android:id="@+id/serverTrafficIn"
+                    style="@style/tv_content_traffic" />
+
+                <View
+                    android:id="@+id/view_line_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:layout_below="@id/tv_trafficIn"
+                    android:layout_marginTop="@dimen/dimen_big_16dp"
+                    android:layout_marginBottom="@dimen/dimen_big_16dp"
+                    android:background="@color/colorBackgroundLine" />
+
+                <TextView
+                    android:id="@+id/tv_trafficOut"
+                    style="@style/tv_title_traffic"
+                    android:layout_below="@id/view_line_1"
+                    android:text="Server Traffic Out" />
+
+                <TextView
+                    android:id="@+id/serverTrafficOut"
+                    style="@style/tv_content_traffic"
+                    android:layout_below="@id/view_line_1" />
+
+                <View
+                    android:id="@+id/view_line_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:layout_below="@id/tv_trafficOut"
+                    android:layout_marginTop="@dimen/dimen_big_16dp"
+                    android:layout_marginBottom="@dimen/dimen_big_16dp"
+                    android:background="@color/colorBackgroundLine" />
+
+
+                <TextView
+                    android:id="@+id/tv_trafficInTotal"
+                    style="@style/tv_title_traffic"
+                    android:layout_below="@id/view_line_2"
+                    android:text="Total Traffic" />
+
+                <TextView
+                    android:id="@+id/serverTrafficInTotally"
+                    style="@style/tv_content_traffic"
+                    android:layout_below="@id/view_line_2" />
+
+                <View
+                    android:id="@+id/view_line_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_view_line"
+                    android:layout_below="@id/tv_trafficInTotal"
+                    android:layout_marginTop="@dimen/dimen_big_16dp"
+                    android:layout_marginBottom="@dimen/dimen_big_16dp"
+                    android:background="@color/colorBackgroundLine" />
+
+
+                <TextView
+                    android:id="@+id/tv_trafficOutTotal"
+                    style="@style/tv_title_traffic"
+                    android:layout_below="@id/view_line_3"
+                    android:text="Traffic Consumed" />
+
+                <TextView
+                    android:id="@+id/serverTrafficOutTotally"
+                    style="@style/tv_content_traffic"
+                    android:layout_below="@id/view_line_3" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/serverConnectingProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_big_ultra_32dp"
         android:visibility="gone" />
-
-    <RelativeLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/serverStatus"
-        android:padding="@dimen/dimen_big_16dp">
-
-        <TextView
-
-            android:id="@+id/tv_speed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Speed"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/circleViewSpeed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            tools:text="@tools:sample/lorem" />
-
-        <TextView
-            android:id="@+id/tv_ping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_speed"
-            android:text="Ping"
-            android:textColor="@color/colorTextBlack"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/circleViewPing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/circleViewSpeed"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            tools:text="@tools:sample/lorem" />
-
-        <TextView
-            android:id="@+id/tv_session"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_ping"
-            android:text="Session"
-            android:textColor="@color/colorTextBlack"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/circleViewSession"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/circleViewPing"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            tools:text="@tools:sample/lorem" />
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/container"
-        android:orientation="vertical"
-        android:padding="@dimen/dimen_big_16dp">
-
-        <TextView
-            android:id="@+id/tv_trafficIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Server Traffic In"
-            android:textColor="@android:color/holo_orange_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/serverTrafficIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="@tools:sample/lorem"
-            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
-
-        <TextView
-            android:id="@+id/tv_trafficOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Server Traffic Out"
-            android:textColor="@android:color/holo_orange_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/serverTrafficOut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="@tools:sample/lorem"
-            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
-
-        <TextView
-            android:id="@+id/tv_trafficInTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Traffic"
-            android:textColor="@android:color/holo_orange_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/serverTrafficInTotally"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="@tools:sample/lorem"
-            android:layout_marginBottom="@dimen/dimen_big_16dp"/>
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Traffic Consumed"
-            android:textColor="@android:color/holo_orange_light"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/serverTrafficOutTotally"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="@tools:sample/lorem" />
-    </LinearLayout>
 
     <include layout="@layout/ads_banner" />
 

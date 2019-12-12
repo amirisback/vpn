@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundWhite"
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".view.ui.activity.SplashActivity">
 
@@ -66,8 +67,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        tools:text="@tools:sample/lorem"
+        android:textColor="@color/colorTextBlack"
         android:textSize="@dimen/text_size_default_12sp"
-        android:textColor="@color/colorTextBlack" />
+        tools:text="@tools:sample/lorem" />
 
 </RelativeLayout>

@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/bg_card"
+        android:background="@drawable/bg_card_white"
         android:padding="@dimen/dimen_big_16dp"
         android:text="Connect"
         android:textAlignment="center"

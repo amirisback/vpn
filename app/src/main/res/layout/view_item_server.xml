@@ -8,7 +8,7 @@
     android:layout_marginStart="@dimen/dimen_big_16dp"
     android:layout_marginTop="@dimen/dimen_big_16dp"
     android:layout_marginEnd="@dimen/dimen_big_16dp"
-    android:background="@drawable/bg_card"
+    android:background="@drawable/bg_card_dark"
     android:elevation="@dimen/dimen_small_4dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:padding="@dimen/dimen_medium_8dp">
@@ -16,7 +16,7 @@
     <ImageView
         android:id="@+id/imageFlag"
         android:layout_width="96dp"
-        android:layout_height="72dp"
+        android:layout_height="64dp"
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_dummy_flag" />
 
@@ -59,6 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dimen_big_16dp"
+        android:layout_marginRight="@dimen/dimen_big_16dp" />
 
 </RelativeLayout>

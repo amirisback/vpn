@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackgroundWhite"
     tools:context=".view.ui.activity.CountryActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_country"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/admob_adview"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/dimen_medium_8dp"
-        tools:listitem="@layout/view_item_country" android:layout_above="@+id/admob_adview"/>
+        android:paddingTop="@dimen/dimen_big_16dp"
+        android:paddingEnd="@dimen/dimen_big_16dp"
+        android:paddingRight="@dimen/dimen_big_16dp"
+        tools:listitem="@layout/view_item_country" />
 
     <include layout="@layout/ads_banner" />
 
