@@ -51,7 +51,7 @@
 
     <dimen name="min_height_list_bimbingan_95dp">95dp</dimen>
     <dimen name="min_height_info_200dp">200dp</dimen>
-    <dimen name="dimen_img_product_150dp">90dp</dimen>
+    <dimen name="dimen_img_product_150dp">150dp</dimen>
     <dimen name="dimen_elevation_2dp">2dp</dimen>
     <dimen name="show_permission_padding">20dp</dimen>
     <dimen name="dimen_menu_category_100dp">100dp</dimen>

@@ -46,6 +46,12 @@
                 android:textColor="@color/colorTextWhite" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="VPN Status"/>
+
+            <TextView
                 android:id="@+id/serverStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,6 +140,14 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_view_line"
+                android:layout_marginStart="@dimen/dimen_big_16dp"
+                android:layout_marginEnd="@dimen/dimen_big_16dp"
+                android:background="@color/colorBackgroundLine" />
+
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -220,8 +234,7 @@
         android:id="@+id/serverConnectingProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dimen_big_ultra_32dp"
+        android:layout_centerInParent="true"
         android:visibility="gone" />
 
     <include layout="@layout/ads_banner" />

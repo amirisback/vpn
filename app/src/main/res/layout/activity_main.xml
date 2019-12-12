@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/homeContextRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +9,55 @@
 
     <include layout="@layout/toolbar_main" />
 
-    <Button
-        android:id="@+id/btn_quick_connect"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/btn_quick_connect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_big_ultra_32dp"
+        android:text="Tap To Connect VPN"
+        android:textColor="@color/primary_black_text"
+        android:textSize="@dimen/text_size_title_medium_20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_quick_connect"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_big_ultra_32dp"
+        android:text="Fastest Server Near You"
+        android:textColor="@color/colorTextGreen"
+        android:textSize="@dimen/text_size_title_medium_20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/btn_quick_connect"
+        android:layout_width="@dimen/dimen_img_product_150dp"
+        android:layout_height="@dimen/dimen_img_product_150dp"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_card_white"
         android:padding="@dimen/dimen_big_16dp"
+        android:elevation="@dimen/dimen_small_4dp"
         android:text="Connect"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_btn_connect_vpn" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/admob_adview"
+        android:layout_centerHorizontal="true"
+        android:text="@string/text_info_desc_privacy"
+        android:layout_margin="@dimen/dimen_big_16dp"
+        android:textSize="@dimen/text_size_small_10sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+
 
     <include layout="@layout/ads_banner" />
 

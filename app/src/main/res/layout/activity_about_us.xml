@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundWhite">
@@ -26,16 +25,28 @@
             android:text="@string/about_frogobox"
             android:textColor="@color/colorTextGreen"
             android:textSize="@dimen/text_size_title_small_18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
-        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/cpright"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/dimen_big_16dp"
+        android:gravity="center"
+        android:text="@string/text_info_desc_be_safe"
+        android:textColor="@color/colorTextBlack"
+        android:textSize="@dimen/text_size_small_10sp" />
+
+    <TextView
+        android:id="@+id/cpright"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about_copyright"
-        android:textColor="@color/colorTextBlack"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_big_16dp" />
+        android:layout_marginBottom="@dimen/dimen_big_16dp"
+        android:text="@string/about_copyright"
+        android:textColor="@color/colorTextBlack" />
 
 </RelativeLayout>
