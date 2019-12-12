@@ -190,6 +190,10 @@ open class BaseActivity : BaseAdmobActivity() {
         getIpInfoFromServerList(serverList)
     }
 
+    fun getColorRes(res: Int): Int {
+        return ContextCompat.getColor(this, res)
+    }
+
     protected open fun getIpInfoFromServerList(serverList: List<Server>) {
         val jsonArray = JSONArray()
         for (server in serverList) {

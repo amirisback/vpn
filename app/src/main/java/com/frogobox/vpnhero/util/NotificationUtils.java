@@ -58,7 +58,7 @@ public class NotificationUtils {
             if (iconUrl != null) {
                 iconBitMap = getBitmapFromURL(iconUrl);
             }
-            final int icon = R.mipmap.ic_launcher;
+            final int icon = R.drawable.ic_launcher;
 
             PendingIntent resultPendingIntent;
 
@@ -103,7 +103,7 @@ public class NotificationUtils {
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
                         .setStyle(inboxStyle)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                         .setContentText(message)
                         .build();
@@ -119,7 +119,7 @@ public class NotificationUtils {
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
                         .setStyle(bigPictureStyle)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                         .setContentText(message)
                         .build();

@@ -90,6 +90,7 @@ class VPNInfoActivity : BaseActivity() {
         }
         registerReceiver(trafficReceiver, IntentFilter(TotalTraffic.TRAFFIC_ACTION))
         serverStatus.text = getString(R.string.server_not_connected)
+        serverStatus.setTextColor(getColorRes(R.color.colorTextRed))
         initView(intent)
     }
 
@@ -116,6 +117,7 @@ class VPNInfoActivity : BaseActivity() {
             serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
             serverConnect.text = getString(R.string.server_btn_disconnect)
             serverStatus.text = VpnStatus.getLastCleanLogMessage(applicationContext)
+            serverStatus.setTextColor(getColorRes(R.color.colorTextGreen))
         } else {
             serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
             serverConnect.text = getString(R.string.server_btn_connect)
@@ -190,6 +192,7 @@ class VPNInfoActivity : BaseActivity() {
                 }
                 serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_connected)
                 serverConnect.text = getString(R.string.server_btn_disconnect)
+                serverStatus.setTextColor(getColorRes(R.color.colorTextGreen))
             }
             ConnectionStatus.LEVEL_NOTCONNECTED -> {
                 serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
@@ -265,6 +268,7 @@ class VPNInfoActivity : BaseActivity() {
         waitConnection.cancel(false)
         serverConnectingProgress.visibility = View.GONE
         serverStatus.text = getString(R.string.server_not_connected)
+        serverStatus.setTextColor(getColorRes(R.color.colorTextRed))
         serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
         serverConnect.text = getString(R.string.server_btn_connect)
         connectedServer = null
@@ -314,6 +318,7 @@ class VPNInfoActivity : BaseActivity() {
                 serverConnect.text = getString(R.string.server_btn_connect)
                 serverConnect.background = ContextCompat.getDrawable(this, R.drawable.bg_button_no_connected)
                 serverStatus.setText(R.string.server_not_connected)
+                serverStatus.setTextColor(getColorRes(R.color.colorTextRed))
             }
         } else {
             serverConnect.text = getString(R.string.server_btn_connect)

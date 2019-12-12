@@ -236,13 +236,13 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
                 pauseVPN.setAction(PAUSE_VPN);
                 PendingIntent pauseVPNPending = PendingIntent.getService(this, 0, pauseVPN, 0);
                 nbuilder.addAction(R.drawable.ic_menu_pause,
-                        getString(R.string.pauseVPN), pauseVPNPending);
+                        getString(R.string.pausVpnHero), pauseVPNPending);
 
             } else {
                 pauseVPN.setAction(RESUME_VPN);
                 PendingIntent resumeVPNPending = PendingIntent.getService(this, 0, pauseVPN, 0);
                 nbuilder.addAction(R.drawable.ic_menu_play,
-                        getString(R.string.resumevpn), resumeVPNPending);
+                        getString(R.string.resumVpnHero), resumeVPNPending);
             }
 
 
@@ -531,7 +531,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
 
         Builder builder = new Builder();
 
-        VpnStatus.logInfo(R.string.last_eVPN_tun_config);
+        VpnStatus.logInfo(R.string.last_VpnHero_tun_config);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mProfile.mAllowLocalLAN) {
             allowAllAFFamilies(builder);
