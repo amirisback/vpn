@@ -5,10 +5,10 @@ apply plugin: 'kotlin-android'
 android {
 
     // Declaration app name
-    def nameApp = "VPN Hero"
+    def nameApp = "Viprox VPN"
 
     // Declaration apk / aab name
-    def nameAPK = "vpn-hero"
+    def nameAPK = "viprox-vpn"
 
     def versionPropsFile = file('version.properties')
     Properties versionProps = new Properties()
@@ -32,7 +32,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion '29.0.1'
     defaultConfig {
-        applicationId "com.frogobox.vpnhero"
+        applicationId "com.frogobox.viprox"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1

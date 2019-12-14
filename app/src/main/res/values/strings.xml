@@ -10,7 +10,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="developer_email">contact@pharid.com</string>
-    <string name="mainText">VPN Hero offers Wi-Fi security, online privacy, and access content and apps like Facebook, Netflix, BBC, YouTube, and Skype via proxy.</string>
+    <string name="mainText">Viprox offers Wi-Fi security, online privacy, and access content and apps like Facebook, Netflix, BBC, YouTube, and Skype via proxy.</string>
     <string name="developer">Pharid</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
@@ -85,7 +85,7 @@
     <string name="routes_debug">VpnService routes installed: %1$s %2$s</string>
     <string name="error">"Error: "</string>
     <string name="route_not_cidr">Cannot make sense of %1$s and %2$s as IP route with CIDR netmask, using /32 as netmask.</string>
-    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by VPN Hero is \"%3$s\".</string>
+    <string name="ip_not_cidr">Got interface information %1$s and %2$s, assuming second address is peer address of remote. Using /32 netmask for local IP. Mode given by Viprox is \"%3$s\".</string>
     <string name="ipv4_format_error">Error parsing the IPv4 address</string>
     <string name="pkcs12_file_encryption_key">PKCS12 File Encryption Key</string>
     <string name="private_key_password">Private Key Password</string>
@@ -102,7 +102,7 @@
     <string name="using_proxy">Using proxy %1$s %2$d</string>
     <string name="session_ipv4string">%1$s - %2$s</string>
     <string name="session_ipv6string">%1$s - %3$s, %2$s</string>
-    <string name="minidump_generated">VPN Hero crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
+    <string name="minidump_generated">Viprox crashed unexpectedly. Please consider using the send Minidump option in the main menu</string>
     <string name="state_connecting">Connecting</string>
     <string name="state_wait">Waiting for server reply</string>
     <string name="state_auth">Authenticating</string>
@@ -140,7 +140,7 @@
     <string name="app_no_longer_exists">Package %s is no longer installed, removing it from app allow/disallow list</string>
     <string name="remote_no_server_selected">You need to define and enable at least one remote server.</string>
     <string name="ignore_multicast_route">Ignoring multicast route: %s</string>
-    <string name="service_restarted">Restarting VPN Hero Service (App crashed probably crashed or killed for memory pressure)</string>
+    <string name="service_restarted">Restarting Viprox Service (App crashed probably crashed or killed for memory pressure)</string>
     <string name="no_allowed_app">No allowed app added. Adding ourselves (%s) to have at least one app in the allowed app list to not allow all apps</string>
     <string name="abi_mismatch">Preferred native ABI precedence of this device (%1$s) and ABI reported by native libraries (%2$s) mismatch</string>
     <string name="months_left">%d months left</string>
