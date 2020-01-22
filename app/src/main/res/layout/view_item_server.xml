@@ -43,12 +43,14 @@
             android:id="@+id/textHostName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
             tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/textIP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryText"
             tools:text="@tools:sample/lorem" />
 
     </LinearLayout>

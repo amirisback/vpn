@@ -20,7 +20,7 @@
     <color name="colorAccentOrange">#C62828</color>
 
     <color name="colorBackgroundLine">#E9E7E7</color>
-    <color name="colorPrimaryText">#757575</color>
+    <color name="colorPrimaryText">@color/colorBaseBlack</color>
 
     <color name="colorPrimaryBackground">@color/colorBackgroundWhite</color>
 
