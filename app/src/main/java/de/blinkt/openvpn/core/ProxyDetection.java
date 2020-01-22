@@ -1,6 +1,6 @@
 package de.blinkt.openvpn.core;
 
-import com.frogobox.vpnhero.R;
+import com.frogobox.viprox.R;
 
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;

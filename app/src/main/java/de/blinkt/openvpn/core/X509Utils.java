@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.text.TextUtils;
 
-import com.frogobox.vpnhero.R;
-import com.frogobox.vpnhero.util.io.pem.PemObject;
-import com.frogobox.vpnhero.util.io.pem.PemReader;
+import com.frogobox.viprox.R;
+import com.frogobox.viprox.util.io.pem.PemObject;
+import com.frogobox.viprox.util.io.pem.PemReader;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

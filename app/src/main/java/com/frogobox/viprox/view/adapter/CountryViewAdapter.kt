@@ -1,0 +1,51 @@
+package com.frogobox.viprox.view.adapter
+
+import android.view.View
+import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.frogobox.viprox.base.adapter.BaseViewAdapter
+import com.frogobox.viprox.base.adapter.BaseViewHolder
+import com.frogobox.viprox.helper.Constant
+import com.frogobox.viprox.source.model.Server
+import com.frogobox.viprox.util.CountriesNames
+import kotlinx.android.synthetic.main.view_item_country.view.*
+
+/**
+ * Created by Faisal Amir
+ * FrogoBox Inc License
+ * =========================================
+ * Frogobox-VPN-Hero
+ * Copyright (C) 02/12/2019.
+ * All rights reserved
+ * -----------------------------------------
+ * Name     : Muhammad Faisal Amir
+ * E-mail   : faisalamircs@gmail.com
+ * Github   : github.com/amirisback
+ * LinkedIn : linkedin.com/in/faisalamircs
+ * -----------------------------------------
+ * FrogoBox Software Industries
+ * com.frogobox.evpn.view.adapter
+ *
+ */
+class CountryViewAdapter : BaseViewAdapter<Server>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Server> {
+        return CountryViewHolder(viewLayout(parent))
+    }
+
+    inner class CountryViewHolder(view: View) : BaseViewHolder<Server>(view) {
+
+        private val tv_country = view.tv_country_name
+        private val iv_flag = view.ivServerFlag
+
+        override fun initComponent(data: Server) {
+            super.initComponent(data)
+
+            val localeCountries: MutableMap<String, String> = CountriesNames.getCountries()
+            val localeCountryName = if (localeCountries[data.countryShort] != null) localeCountries[data.countryShort] else data.countryLong
+            tv_country.text = localeCountryName
+            Glide.with(itemView.context).load(Constant().getFlagImageUrl(data)).into(iv_flag)
+        }
+    }
+
+}

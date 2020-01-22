@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.HandlerThread;
 import android.os.Message;
 
-import com.frogobox.vpnhero.R;
+import com.frogobox.viprox.R;
 
 import java.io.File;
 import java.io.PrintWriter;

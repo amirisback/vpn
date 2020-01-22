@@ -27,10 +27,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.frogobox.vpnhero.BuildConfig;
-import com.frogobox.vpnhero.R;
-import com.frogobox.vpnhero.util.TotalTraffic;
-import com.frogobox.vpnhero.view.ui.activity.VPNInfoActivity;
+import com.frogobox.viprox.BuildConfig;
+import com.frogobox.viprox.R;
+import com.frogobox.viprox.util.TotalTraffic;
+import com.frogobox.viprox.view.ui.activity.VPNInfoActivity;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

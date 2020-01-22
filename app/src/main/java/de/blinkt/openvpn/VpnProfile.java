@@ -15,9 +15,9 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
-import com.frogobox.vpnhero.R;
-import com.frogobox.vpnhero.util.io.pem.PemObject;
-import com.frogobox.vpnhero.util.io.pem.PemWriter;
+import com.frogobox.viprox.R;
+import com.frogobox.viprox.util.io.pem.PemObject;
+import com.frogobox.viprox.util.io.pem.PemWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
