@@ -154,7 +154,7 @@ class VPNInfoActivity : BaseActivity() {
 
     private fun receiveStatus(intent: Intent) {
         if (checkStatus()) {
-            changeServerStatus(ConnectionStatus.valueOf(intent.getStringExtra(EXTRA_STATUS)))
+            changeServerStatus(ConnectionStatus.valueOf(intent.getStringExtra(EXTRA_STATUS)!!))
             serverStatus.text = VpnStatus.getLastCleanLogMessage(applicationContext)
         }
         if (intent.getStringExtra("detailstatus") == "NOPROCESS") {

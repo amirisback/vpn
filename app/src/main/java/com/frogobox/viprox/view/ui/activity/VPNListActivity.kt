@@ -29,7 +29,9 @@ class VPNListActivity : BaseActivity(), BaseViewListener<Server> {
         val country = intent.getStringExtra(EXTRA_COUNTRY)
         if (!VpnStatus.isVPNActive()) connectedServer = null
         setupDetailActivity("")
-        setupRecyclerView(country)
+        if (country != null) {
+            setupRecyclerView(country)
+        }
     }
 
     private fun setupRecyclerView(country: String) {

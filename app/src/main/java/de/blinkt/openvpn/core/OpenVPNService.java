@@ -1,6 +1,7 @@
 package de.blinkt.openvpn.core;
 
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -138,6 +139,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void showNotification(final String msg, String tickerText, boolean lowpriority, long when, ConnectionStatus status) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
@@ -406,7 +408,7 @@ public class OpenVPNService extends VpnService implements StateListener, Callbac
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mOvpn3 = prefs.getBoolean("ovpn3", false);
-        if (!"ovpn3".equals(BuildConfig.FLAVOR))
+        if (!"ovpn3".equals("ov"))
             mOvpn3 = false;
 
 
