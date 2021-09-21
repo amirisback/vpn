@@ -6,14 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundWhite">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.frogobox.recycler.widget.FrogoRecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/dimen_big_16dp"
+        android:layout_above="@id/ads"
         tools:listitem="@layout/view_item_server" />
 
-    <include layout="@layout/ads_banner" />
+    <include
+        android:id="@+id/ads"
+        layout="@layout/ads_banner" />
 
 </RelativeLayout>

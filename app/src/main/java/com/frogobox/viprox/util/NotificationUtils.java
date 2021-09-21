@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 import android.text.Html;
 
 import com.frogobox.viprox.R;
-import com.frogobox.viprox.view.ui.activity.MainActivity;
+import com.frogobox.viprox.ui.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;

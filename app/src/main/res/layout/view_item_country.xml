@@ -43,8 +43,8 @@
         android:id="@+id/tv_country_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Indonesia"
         android:maxLines="1"
+        android:text="Indonesia"
         android:textColor="@color/primary_black_text"
         android:textSize="@dimen/text_size_medium_16sp" />
 

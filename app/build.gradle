@@ -1,73 +1,61 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
 
-    // Declaration app name
-    def nameApp = "Viprox VPN"
+    // Declaration admob id for release
+    def releaseAdmobPublisherId = ""
+    def releaseAdmobBanner = ""
+    def releaseAdmobInterstitial = ""
+    def releaseAdmobInterstitialVideo = ""
+    def releaseAdmobRewarded = ""
+    def releaseAdmobRewardedInterstitial = ""
+    def releaseAdmobNativeAdvanced = ""
+    def releaseAdmobNativeAdvancedVideo = ""
 
-    // Declaration apk / aab name
-    def nameAPK = "viprox-vpn"
+    compileSdk projectCompileSdk
 
-    def versionPropsFile = file('version.properties')
-    Properties versionProps = new Properties()
-
-    if (versionPropsFile.canRead()) {
-        versionProps.load(new FileInputStream(versionPropsFile))
-    } else {
-        versionProps['VERSION_CODE'] = '0'
-    }
-
-    def code = versionProps['VERSION_CODE'].toInteger()
-
-    versionProps['VERSION_CODE'] = code.toString()
-    versionProps.store(versionPropsFile.newWriter(), null)
-
-    compileOptions {
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
-    }
-
-    compileSdkVersion 30
-    buildToolsVersion '30.0.3'
     defaultConfig {
-        applicationId "com.frogobox.viprox"
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 2
-        versionName "1.0.1"
+        applicationId projectApplicationId
+        minSdk projectMinSdk
+        targetSdk projectTargetSdk
+        versionCode projectVersionCode
+        versionName projectVersionName
+
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
 
         // Declaration apps name debug mode
         def debugAttribute = " Development"
         def nameAppDebug = nameApp + debugAttribute
+
+        // Naming APK // AAB
+        setProperty("archivesBaseName", nameAPK + versionName + "#" + versionCode + "-"
+                + new Date().format('ddMMyy'))
+
+        resConfigs "en", "id"
+
+        // Inject app name for debug
+        resValue "string", "app_name", nameAppDebug
 
         // Declaration admob id for debug
         def debugAdmobPublisherId = "ca-app-pub-3940256099942544~3347511713"
         def debugAdmobBanner = "ca-app-pub-3940256099942544/6300978111"
         def debugAdmobInterstitial = "ca-app-pub-3940256099942544/1033173712"
         def debugAdmobInterstitialVideo = "ca-app-pub-3940256099942544/8691691433"
-        def debugAdmobRewardedVideo = "ca-app-pub-3940256099942544/5224354917"
+        def debugAdmobRewarded = "ca-app-pub-3940256099942544/5224354917"
+        def debugAdmobRewardedInterstitial = "ca-app-pub-3940256099942544/5354046379"
         def debugAdmobNativeAdvanced = "ca-app-pub-3940256099942544/2247696110"
         def debugAdmobNativeAdvancedVideo = "ca-app-pub-3940256099942544/1044960115"
-
-        // Naming APK // AAB
-        setProperty("archivesBaseName", nameAPK + versionName + "#" + code + "-"
-                + new Date().format('ddMMyy'))
-
-        resConfigs "en", "id"
-        vectorDrawables.useSupportLibrary = true
-
-        // Inject app name for debug
-        resValue "string", "app_name", nameAppDebug
 
         // Inject admob id for debug
         resValue "string", "admob_publisher_id", debugAdmobPublisherId
         resValue "string", "admob_banner", debugAdmobBanner
         resValue "string", "admob_interstitial", debugAdmobInterstitial
         resValue "string", "admob_interstitial_video", debugAdmobInterstitialVideo
-        resValue "string", "admob_rewarded_video", debugAdmobRewardedVideo
+        resValue "string", "admob_rewarded", debugAdmobRewarded
+        resValue "string", "admob_rewarded_interstitial", debugAdmobRewardedInterstitial
         resValue "string", "admob_native_advanced", debugAdmobNativeAdvanced
         resValue "string", "admob_native_advanced_video", debugAdmobNativeAdvancedVideo
 
@@ -94,15 +82,6 @@ android {
             // Generated Signed APK / AAB
             signingConfig signingConfigs.release
 
-            // Declaration admob id for release
-            def releaseAdmobPublisherId = "ca-app-pub-5472340099809711~5221027549"
-            def releaseAdmobBanner = "ca-app-pub-5472340099809711/7689965132"
-            def releaseAdmobInterstitial = "ca-app-pub-5472340099809711/5063801791"
-            def releaseAdmobInterstitialVideo = ""
-            def releaseAdmobRewardedVideo = ""
-            def releaseAdmobNativeAdvanced = ""
-            def releaseAdmobNativeAdvancedVideo = ""
-
             // Inject app name for release
             resValue "string", "app_name", nameApp
 
@@ -111,12 +90,39 @@ android {
             resValue "string", "admob_banner", releaseAdmobBanner
             resValue "string", "admob_interstitial", releaseAdmobInterstitial
             resValue "string", "admob_interstitial_video", releaseAdmobInterstitialVideo
-            resValue "string", "admob_rewarded_video", releaseAdmobRewardedVideo
+            resValue "string", "admob_rewarded", releaseAdmobRewarded
+            resValue "string", "admob_rewarded_interstitial", releaseAdmobRewardedInterstitial
             resValue "string", "admob_native_advanced", releaseAdmobNativeAdvanced
             resValue "string", "admob_native_advanced_video", releaseAdmobNativeAdvancedVideo
 
         }
 
+    }
+
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerVersion kotlin_version
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+        useIR = true
+    }
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
 
 }
@@ -127,22 +133,41 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
 
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
 
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.3.1'
 
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.android.material:material:1.4.0'
 
-    implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
-    implementation 'com.amitshekhar.android:android-networking:0.2.0'
+    implementation "com.google.android.gms:play-services-ads:20.3.0"
+
+    implementation 'com.github.frogobox:frogo-android-sdk:2.0.4'
+    implementation 'com.github.frogobox:frogo-android-ui-kit:1.0.4'
+
+    implementation 'com.github.amirisback:frogo-admob:4.1.2'
+    implementation 'com.github.amirisback:frogo-recycler-view:3.8.7'
+    implementation 'com.github.amirisback:frogo-log:2.0.4'
+
+    implementation "com.github.bumptech.glide:glide:4.12.0"
+
+    implementation "com.daimajia.numberprogressbar:library:1.2@aar"
+    implementation "com.amitshekhar.android:android-networking:0.2.0"
+
+    kapt "com.github.bumptech.glide:compiler:4.11.0"
 
     testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }

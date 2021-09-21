@@ -7,7 +7,9 @@
     android:background="@color/colorBackgroundWhite"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_main" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,8 +39,8 @@
         android:layout_height="@dimen/dimen_img_product_150dp"
         android:layout_centerInParent="true"
         android:background="@drawable/bg_card_white"
-        android:padding="@dimen/dimen_big_16dp"
         android:elevation="@dimen/dimen_small_4dp"
+        android:padding="@dimen/dimen_big_16dp"
         android:text="Connect"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -49,16 +51,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/admob_adview"
+        android:layout_above="@id/ads"
         android:layout_centerHorizontal="true"
-        android:text="@string/text_info_desc_privacy"
         android:layout_margin="@dimen/dimen_big_16dp"
+        android:gravity="center"
+        android:text="@string/text_info_desc_privacy"
         android:textSize="@dimen/text_size_small_10sp"
-        android:textStyle="bold"
-        android:gravity="center"/>
+        android:textStyle="bold" />
 
-
-
-    <include layout="@layout/ads_banner" />
+    <include
+        android:id="@+id/ads"
+        layout="@layout/ads_banner" />
 
 </RelativeLayout>

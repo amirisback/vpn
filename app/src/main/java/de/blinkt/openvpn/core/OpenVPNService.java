@@ -28,10 +28,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.frogobox.viprox.BuildConfig;
 import com.frogobox.viprox.R;
 import com.frogobox.viprox.util.TotalTraffic;
-import com.frogobox.viprox.view.ui.activity.VPNInfoActivity;
+import com.frogobox.viprox.ui.VPNInfoActivity;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

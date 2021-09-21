@@ -4,19 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundWhite"
-    tools:context=".view.ui.activity.CountryActivity">
+    tools:context=".ui.CountryActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.frogobox.recycler.widget.FrogoRecyclerView
         android:id="@+id/recycler_view_country"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/admob_adview"
+        android:layout_above="@+id/ads"
         android:clipToPadding="false"
         android:paddingTop="@dimen/dimen_big_16dp"
         android:paddingEnd="@dimen/dimen_big_16dp"
         android:paddingRight="@dimen/dimen_big_16dp"
         tools:listitem="@layout/view_item_country" />
 
-    <include layout="@layout/ads_banner" />
+    <include
+        android:id="@+id/ads"
+        layout="@layout/ads_banner" />
 
 </RelativeLayout>

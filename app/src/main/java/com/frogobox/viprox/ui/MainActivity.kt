@@ -1,27 +1,29 @@
-package com.frogobox.viprox.view.ui.activity
+package com.frogobox.viprox.ui
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.frogobox.viprox.R
-import com.frogobox.viprox.base.ui.BaseActivity
+import com.frogobox.viprox.base.BaseActivity
+import com.frogobox.viprox.databinding.ActivityMainBinding
 import com.frogobox.viprox.util.PropertiesService
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.ads_banner.*
-import kotlinx.android.synthetic.main.toolbar_main.*
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun setupViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
 
-        setSupportActionBar(toolbar_main)
-        setupShowAdsInterstitial()
-        setupShowAdsBanner(admob_adview)
-        setupViewFunction()
+    override fun setupViewModel() {}
 
+    override fun setupUI(savedInstanceState: Bundle?) {
+        binding.apply {
+            setSupportActionBar(toolbar.toolbarMain)
+            setupShowAdsInterstitial()
+            setupShowAdsBanner(ads.admobAdview)
+            setupViewFunction()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -46,11 +48,16 @@ class MainActivity : BaseActivity() {
     }
 
     private fun setupViewFunction() {
-        btn_quick_connect.setOnClickListener { v: View? ->
+        binding.btnQuickConnect.setOnClickListener { v: View? ->
             if (getRandomServer() != null) {
                 newConnecting(getRandomServer(), fastConnection = true, autoConnection = true)
             } else {
-                showToast(String.format(resources.getString(R.string.error_random_country), PropertiesService.getSelectedCountry()))
+                showToast(
+                    String.format(
+                        resources.getString(R.string.error_random_country),
+                        PropertiesService.getSelectedCountry()
+                    )
+                )
             }
         }
 

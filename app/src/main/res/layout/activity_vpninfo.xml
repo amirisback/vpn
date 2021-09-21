@@ -49,16 +49,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VPN Status"
-                android:textColor="@color/colorPrimaryText"/>
+                android:textColor="@color/colorPrimaryText" />
 
             <TextView
                 android:id="@+id/serverStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dimen_big_16dp"
-                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryText"
+                android:textStyle="bold"
                 tools:text="@tools:sample/lorem" />
 
             <LinearLayout

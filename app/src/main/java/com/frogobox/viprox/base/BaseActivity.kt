@@ -1,30 +1,29 @@
-package com.frogobox.viprox.base.ui
+package com.frogobox.viprox.base
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONArrayRequestListener
+import com.frogobox.admob.core.FrogoAdmob
+import com.frogobox.sdk.core.FrogoActivity
 import com.frogobox.viprox.R
-import com.frogobox.viprox.base.ui.activity.BaseAdmobActivity
-import com.frogobox.viprox.base.util.BaseHelper
-import com.frogobox.viprox.helper.Constant.Variable.EXTRA_AUTO_CONNECTION
-import com.frogobox.viprox.helper.Constant.Variable.EXTRA_FAST_CONNECTION
+import com.frogobox.viprox.util.Constant.Variable.EXTRA_AUTO_CONNECTION
+import com.frogobox.viprox.util.Constant.Variable.EXTRA_FAST_CONNECTION
 import com.frogobox.viprox.source.local.DBHelper
 import com.frogobox.viprox.source.model.Server
 import com.frogobox.viprox.util.CountriesNames
 import com.frogobox.viprox.util.PropertiesService
 import com.frogobox.viprox.util.TotalTraffic
-import com.frogobox.viprox.view.ui.activity.VPNInfoActivity
+import com.frogobox.viprox.ui.VPNInfoActivity
+import com.google.android.gms.ads.AdView
+import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -47,7 +46,7 @@ import java.util.*
  * com.frogobox.evpn.base
  *
  */
-open class BaseActivity : BaseAdmobActivity() {
+abstract class BaseActivity<VB : ViewBinding> : FrogoActivity<VB>() {
 
     var connectedServer: Server? = null
     protected var hideCurrentConnection = false
@@ -56,6 +55,48 @@ open class BaseActivity : BaseAdmobActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupAdmob()
+    }
+
+    private fun setupAdmob(){
+        setPublisher()
+        setBanner()
+        setInterstitial()
+    }
+
+    private fun setupAdsPublisher(mPublisherId: String) {
+        FrogoAdmob.setupPublisherID(mPublisherId)
+        FrogoAdmob.Publisher.setupPublisher(this)
+    }
+
+    private fun setupAdsBanner(mAdUnitId: String) {
+        FrogoAdmob.setupBannerAdUnitID(mAdUnitId)
+    }
+
+    private fun setupAdsInterstitial(mAdUnitId: String) {
+        FrogoAdmob.setupInterstialAdUnitID(mAdUnitId)
+        FrogoAdmob.Interstitial.setupInterstitial(this)
+    }
+
+    private fun setPublisher() {
+        setupAdsPublisher(getString(R.string.admob_publisher_id))
+    }
+
+    private fun setBanner() {
+        setupAdsBanner(getString(R.string.admob_banner))
+    }
+
+    private fun setInterstitial() {
+        setupAdsInterstitial(getString(R.string.admob_interstitial))
+    }
+
+    fun setupShowAdsBanner(mAdView: AdView) {
+        FrogoAdmob.Banner.setupBanner(mAdView)
+        FrogoAdmob.Banner.showBanner(mAdView)
+    }
+
+    fun setupShowAdsInterstitial() {
+        FrogoAdmob.Interstitial.showInterstitial(this)
     }
 
     override fun onPause() {
@@ -63,68 +104,11 @@ open class BaseActivity : BaseAdmobActivity() {
         TotalTraffic.saveTotal()
     }
 
-    protected fun setupCustomTitleToolbar(title: Int) {
-        supportActionBar?.setTitle(title)
-    }
-
     protected fun setupNoLimitStatBar() {
         val windows = window // in Activity's onCreate() for instance
         windows.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-    }
-
-    protected fun setupChildFragment(frameId: Int, fragment: Fragment) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(frameId, fragment)
-            commit()
-        }
-    }
-
-    protected inline fun <reified ClassActivity> baseStartActivity() {
-        this.startActivity(Intent(this, ClassActivity::class.java))
-    }
-
-    protected inline fun <reified ClassActivity, Model> baseStartActivity(
-        extraKey: String,
-        data: Model
-    ) {
-        val intent = Intent(this, ClassActivity::class.java)
-        val extraData = BaseHelper().baseToJson(data)
-        intent.putExtra(extraKey, extraData)
-        this.startActivity(intent)
-    }
-
-    protected inline fun <reified Model> baseGetExtraData(extraKey: String): Model {
-        val extraIntent = intent.getStringExtra(extraKey)
-        val extraData = BaseHelper().baseFromJson<Model>(extraIntent)
-        return extraData
-    }
-
-    protected fun checkExtra(extraKey: String): Boolean {
-        return intent?.hasExtra(extraKey)!!
-    }
-
-    protected fun <Model> baseFragmentNewInstance(
-            fragment: BaseFragment,
-            argumentKey: String,
-            extraDataResult: Model
-    ) {
-        fragment.baseNewInstance(argumentKey, extraDataResult)
-    }
-
-
-    protected fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-    protected fun setupDetailActivity(title: String) {
-        val upArrow = ContextCompat.getDrawable(this, R.drawable.ic_toolbar_back_home)
-        supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(upArrow)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.colorBaseWhite))
         )
     }
 
@@ -142,22 +126,6 @@ open class BaseActivity : BaseAdmobActivity() {
         }
     }
 
-    protected fun setupEventEmptyView(view: View, isEmpty: Boolean) {
-        if (isEmpty) {
-            view.visibility = View.VISIBLE
-        } else {
-            view.visibility = View.GONE
-        }
-    }
-
-    protected fun setupEventProgressView(view: View, progress: Boolean) {
-        if (progress) {
-            view.visibility = View.VISIBLE
-        } else {
-            view.visibility = View.GONE
-        }
-    }
-
     protected fun getRandomServer(): Server? {
         return if (PropertiesService.getCountryPriority()) {
             dbHelper.getGoodRandomServer(PropertiesService.getSelectedCountry())
@@ -169,7 +137,7 @@ open class BaseActivity : BaseAdmobActivity() {
     protected open fun newConnecting(server: Server?, fastConnection: Boolean, autoConnection: Boolean) {
         if (server != null) {
             val intent = Intent(this, VPNInfoActivity::class.java)
-            intent.putExtra(Server::class.java.canonicalName, BaseHelper().baseToJson(server))
+            intent.putExtra(Server::class.java.canonicalName, Gson().toJson(server))
             intent.putExtra(EXTRA_FAST_CONNECTION, fastConnection)
             intent.putExtra(EXTRA_AUTO_CONNECTION, autoConnection)
             startActivity(intent)
@@ -213,8 +181,8 @@ open class BaseActivity : BaseAdmobActivity() {
                 .build()
                 .getAsJSONArray(object : JSONArrayRequestListener {
                     override fun onResponse(response: JSONArray) {
-                        if (dbHelper.setIpInfo(response, serverList)) {
-                        }
+                        dbHelper.setIpInfo(response, serverList)
+                        // TODO WHEN VPN CONNECTED
                     }
 
                     override fun onError(error: ANError) {}

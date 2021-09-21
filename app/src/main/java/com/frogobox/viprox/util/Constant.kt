@@ -1,7 +1,7 @@
-package com.frogobox.viprox.helper
+package com.frogobox.viprox.util
 
-import com.frogobox.viprox.helper.Constant.Variable.BASE_FLAG_IMAGE_SIZE
-import com.frogobox.viprox.helper.Constant.Variable.BASE_FLAG_IMAGE_URL
+import com.frogobox.viprox.util.Constant.Variable.BASE_FLAG_IMAGE_SIZE
+import com.frogobox.viprox.util.Constant.Variable.BASE_FLAG_IMAGE_URL
 import com.frogobox.viprox.source.model.Server
 
 /**

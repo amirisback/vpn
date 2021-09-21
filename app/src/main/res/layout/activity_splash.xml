@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundWhite"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".view.ui.activity.SplashActivity">
+    tools:context=".ui.SplashActivity">
 
     <ImageView
         android:layout_width="120dp"
